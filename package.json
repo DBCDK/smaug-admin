@@ -1,0 +1,44 @@
+{
+  "name": "smaug-admin",
+  "version": "0.0.1",
+  "description": "An admin interface for Smaug webservice",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "STANDARD_CACHE_TIME=1 parallelshell \"npm run build:dev -s\" \"npm run serve -s\"",
+    "serve": "nodemon --exec node --no-stdin src/server/index.js",
+    "build": "webpack --define process.env.NODE_ENV='\"production\"' --progress --colors -p",
+    "build:dev": "webpack --progress --colors --watch -d",
+    "lint": "eslint ./src --cache",
+    "test": "test"
+  },
+  "keywords": [
+    "admin",
+    "ui",
+    "smaug"
+  ],
+  "author": "ux",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-class-properties": "^6.16.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.16.0",
+    "babel-register": "^6.16.3",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "koa": "^2.0.0",
+    "koa-router": "^7.0.0",
+    "postcss-loader": "^1.1.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "sass-loader": "^4.0.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.3",
+    "babel-loader": "^6.2.7",
+    "babel-preset-react": "^6.16.0",
+    "eslint": "^3.9.1",
+    "node-sass": "^3.11.2",
+    "nodemon": "^1.11.0",
+    "parallelshell": "^2.0.0",
+    "webpack": "^1.13.3"
+  }
+}

@@ -1,0 +1,13 @@
+language: node_js
+sudo: false
+dist: trusty
+cache:
+  bundler: true
+  directories:
+  - node_modules
+branches:
+  only:
+  - master
+env:
+- TEST_SUITE=lint
+script: npm run $TEST_SUITE

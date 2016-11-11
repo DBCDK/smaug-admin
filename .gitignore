@@ -1,0 +1,29 @@
+
+# ==========
+# IDE #
+# ==========
+.idea/
+
+# ==========
+# NODE/NPM #
+# ==========
+node_modules/
+npm-debug.log
+yarn.lock
+
+# ==========
+# REPORTS #
+# ==========
+reports
+report.xml
+static/*.css
+
+# ==========
+# ENV #
+# ==========
+*.env
+
+# ==========
+# ESLINT #
+# ==========
+.eslintcache
