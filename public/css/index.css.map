@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///webpack:///src/client/components/client/src/client/components/client/client.css"],"names":[],"mappings":"AAAA;EACE,WAAW,EACZ","file":"../css/index.css","sourcesContent":["body {\n  color: red;\n}\n\n\n\n// WEBPACK FOOTER //\n// webpack:///src/client/components/client/src/client/components/client/client.css"],"sourceRoot":""}

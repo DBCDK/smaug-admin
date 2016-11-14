@@ -30,10 +30,10 @@ module.exports = [{
       {
         test: /\.(scss|css)$/,
         loader: extractTextPlugin.extract(
-          // activate source maps via loader query
           'css?sourceMap' +
           '!sass?sourceMap' +
           "&includePaths[]=" + path.resolve(__dirname, "./src/client/scss/") +
+          "&includePaths[]=" + path.resolve(__dirname, "./node_modules/") +
           '!postcss-loader'
         )
       },
