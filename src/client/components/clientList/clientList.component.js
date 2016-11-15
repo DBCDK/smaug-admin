@@ -3,7 +3,7 @@ import React from 'react';
 
 function clientListElement({id, name}) {
   return (
-    <a href={`/${id}`} className="client-list-element">
+    <a href={`/client/${id}`} className="client-list-element">
         <div className="id">{id}</div>
         <div className="name">{name}</div>
     </a>

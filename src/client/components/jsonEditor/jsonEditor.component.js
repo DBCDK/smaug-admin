@@ -10,16 +10,19 @@ export default class JEditor extends React.Component {
   componentDidMount() {
     var container = document.getElementById("jsoneditor");
     var options = {
-      "mode": "code",
-      "indentation": 2
+      mode: "code",
+      onChange: this.onChange.bind(this)
     };
-    this.editor = new JSONEditor(container, options);
-    this.editor.set(this.props.json);
+    this.editor = new JSONEditor(container, options, this.props.json);
+  }
+
+  onChange() {
+    this.props.onChange(this.editor.getText());
   }
 
   render() {
     return (
-      <div id="jsoneditor"></div>
+      <div id="jsoneditor" style={{width:'100%', height:'400px'}}></div>
     );
   }
 }

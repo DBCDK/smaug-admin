@@ -14,7 +14,7 @@ import serve from 'koa-static';
 import {html} from './templates/html.template';
 
 // Utils
-import {getClientList, getClient, setClient} from './dataFetcher/dataFetcher'
+import {getClientList, getClient, setClient, createClient} from './dataFetcher/dataFetcher'
 //import {CONFIG, validateConfig} from './utils/config.util';
 //import {log} from './utils/logging.util';
 
@@ -50,22 +50,9 @@ router.get('/', async (ctx, next) => {
   return next();
 });
 
-router.get('/:id', async (ctx, next) => {
+router.get('/client/:id', async (ctx, next) => {
   const id = ctx.params.id;
   const client = await getClient(id);
-  //console.log(client);
-  ctx.body = html({
-    title: `Client with id ${id}`,
-    state: client,
-    id: 'client'
-  });
-  return next();
-});
-
-router.post('/:id', async (ctx, next) => {
-  const body = ctx.request.body;
-  const id = ctx.params.id;
-  const client = await setClient(id, {name: body.name, config: JSON.parse(body.config)});
   console.log(client);
   ctx.body = html({
     title: `Client with id ${id}`,
@@ -75,15 +62,46 @@ router.post('/:id', async (ctx, next) => {
   return next();
 });
 
+router.get('/add', async (ctx, next) => {
+  ctx.body = html({
+    title: `Creating new client`,
+    state: {},
+    id: 'client'
+  });
+  return next();
+});
+
 router.post('/add', async (ctx, next) => {
   const body = ctx.request.body;
+  const client = await createClient({name: body.name, config: JSON.parse(body.config), contact: parseContacts(body.contact)});
+  console.log(client);
+  ctx.redirect(`/${client.id}`)
+  await next();
+});
+
+
+router.post('/client/:id', async (ctx, next) => {
+  const body = ctx.request.body;
   const id = ctx.params.id;
-  const client = await setClient(id, {name: body.name, config: JSON.parse(body.config)});
+  console.log(body.config, 'contact');
+  const client = await setClient(id, {name: body.name, config: JSON.parse(body.config), contact: parseContacts(body.contact)});
+  console.log(client);
   ctx.body = html({
     title: `Client with id ${id}`,
     state: client,
     id: 'client'
   });
-  await next();
+  return next();
 });
+
+function parseContacts(contactList) {
+  const contacts = {};
+  for(const contact of contactList) {
+    const {role, ...info} = contact;
+    if (role) {
+      contacts[role] = info;
+    }
+  }
+   return contacts;
+}
 
