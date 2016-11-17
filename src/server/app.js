@@ -14,7 +14,7 @@ import serve from 'koa-static';
 import {html} from './templates/html.template';
 
 // Utils
-import {getClientList, getClient, setClient, createClient} from './dataFetcher/dataFetcher'
+import {getClientList, getClient, setClient, createClient, deleteClient} from './dataFetcher/dataFetcher'
 //import {CONFIG, validateConfig} from './utils/config.util';
 //import {log} from './utils/logging.util';
 
@@ -75,7 +75,14 @@ router.post('/add', async (ctx, next) => {
   const body = ctx.request.body;
   const client = await createClient({name: body.name, config: JSON.parse(body.config), contact: parseContacts(body.contact)});
   console.log(client);
-  ctx.redirect(`/${client.id}`)
+  ctx.redirect(`/${client.id}`);
+  await next();
+});
+
+router.post('/remove/:id', async (ctx, next) => {
+  const id = ctx.params.id;
+  await deleteClient(id);
+  ctx.redirect(`/`);
   await next();
 });
 

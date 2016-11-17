@@ -20,3 +20,7 @@ export function setClient(id, props) {
 export function createClient(props) {
   return promiseRequest('post', `http://localhost:3002/clients/`, props).then(response => response.body);
 }
+
+export function deleteClient(id) {
+  return promiseRequest('delete', `http://localhost:3002/clients/${id}`).then(response => response.body);
+}

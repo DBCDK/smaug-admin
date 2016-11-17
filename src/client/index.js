@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import clientList from './components/clientList/clientList.component';
-import client from './components/client/client.component';
+import client from './components/clientForm/clientFormContainer.component';
 
 
 function getRootComponent(pageId) {
