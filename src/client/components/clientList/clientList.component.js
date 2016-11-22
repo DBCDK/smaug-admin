@@ -1,8 +1,5 @@
 import React from 'react';
 
-import './clientList.scss';
-
-
 function clientListElement({id, name, contact}) {
   const submit = (e) => {
     const confirmed = confirm(`Are you sure you want to delete:\n${name}?`);

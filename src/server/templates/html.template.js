@@ -1,4 +1,4 @@
-export function html({title, content, id = 'clientlist', state = {}}) {
+export function html({title, content = '', id = 'clientlist', state = {}}) {
   return `
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@ export function html({title, content, id = 'clientlist', state = {}}) {
     </header>
     <div class="wrapper">
       <h1>${title}</h1>
-      <div id="content"></div>
+      <div id="content">${content}</div>
       <script id="pagedata" type='application/json'>${JSON.stringify({id, state})}</script>
       <script src="/js/index.js"></script>
       <link href="/jsoneditor.min.css" " media="all" rel="stylesheet" />

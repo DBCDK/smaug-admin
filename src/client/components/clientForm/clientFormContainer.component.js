@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './clientForm.scss';
 import Client from './clientForm.component';
 
 export default class ClientFormContainer extends React.Component {

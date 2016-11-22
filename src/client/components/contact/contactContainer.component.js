@@ -1,8 +1,6 @@
 import React from 'react';
 import Contact from './contact.component';
 
-import './contact.scss';
-
 export default class ContactContainer extends React.Component {
   constructor(props) {
     super(props);

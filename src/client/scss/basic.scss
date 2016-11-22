@@ -1,4 +1,9 @@
-@import "forms.css";
+@import "mixins/button";
+@import "mixins/cssIcon";
+@import "components/clientForm";
+@import "components/clientList";
+@import "components/contact";
+@import "components/forms";
 
 div, form, input, p {
   box-sizing: border-box;
