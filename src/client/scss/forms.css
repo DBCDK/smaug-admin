@@ -1,0 +1,25 @@
+input[type=text],
+input[type=email] {
+  margin: 0;
+  display: block;
+  width: 100%;
+  padding: .5rem 1rem;
+  line-height: 1.25;
+  color: #55595c;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .15);
+}
+
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+}
+
+
+.element {
+  margin-bottom: 1rem;
+}
+
+.element label {
+  font-weight: bold;
+}

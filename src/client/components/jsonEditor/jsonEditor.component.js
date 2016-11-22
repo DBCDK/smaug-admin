@@ -22,7 +22,7 @@ export default class JEditor extends React.Component {
   onChange() {
     const json = this.editor.getText();
     this.setState({json});
-    this.props.setErrorState(this.validateJson(json));
+    this.props.setErrorState(!this.validateJson(json));
   }
 
   validateJson(json) {
@@ -36,7 +36,8 @@ export default class JEditor extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={`element ${this.props.name}`}>
+        <label htmlFor={this.props.name}>{this.props.name}</label>
         <div id="jsoneditor" style={{width:'100%', height:'400px'}}></div>
         <input type="hidden" name={this.props.name} id={this.props.name} value={this.state.json}/>
       </div>

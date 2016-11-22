@@ -1,0 +1,13 @@
+@mixin cssIcon($content, $color, $backgroundColor, $size: 20px, $line-height: 20px) {
+  &:before {
+    content: $content;
+    display: inline-block;
+    width: $size;
+    height: $size;
+    text-align: center;
+    line-height: $line-height;
+    color: $color;
+    background-color: $backgroundColor;
+    border-radius: 50%;
+  }
+}

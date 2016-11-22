@@ -1,4 +1,6 @@
 import React from 'react';
+
+import './clientForm.scss';
 import Client from './clientForm.component';
 
 export default class ClientFormContainer extends React.Component {
@@ -14,12 +16,13 @@ export default class ClientFormContainer extends React.Component {
   }
 
   setErrorState(hasError) {
+    console.log(hasError);
     this.hasError =  hasError;
   }
 
   render() {
     return (
-      <Client submit={e => this.onSubmit(e)} setErrorState={state => this.setErrorState(state)} {...this.props} />
+      <Client onSubmit={e => this.onSubmit(e)} setErrorState={state => this.setErrorState(state)} {...this.props} />
     );
   }
 }

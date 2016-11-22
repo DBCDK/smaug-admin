@@ -1,0 +1,63 @@
+@import "mixins/button";
+.clientlist {
+  text-align: center;
+}
+
+.clients {
+  display: table;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 2rem;
+  .elements {
+    display: table-row-group;
+  }
+}
+
+.labels {
+  display: table-header-group;
+  padding: 0 0.5rem;
+  * {
+    display: table-cell;
+    padding: 0 0.5rem;
+    font-weight: bold;
+  }
+}
+
+.client {
+  transition: all 200ms ease-in;
+  display: table-row;
+  border-bottom: 1px solid #ccc;
+  * {
+    display: table-cell;
+    border-bottom: 1px solid #ccc;
+  }
+  a {
+    padding: 1rem 0.5rem;
+    color: #373a3c;
+    transition: all 200ms ease-in;
+  }
+  &:nth-of-type(2n + 1) {
+    background-color: #eceeef;
+  }
+  &:hover {
+    background-color: #4c4c4c;
+    a {
+      color: white;
+    }
+  }
+}
+
+.createclient {
+  @include button();
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.deleteclient {
+  @include button(#ee422e);
+}
+
+.editclient {
+  @include button(lightseagreen);
+  font-weight: bold;
+}

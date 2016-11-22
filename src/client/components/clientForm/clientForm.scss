@@ -1,0 +1,18 @@
+@import "mixins/button";
+
+.clientform {
+  .submit input {
+    @include button();
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  label {
+    font-weight: bold;
+  }
+}
+
+.emptylist {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: bold;
+}

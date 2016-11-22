@@ -1,25 +1,71 @@
 import React from 'react';
 
+import './clientList.scss';
 
-function clientListElement({id, name}) {
+
+function clientListElement({id, name, contact}) {
+  const submit = (e) => {
+    const confirmed = confirm(`Are you sure you want to delete:\n${name}?`);
+    if (!confirmed) {
+      e.preventDefault();
+    }
+  };
   return (
-    <div>
-      <a href={`/client/${id}`} className="client-list-element">
-        <div className="id">{id}</div>
-        <div className="name">{name}</div>
-      </a>
-      <form action={`/remove/${id}`} method="post">
-        <input type="submit" value="delete"/>
+    <div className="client">
+      <a href={`/client/${id}`} className="name">{name}</a>
+      <a href={`/client/${id}`} className="id">{id}</a>
+      <a href={`/client/${id}`} className="owner">{contact.owner.name}</a>
+      <form onSubmit={submit} action={`/remove/${id}`} method="post">
+        <input className="deleteclient" type="submit" value="delete"/>
       </form>
     </div>
 
   );
 }
 
-export default function ClientList ({list = []}) {
+function ClientList({list}) {
   return (
-    <div className="client-list">
-      {list.map(clientListElement)}
+    <div className="clientlist">
+      <div className="clients">
+        <div className="labels">
+          <label className="label-name">Name</label>
+          <label className="label-id">ID</label>
+          <label className="label-owner">Owner</label>
+          <label className="label-owner">Delete</label>
+        </div>
+        <div className="elements">
+          {list.map(clientListElement)}
+        </div>
+      </div>
+      <a className="createclient" href="/add">+ Create a new client</a>
     </div>
   );
+}
+
+function ClientListError({error}) {
+  return (
+    <div className="clientlist error">
+      {error}
+    </div>
+  );
+}
+
+function ClientListEmpty() {
+  return (
+    <div className="clientlist empty">
+      <p>No clients created yet.</p>
+      <a className="createclient" href="/add">+ Create a new client</a>
+    </div>
+  );
+}
+
+export default function ClientListContainer({error, list = []}) {
+  if (error) {
+    return ClientListError({error});
+  }
+  else if (list.length === 0) {
+    return ClientListEmpty();
+  }
+
+  return ClientList({list});
 }
