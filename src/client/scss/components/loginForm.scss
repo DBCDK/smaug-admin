@@ -1,0 +1,27 @@
+.page {
+  background-color: white;
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  min-height: 80%;
+  box-shadow: 2px 2px 5px rgba($dark-color, 0.1);
+}
+
+.page.login {
+  margin: 0 auto;
+  min-height: 0;
+  max-width: 400px;
+  position: relative;
+  top: 33%;
+  transform: translateY(-50%);
+
+
+  .submit {
+    text-align: right;
+    input {
+      @include button();
+    }
+
+  }
+}
+

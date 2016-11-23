@@ -19,7 +19,7 @@ export function html({title, content = '', id = 'clientlist', state = {}}) {
         </nav>
       </div>
     </header>
-    <div class="wrapper">
+    <div class="wrapper page ${id}">
       <h1>${title}</h1>
       <div id="content">${content}</div>
       <script id="pagedata" type='application/json'>${JSON.stringify({id, state})}</script>

@@ -8,7 +8,7 @@ import {contactListToObject} from '../utils/contact.util';
 import ClientList from '../client/components/clientList/clientList.component';
 import Client from '../client/components/clientForm/clientFormContainer.component';
 import NewClient from '../client/components/createClient/newClient.component';
-
+import LoginForm from '../client/components/loginForm/loginFormContainer.component';
 
 // Templates
 import {html} from './templates/html.template';
@@ -34,6 +34,16 @@ router.get('/', async (ctx, next) => {
   return next();
 });
 
+router.get('/login', async (ctx, next) => {
+  ctx.body = html({
+    title: 'Login to Smaug Admin',
+    content: ReactDOM.renderToString(<LoginForm />),
+    id: 'login'
+  });
+  return next();
+});
+
+
 router.get('/client/:id', async (ctx, next) => {
   const id = ctx.params.id;
   const client = await getClient(id);
@@ -41,7 +51,7 @@ router.get('/client/:id', async (ctx, next) => {
     title: `Edit Client`,
     state: client,
     content: ReactDOM.renderToString(<Client {...client} />),
-    id: 'client'
+    id: 'clientform'
   });
   return next();
 });
@@ -54,7 +64,7 @@ router.post('/client/:id', async (ctx, next) => {
     title: `Edit Client`,
     state: client,
     content: ReactDOM.renderToString(<Client {...client} />),
-    id: 'client'
+    id: 'clientform'
   });
   return next();
 });
@@ -65,7 +75,7 @@ router.get('/add', async (ctx, next) => {
     title: `Create new client`,
     state: {},
     content: ReactDOM.renderToString(<Client />),
-    id: 'client'
+    id: 'clientform'
   });
   return next();
 });
