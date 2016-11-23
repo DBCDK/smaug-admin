@@ -14,7 +14,7 @@ export default function LoginForm() {
         </div>
         <div className="element password">
           <label for="username">Password</label>
-          <input type="text" name="username"/>
+          <input type="text" name="password"/>
         </div>
         <div className="element submit">
           <input type="submit" value="Login"/>

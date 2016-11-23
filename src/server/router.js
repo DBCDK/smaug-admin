@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/server';
 import React from 'react';
 
 // Utils
-import {getClientList, getClient, setClient, createClient, deleteClient} from './api/smaug.client'
 import {contactListToObject} from '../utils/contact.util';
+
+//components
 import ClientList from '../client/components/clientList/clientList.component';
 import Client from '../client/components/clientForm/clientFormContainer.component';
 import NewClient from '../client/components/createClient/newClient.component';
@@ -18,7 +19,7 @@ const router = new KoaRouter();
 router.get('/', async (ctx, next) => {
   const state = {}
   try {
-    const list = await getClientList();
+    const list = await ctx.api.getClientList();
     state.list = Array.isArray(list) && list || [];
   } catch(e) {
     state.error = "No contact to SMAUG";
@@ -34,19 +35,30 @@ router.get('/', async (ctx, next) => {
   return next();
 });
 
-router.get('/login', async (ctx, next) => {
+router.get('/login', ctx => {
   ctx.body = html({
     title: 'Login to Smaug Admin',
     content: ReactDOM.renderToString(<LoginForm />),
     id: 'login'
   });
-  return next();
+});
+
+router.post('/login', ctx => {
+  const config = ctx.request.body;
+  // validate credentials
+  // save data in session
+  ctx.session.smaug = config;
+  // use data in following requests
+  // handle invalid credentials
+  // redirect to frontpage
+  ctx.redirect('/');
+  ctx.body = JSON.stringify(config);
 });
 
 
 router.get('/client/:id', async (ctx, next) => {
   const id = ctx.params.id;
-  const client = await getClient(id);
+  const client = await ctx.api.getClient(id);
   ctx.body = html({
     title: `Edit Client`,
     state: client,
@@ -59,7 +71,7 @@ router.get('/client/:id', async (ctx, next) => {
 router.post('/client/:id', async (ctx, next) => {
   const body = ctx.request.body;
   const id = ctx.params.id;
-  const client = await setClient(id, {name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
+  const client = await ctx.api.setClient(id, {name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
   ctx.body = html({
     title: `Edit Client`,
     state: client,
@@ -82,7 +94,7 @@ router.get('/add', async (ctx, next) => {
 
 router.post('/add', async (ctx, next) => {
   const body = ctx.request.body;
-  const client = await createClient({name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
+  const client = await ctx.api.createClient({name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
   ctx.body = html({
     title: `New client created`,
     state: client,
@@ -94,7 +106,7 @@ router.post('/add', async (ctx, next) => {
 
 router.post('/remove/:id', async (ctx, next) => {
   const id = ctx.params.id;
-  await deleteClient(id);
+  await ctx.api.deleteClient(id);
   ctx.redirect(`/`);
   await next();
 });
