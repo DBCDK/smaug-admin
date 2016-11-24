@@ -9,7 +9,7 @@
     "build": "webpack --define process.env.NODE_ENV='\"production\"' --progress --colors -p",
     "build:dev": "webpack --progress --colors --watch -d",
     "lint": "eslint ./src --cache",
-    "test": "LOG_LEVEL=off mocha --compilers js:babel-core/register --recursive src/**/__tests__/*",
+    "test": "LOG_LEVEL=off mocha src/utils/test.util.js --compilers js:babel-core/register -w --recursive src/**/__tests__/*",
     "testverbose": "LOG_LEVEL=debug mocha --compilers js:babel-core/register --recursive src/**/__tests__/*"
   },
   "keywords": [
@@ -27,7 +27,10 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-register": "^6.16.3",
+    "chai": "^3.5.0",
+    "enzyme": "^2.6.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "jsdom": "^9.8.3",
     "jsoneditor": "^5.5.10",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.2.0",
@@ -37,7 +40,9 @@
     "koa-static": "^2.0.0",
     "mocha": "^3.1.2",
     "react": "^15.3.2",
+    "react-addons-test-utils": "^15.4.1",
     "react-dom": "^15.3.2",
+    "sinon": "^1.17.6",
     "superagent": "^2.3.0"
   },
   "devDependencies": {

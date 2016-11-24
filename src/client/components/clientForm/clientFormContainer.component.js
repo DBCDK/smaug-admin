@@ -5,6 +5,7 @@ import Client from './clientForm.component';
 export default class ClientFormContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.hasError = false;
   }
 
   onSubmit(e) {

@@ -10,7 +10,7 @@ export default class JEditor extends React.Component {
   }
 
   componentDidMount() {
-    var container = document.getElementById('jsoneditor');
+    var container = this.refs.jsoneditor;
     var options = {
       mode: 'code',
       onChange: () => this.onChange()
@@ -38,7 +38,7 @@ export default class JEditor extends React.Component {
     return (
       <div className={`element ${this.props.name}`}>
         <label htmlFor={this.props.name}>{this.props.name}</label>
-        <div id="jsoneditor" style={{width: '100%', height: '400px'}}></div>
+        <div ref="jsoneditor" style={{width: '100%', height: '400px'}}></div>
         <input type="hidden" name={this.props.name} id={this.props.name} value={this.state.json}/>
       </div>
 
