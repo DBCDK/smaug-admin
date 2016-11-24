@@ -8,7 +8,7 @@ function clientListElement({id, name, contact}) {
     }
   };
   return (
-    <div className="client">
+    <div className="client" key={id}>
       <a href={`/client/${id}`} className="name">{name}</a>
       <a href={`/client/${id}`} className="id">{id}</a>
       <a href={`/client/${id}`} className="owner">{contact.owner.name}</a>

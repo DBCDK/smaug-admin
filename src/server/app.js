@@ -16,6 +16,7 @@ import router from './router';
 //middlewares
 import authenticate from './middlewares/authenticate.middleware';
 import api from './middlewares/api.middleware';
+import config from './middlewares/config.middleware';
 //import {CONFIG, validateConfig} from './utils/config.util';
 //import {log} from './utils/logging.util';
 
@@ -38,6 +39,8 @@ app.listen(PORT, () => {
 // Apply middlewares
 app.use(session());
 app.use(bodyParser());
-app.use(authenticate);
+app.use(config);
 app.use(api);
+app.use(authenticate);
+
 app.use(router.routes());

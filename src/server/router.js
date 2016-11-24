@@ -1,114 +1,85 @@
 import KoaRouter from 'koa-router';
-import ReactDOM from 'react-dom/server';
-import React from 'react';
 
 // Utils
 import {contactListToObject} from '../utils/contact.util';
 
-//components
-import ClientList from '../client/components/clientList/clientList.component';
-import Client from '../client/components/clientForm/clientFormContainer.component';
-import NewClient from '../client/components/createClient/newClient.component';
-import LoginForm from '../client/components/loginForm/loginFormContainer.component';
-
-// Templates
-import {html} from './templates/html.template';
+// Server side rendering
+import renderPage from '../utils/renderPage.util';
 
 const router = new KoaRouter();
 
-router.get('/', async (ctx, next) => {
-  const state = {}
+router.get('/', async (ctx) => {
+  const state = {};
   try {
     const list = await ctx.api.getClientList();
     state.list = Array.isArray(list) && list || [];
-  } catch(e) {
+  } catch (e) {
     state.error = "No contact to SMAUG";
-    console.error(e);
   }
 
-  ctx.body = html({
-    title: 'Client List',
-    state: state,
-    content: ReactDOM.renderToString(<ClientList {...state} />),
-    id: 'clientList'
-  });
-  return next();
+  ctx.body = renderPage('clientList', 'Client List', ctx.session.smaug.loggedIn, state);
 });
 
 router.get('/login', ctx => {
-  ctx.body = html({
-    title: 'Login to Smaug Admin',
-    content: ReactDOM.renderToString(<LoginForm />),
-    id: 'login'
-  });
+  ctx.body = renderPage('login', 'Login to Smaug Admin', false, {uri: ctx.session.smaug.uri});
+});
+
+router.get('/logout', ctx => {
+  ctx.session.smaug = {};
+  ctx.redirect('/login');
 });
 
 router.post('/login', ctx => {
-  const config = ctx.request.body;
-  // validate credentials
-  // save data in session
-  ctx.session.smaug = config;
-  // use data in following requests
-  // handle invalid credentials
-  // redirect to frontpage
-  ctx.redirect('/');
-  ctx.body = JSON.stringify(config);
+  const body = ctx.request.body;
+  try {
+    ctx.api.login(body);
+    ctx.session.smaug = body;
+    ctx.redirect('/');
+  }
+  catch (e) {
+    ctx.body = renderPage('login', 'Login to Smaug Admin', false, {...body, error: "invalid credentials"});
+  }
 });
 
 
-router.get('/client/:id', async (ctx, next) => {
+router.get('/client/:id', async (ctx) => {
   const id = ctx.params.id;
   const client = await ctx.api.getClient(id);
-  ctx.body = html({
-    title: `Edit Client`,
-    state: client,
-    content: ReactDOM.renderToString(<Client {...client} />),
-    id: 'clientform'
-  });
-  return next();
+  ctx.body = renderPage('clientform', 'Edit Client', ctx.session.smaug.loggedIn, client);
 });
 
-router.post('/client/:id', async (ctx, next) => {
+
+router.post('/client/:id', async (ctx) => {
   const body = ctx.request.body;
   const id = ctx.params.id;
-  const client = await ctx.api.setClient(id, {name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
-  ctx.body = html({
-    title: `Edit Client`,
-    state: client,
-    content: ReactDOM.renderToString(<Client {...client} />),
-    id: 'clientform'
+  const client = await ctx.api.setClient(id, {
+    name: body.name,
+    config: JSON.parse(body.config),
+    contact: contactListToObject(body.contact)
   });
-  return next();
+  ctx.body = renderPage('clientform', 'Edit Client', ctx.session.smaug.loggedIn, client);
 });
 
 
-router.get('/add', async (ctx, next) => {
-  ctx.body = html({
-    title: `Create new client`,
-    state: {},
-    content: ReactDOM.renderToString(<Client />),
-    id: 'clientform'
-  });
-  return next();
+router.get('/add', (ctx) => {
+  ctx.body = renderPage('clientform', 'Create new client', ctx.session.smaug.loggedIn);
 });
 
-router.post('/add', async (ctx, next) => {
+router.post('/add', async (ctx) => {
   const body = ctx.request.body;
-  const client = await ctx.api.createClient({name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
-  ctx.body = html({
-    title: `New client created`,
-    state: client,
-    content: ReactDOM.renderToString(<NewClient {...client} />),
-    id: 'newclient'
+  const client = await ctx.api.createClient({
+    name: body.name,
+    config: JSON.parse(body.config),
+    contact: contactListToObject(body.contact)
   });
-  await next();
+
+  ctx.body = renderPage('newclient', 'New client created', ctx.session.smaug.loggedIn, client);
 });
 
-router.post('/remove/:id', async (ctx, next) => {
+router.post('/remove/:id', async (ctx) => {
   const id = ctx.params.id;
   await ctx.api.deleteClient(id);
   ctx.redirect(`/`);
-  await next();
 });
 
 export default router;

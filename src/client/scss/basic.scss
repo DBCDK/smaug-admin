@@ -8,6 +8,7 @@ $secondary-color: #222;
 
 @import "mixins/button";
 @import "mixins/cssIcon";
+@import "components/page";
 @import "components/clientForm";
 @import "components/clientList";
 @import "components/contact";
@@ -18,7 +19,7 @@ div, form, input, p {
   box-sizing: border-box;
 }
 
-html, body {
+html, body, .page-wrapper, #content {
   width: 100%;
   height: 100%;
 }
