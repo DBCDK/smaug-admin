@@ -13,7 +13,7 @@ function getMenuLinks(userLoggedIn) {
     {
       url: '/add',
       display: 'Create Client'
-    },
+    }
   ];
   if (userLoggedIn) {
     links.push({
@@ -37,6 +37,6 @@ export default function renderPage(id, title, userLoggedIn, state = {}) {
     userLoggedIn,
     content: ReactDOM.renderToString(
       <Page id={id} title={title} links={links}><Component {...state} /></Page>
-    ),
+    )
   });
 }

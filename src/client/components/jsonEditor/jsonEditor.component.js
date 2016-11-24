@@ -1,6 +1,5 @@
 import React from 'react';
 import JSONEditor from 'jsoneditor/dist/jsoneditor.min.js';
-//import 'jsoneditor/dist/jsoneditor.css';
 
 export default class JEditor extends React.Component {
   constructor(props) {
@@ -11,9 +10,9 @@ export default class JEditor extends React.Component {
   }
 
   componentDidMount() {
-    var container = document.getElementById("jsoneditor");
+    var container = document.getElementById('jsoneditor');
     var options = {
-      mode: "code",
+      mode: 'code',
       onChange: () => this.onChange()
     };
     this.editor = new JSONEditor(container, options, this.props.json);
@@ -29,7 +28,8 @@ export default class JEditor extends React.Component {
     try {
       JSON.parse(json);
       return true;
-    } catch (e) {
+    }
+    catch (e) {
       return false;
     }
   }
@@ -38,7 +38,7 @@ export default class JEditor extends React.Component {
     return (
       <div className={`element ${this.props.name}`}>
         <label htmlFor={this.props.name}>{this.props.name}</label>
-        <div id="jsoneditor" style={{width:'100%', height:'400px'}}></div>
+        <div id="jsoneditor" style={{width: '100%', height: '400px'}}></div>
         <input type="hidden" name={this.props.name} id={this.props.name} value={this.state.json}/>
       </div>
 

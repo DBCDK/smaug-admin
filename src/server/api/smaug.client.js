@@ -11,13 +11,13 @@ export default class SmaugClient {
         reject(err);
       }
       else {
-        resolve(res)
+        resolve(res);
       }
     }));
   }
 
   getClientList() {
-    return this.promiseRequest('get', `/clients/`).then(response => response.body);
+    return this.promiseRequest('get', '/clients/').then(response => response.body);
   }
 
   getClient(id) {
@@ -29,7 +29,7 @@ export default class SmaugClient {
   }
 
   createClient(props) {
-    return this.promiseRequest('post', `/clients/`, props).then(response => response.body);
+    return this.promiseRequest('post', '/clients/', props).then(response => response.body);
   }
 
   deleteClient(id) {
@@ -37,6 +37,6 @@ export default class SmaugClient {
   }
 
   login(config = this.config) {
-    return this.promiseRequest('get', `/clients/`, {}, config).then(response => response.body);
+    return this.promiseRequest('get', '/clients/', {}, config).then(response => response.body);
   }
 }

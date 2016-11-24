@@ -10,13 +10,12 @@ export default class ClientFormContainer extends React.Component {
   onSubmit(e) {
     if (this.hasError) {
       e.preventDefault();
-      alert('The config JSON is not valid');
+      alert('The config JSON is not valid'); // eslint-disable-line no-alert
     }
   }
 
   setErrorState(hasError) {
-    console.log(hasError);
-    this.hasError =  hasError;
+    this.hasError = hasError;
   }
 
   render() {

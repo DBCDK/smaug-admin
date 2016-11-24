@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function newClient({id, secret, name = '', contact = null, config = {}, onSubmit, setErrorState, hasErrors}) {
+export default function newClient({id, secret, name = ''}) {
   return (
     <div className="clientform">
       <div className="element name">
@@ -17,7 +17,7 @@ export default function newClient({id, secret, name = '', contact = null, config
         <div className="notice">NB! Secret will not be shown again</div>
       </div>
       <a className="editclient btn" href={`/client/${id}`}>Edit Client</a>
-      <a className="createclient btn" href={`/add`}>Create another Client</a>
+      <a className="createclient btn" href="/add" >Create another Client</a>
     </div>
   );
 }

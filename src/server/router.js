@@ -13,8 +13,9 @@ router.get('/', async (ctx) => {
   try {
     const list = await ctx.api.getClientList();
     state.list = Array.isArray(list) && list || [];
-  } catch (e) {
-    state.error = "No contact to SMAUG";
+  }
+  catch (e) {
+    state.error = 'No contact to SMAUG';
   }
 
   ctx.body = renderPage('clientList', 'Client List', ctx.session.smaug.loggedIn, state);
@@ -37,7 +38,7 @@ router.post('/login', ctx => {
     ctx.redirect('/');
   }
   catch (e) {
-    ctx.body = renderPage('login', 'Login to Smaug Admin', false, {...body, error: "invalid credentials"});
+    ctx.body = renderPage('login', 'Login to Smaug Admin', false, {...body, error: 'invalid credentials'});
   }
 });
 
@@ -79,7 +80,7 @@ router.post('/add', async (ctx) => {
 router.post('/remove/:id', async (ctx) => {
   const id = ctx.params.id;
   await ctx.api.deleteClient(id);
-  ctx.redirect(`/`);
+  ctx.redirect('/');
 });
 
 export default router;

@@ -10,23 +10,18 @@ import bodyParser from 'koa-bodyParser';
 import convert from 'koa-convert';
 import serve from 'koa-static';
 
+import config from '../utils/config.util';
 // routes
 import router from './router';
 
-//middlewares
+// middlewares
 import authenticate from './middlewares/authenticate.middleware';
-import api from './middlewares/api.middleware';
-import config from './middlewares/config.middleware';
-//import {CONFIG, validateConfig} from './utils/config.util';
-//import {log} from './utils/logging.util';
+import apiToContext from './middlewares/api.middleware';
+import configtoContext from './middlewares/config.middleware';
 
 const app = new Koa();
 app.name = 'Smaug Admin';
-const PORT = 1234; //CONFIG.app.port;
-
-app.use(convert(serve('./public')));
-
-
+const PORT = config.port;
 
 app.on('error', (err) => {
   console.error('Server error', {error: err.message, stack: err.stack});
@@ -37,10 +32,10 @@ app.listen(PORT, () => {
 });
 
 // Apply middlewares
+app.use(convert(serve('./public')));
 app.use(session());
 app.use(bodyParser());
-app.use(config);
-app.use(api);
+app.use(configtoContext);
+app.use(apiToContext);
 app.use(authenticate);
-
 app.use(router.routes());

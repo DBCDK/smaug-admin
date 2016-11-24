@@ -14,5 +14,5 @@ export function html({title, content = '', links = [], id = 'clientlist', userLo
       <link href="/jsoneditor.min.css" " media="all" rel="stylesheet" />
   </body>
 </html>
-`
+`;
 }

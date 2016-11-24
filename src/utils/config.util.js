@@ -1,4 +1,4 @@
-const env = process.env;
+const env = process.env; // eslint-disable-line no-process-env
 
 export default {
   port: env.PORT || 1234,

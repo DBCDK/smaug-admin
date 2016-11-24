@@ -2,7 +2,7 @@ import React from 'react';
 
 function clientListElement({id, name, contact}) {
   const submit = (e) => {
-    const confirmed = confirm(`Are you sure you want to delete:\n${name}?`);
+    const confirmed = confirm(`Are you sure you want to delete:\n${name}?`); // eslint-disable-line no-alert
     if (!confirmed) {
       e.preventDefault();
     }
