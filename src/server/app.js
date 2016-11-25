@@ -10,11 +10,13 @@ import bodyParser from 'koa-bodyParser';
 import convert from 'koa-convert';
 import serve from 'koa-static';
 
+// import config
 import config from '../utils/config.util';
-// routes
+
+// import routes
 import router from './router';
 
-// middlewares
+// import middlewares
 import authenticate from './middlewares/authenticate.middleware';
 import apiToContext from './middlewares/api.middleware';
 import configtoContext from './middlewares/config.middleware';

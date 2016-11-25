@@ -1,6 +1,8 @@
 import React from 'react';
+import Token from '../token/tokenContainer.component';
 
 function clientListElement({id, name, contact}) {
+
   const submit = (e) => {
     const confirmed = confirm(`Are you sure you want to delete:\n${name}?`); // eslint-disable-line no-alert
     if (!confirmed) {
@@ -11,10 +13,12 @@ function clientListElement({id, name, contact}) {
     <div className="client" key={id}>
       <a href={`/client/${id}`} className="name">{name}</a>
       <a href={`/client/${id}`} className="id">{id}</a>
-      <a href={`/client/${id}`} className="owner">{contact.owner.name}</a>
+      <a href={`/client/${id}`} className="owner">{contact.owner && contact.owner.name || ''}</a>
+      <Token client={{id, name}} />
       <form onSubmit={submit} action={`/remove/${id}`} method="post">
         <input className="deleteclient" type="submit" value="delete"/>
       </form>
+
     </div>
 
   );
@@ -28,6 +32,7 @@ function ClientList({list}) {
           <label className="label-name">Name</label>
           <label className="label-id">ID</label>
           <label className="label-owner">Owner</label>
+          <label className="label-owner">token</label>
           <label className="label-owner">Delete</label>
         </div>
         <div className="elements">

@@ -61,6 +61,18 @@ router.post('/client/:id', async (ctx) => {
   ctx.body = renderPage('clientform', 'Edit Client', ctx.session.smaug.loggedIn, client);
 });
 
+router.get('/token/:id', async (ctx) => {
+  try {
+    const id = ctx.params.id;
+    const client = await ctx.api.getToken(id);
+    ctx.body = client;
+  }
+  catch (e) {
+    ctx.body = {error: 'invalid client id'};
+  }
+
+});
+
 
 router.get('/add', (ctx) => {
   ctx.body = renderPage('clientform', 'Create new client', ctx.session.smaug.loggedIn);

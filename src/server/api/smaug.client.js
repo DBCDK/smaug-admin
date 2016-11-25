@@ -36,6 +36,10 @@ export default class SmaugClient {
     return this.promiseRequest('delete', `/clients/${id}`).then(response => response.body);
   }
 
+  getToken(id) {
+    return this.promiseRequest('get', `/clients/token/${id}`).then(response => response.body);
+  }
+
   login(config = this.config) {
     return this.promiseRequest('get', '/clients/', {}, config).then(response => response.body);
   }

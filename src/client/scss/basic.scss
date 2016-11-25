@@ -8,12 +8,14 @@ $secondary-color: #222;
 
 @import "mixins/button";
 @import "mixins/cssIcon";
+@import "mixins/overlay";
 @import "components/page";
 @import "components/clientForm";
 @import "components/clientList";
 @import "components/contact";
 @import "components/forms";
 @import "components/loginForm";
+@import "components/tokenview";
 
 div, form, input, p {
   box-sizing: border-box;
