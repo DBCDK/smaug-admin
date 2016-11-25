@@ -1,7 +1,7 @@
 import React from 'react';
 import request from 'superagent';
 
-function TokenForm({onSubmit}) {
+export function TokenForm({onSubmit}) {
 
   return (
     <div className="tokenform"><a className="createtoken" href="#getToken" onClick={onSubmit}>Token</a></div>
@@ -9,7 +9,7 @@ function TokenForm({onSubmit}) {
   );
 }
 
-function TokenView({client, token, close}) {
+export function TokenView({client, token, close}) {
   const expiresOptions = {
     weekday: 'long', year: 'numeric', month: 'short',
     day: 'numeric', hour: '2-digit', minute: '2-digit'
