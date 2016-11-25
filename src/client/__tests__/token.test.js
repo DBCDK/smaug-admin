@@ -16,14 +16,13 @@ describe('<TokenContainer />', () => {
   });
 
   it('shows new token in overlay', function () {
-    const mockRequest = sinon.mock(request);
-    mockRequest.get = () => {
+    const stub = sinon.stub(request, 'get', () => {
       return {
         end: (cb) => {
           cb(null, {ok: true, text: JSON.stringify(token)});
         }
       };
-    };
+    });
 
     // Fetch token
     wrapper.find('.tokenform a').simulate('click');
@@ -40,6 +39,7 @@ describe('<TokenContainer />', () => {
     wrapper.find('.tokenform a').simulate('click');
     expect(wrapper.find('.tokenform')).to.have.length(0);
     expect(wrapper.find('.tokenview')).to.have.length(1);
+    stub.restore();
   });
 
   it('renders TokenView with id and expires', function () {

@@ -29,7 +29,7 @@ export default class JEditor extends React.Component {
       JSON.parse(json);
       return true;
     }
-    catch (e) {
+    catch (error) {
       return false;
     }
   }

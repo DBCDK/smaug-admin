@@ -1,5 +1,5 @@
 import React from 'react';
-import {mount, render} from 'enzyme';
+import {mount} from 'enzyme';
 import {expect} from 'chai';
 import ContactContainer from '../components/contact/contactContainer.component';
 
@@ -22,10 +22,10 @@ describe('<ContactContainer />', () => {
       test: {name: 'test'},
       owner: {name: 'owner'}
     };
-    const component = render(<ContactContainer contacts={contacts}/>);
+    const component = mount(<ContactContainer contacts={contacts}/>);
     expect(component.find('.contact-row')).to.have.length(2);
-    expect(wrapper.parseContacts).to.be.function;
-    expect(ContactContainer.prototype.parseContacts(contacts)).to.be.deep.equal([
+    expect(component.parseContacts).to.be.function;
+    expect(component.instance().parseContacts(contacts)).to.be.deep.equal([
       {role: 'owner', contact: {name: 'owner'}},
       {role: 'test', contact: {name: 'test'}}
     ]);
