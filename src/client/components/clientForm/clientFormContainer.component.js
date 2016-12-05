@@ -1,23 +1,22 @@
 import React from 'react';
 
-import './clientForm.scss';
 import Client from './clientForm.component';
 
 export default class ClientFormContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.hasError = false;
   }
 
   onSubmit(e) {
     if (this.hasError) {
       e.preventDefault();
-      alert('The config JSON is not valid');
+      alert('The config JSON is not valid'); // eslint-disable-line no-alert
     }
   }
 
   setErrorState(hasError) {
-    console.log(hasError);
-    this.hasError =  hasError;
+    this.hasError = hasError;
   }
 
   render() {

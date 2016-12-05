@@ -1,4 +1,10 @@
+input {
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
 input[type=text],
+input[type=password],
 input[type=email] {
   margin: 0;
   display: block;
@@ -12,7 +18,6 @@ input[type=email] {
 
 label {
   display: inline-block;
-  margin-bottom: .5rem;
 }
 
 

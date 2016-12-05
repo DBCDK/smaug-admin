@@ -1,13 +1,11 @@
 import React from 'react';
 import Contact from './contact.component';
 
-import './contact.scss';
-
 export default class ContactContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contacts: this.parseContacts(props.contacts || {}),
+      contacts: this.parseContacts(props.contacts || {})
     };
   }
 
@@ -19,20 +17,20 @@ export default class ContactContainer extends React.Component {
       return {
         role,
         contact: contacts[role]
-      }
+      };
     }).sort(contact => {
-      return contact.role.toLowerCase() != "owner";
+      return contact.role.toLowerCase() !== 'owner';
     });
   }
 
   addContact(e) {
     e.preventDefault();
-    this.setState({contacts: this.state.contacts.concat([{role: '', contact: ''}])})
+    this.setState({contacts: this.state.contacts.concat([{role: '', contact: ''}])});
   }
 
   removeContact(e, index) {
     e.preventDefault();
-    this.setState({contacts: this.state.contacts.filter((c, i) => i !== index)})
+    this.setState({contacts: this.state.contacts.filter((c, i) => i !== index)});
   }
   render() {
     return (

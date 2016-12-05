@@ -11,9 +11,14 @@
     "jsx": true
   },
   "globals": {},
-  "plugins": [],
-  "extends": ["eslint:recommended"],
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
+    // react
+    "react/no-find-dom-node": 1,
+    "react/prop-types": 0,
     // Possible Errors
     "comma-dangle": [
       2
@@ -78,14 +83,14 @@
     "no-new-wrappers": 2,
     "no-octal": 2,
     "no-octal-escape": 2,
-    "no-process-env": 0,
+    "no-process-env": 2,
     "no-proto": 2,
     "no-redeclare": 2,
     "no-return-assign": 1,
     "no-script-url": 2,
     "no-self-compare": 2,
     "no-sequences": 2,
-    "no-unused-expressions": 2,
+    "no-unused-expressions": 0,
     "no-void": 0,
     "no-warning-comments": 0,
     "no-with": 2,
@@ -108,7 +113,7 @@
     "no-undef-init": 2,
     "no-undefined": 2,
     "no-unused-vars": 2,
-    "no-use-before-define": 0,
+    "no-use-before-define": 2,
     // Stylistic Issues
     "indent": [2, 2, {"SwitchCase": 1}],
     "brace-style": [

@@ -1,82 +1,98 @@
 import KoaRouter from 'koa-router';
 
 // Utils
-import {getClientList, getClient, setClient, createClient, deleteClient} from './api/smaug.client'
 import {contactListToObject} from '../utils/contact.util';
 
-// Templates
-import {html} from './templates/html.template';
+// Server side rendering
+import renderPage from '../utils/renderPage.util';
 
 const router = new KoaRouter();
 
-router.get('/', async (ctx, next) => {
-  const state = {}
+router.get('/', async (ctx) => {
+  const state = {};
   try {
-    const list = await getClientList();
+    const list = await ctx.api.getClientList();
     state.list = Array.isArray(list) && list || [];
-  } catch(e) {
-    state.error = "No contact to SMAUG";
-    console.error(e);
+  }
+  catch (e) {
+    state.error = 'No contact to SMAUG';
   }
 
-  ctx.body = html({
-    title: 'Client List',
-    state: state,
-    id: 'clientList'
-  });
-  return next();
+  ctx.body = renderPage('clientList', 'Client List', ctx.session.smaug.loggedIn, state);
 });
 
-router.get('/client/:id', async (ctx, next) => {
-  const id = ctx.params.id;
-  const client = await getClient(id);
-  ctx.body = html({
-    title: `Edit Client`,
-    state: client,
-    id: 'client'
-  });
-  return next();
+router.get('/login', ctx => {
+  ctx.body = renderPage('login', 'Login to Smaug Admin', false, {uri: ctx.session.smaug.uri});
 });
 
-router.get('/add', async (ctx, next) => {
-  ctx.body = html({
-    title: `Create new client`,
-    state: {},
-    id: 'client'
-  });
-  return next();
+router.get('/logout', ctx => {
+  ctx.session.smaug = {};
+  ctx.redirect('/login');
 });
 
-router.post('/add', async (ctx, next) => {
+router.post('/login', ctx => {
   const body = ctx.request.body;
-  const client = await createClient({name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
-  ctx.body = html({
-    title: `New client created`,
-    state: client,
-    id: 'newclient'
-  });
-  await next();
+  try {
+    ctx.api.login(body);
+    ctx.session.smaug = body;
+    ctx.redirect('/');
+  }
+  catch (e) {
+    ctx.body = renderPage('login', 'Login to Smaug Admin', false, {...body, error: 'invalid credentials'});
+  }
 });
 
-router.post('/remove/:id', async (ctx, next) => {
+
+router.get('/client/:id', async (ctx) => {
   const id = ctx.params.id;
-  await deleteClient(id);
-  ctx.redirect(`/`);
-  await next();
+  const client = await ctx.api.getClient(id);
+  ctx.body = renderPage('clientform', 'Edit Client', ctx.session.smaug.loggedIn, client);
 });
 
 
-router.post('/client/:id', async (ctx, next) => {
+router.post('/client/:id', async (ctx) => {
   const body = ctx.request.body;
   const id = ctx.params.id;
-  const client = await setClient(id, {name: body.name, config: JSON.parse(body.config), contact: contactListToObject(body.contact)});
-  ctx.body = html({
-    title: `Client with id ${id}`,
-    state: client,
-    id: 'client'
+  const client = await ctx.api.setClient(id, {
+    name: body.name,
+    config: JSON.parse(body.config),
+    contact: contactListToObject(body.contact)
   });
-  return next();
+  ctx.body = renderPage('clientform', 'Edit Client', ctx.session.smaug.loggedIn, client);
 });
 
+router.get('/token/:id', async (ctx) => {
+  try {
+    const id = ctx.params.id;
+    const client = await ctx.api.getToken(id);
+    ctx.body = client;
+  }
+  catch (e) {
+    ctx.body = {error: 'invalid client id'};
+  }
+
+});
+
+
+router.get('/add', (ctx) => {
+  ctx.body = renderPage('clientform', 'Create new client', ctx.session.smaug.loggedIn);
+});
+
+router.post('/add', async (ctx) => {
+  const body = ctx.request.body;
+  const client = await ctx.api.createClient({
+    name: body.name,
+    config: JSON.parse(body.config),
+    contact: contactListToObject(body.contact)
+  });
+
+  ctx.body = renderPage('newclient', 'New client created', ctx.session.smaug.loggedIn, client);
+});
+
+router.post('/remove/:id', async (ctx) => {
+  const id = ctx.params.id;
+  await ctx.api.deleteClient(id);
+  ctx.redirect('/');
+});
 
 export default router;

@@ -1,26 +1,23 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import ClientList from './components/clientList/clientList.component';
-import Client from './components/clientForm/clientFormContainer.component';
-import Newclient from './components/createClient/newClient.component';
-import './scss/basic.scss';
 
-function getRootComponent(pageId) {
-  console.log(pageId);
-  switch (pageId) {
-    case 'client':
-      return Client;
-    case 'newclient':
-      return Newclient;
-    default:
-      return ClientList;
-  }
-}
+// Components
+import Page from './components/page/pageContainer.component';
+
+// Utils
+import getComponentFromId from '../utils/getComponentFromId.util';
+
+// Styling
+import './scss/basic.scss';
 
 const rootContainer = document.getElementById('content');
 const pageData = JSON.parse(document.getElementById('pagedata').innerHTML || {});
-console.log(pageData);
 
-const rootComponent = getRootComponent(pageData.id || 'clientList');
+const RootComponent = getComponentFromId(pageData.id || 'clientList');
 
-ReactDOM.render(React.createElement(rootComponent, pageData.state), rootContainer);
+const {state, ...pageState} = pageData;
+
+ReactDOM.render(
+  <Page {...pageState}>
+    <RootComponent {...state}/>
+  </Page>, rootContainer);

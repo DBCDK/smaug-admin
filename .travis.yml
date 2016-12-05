@@ -10,4 +10,5 @@ branches:
   - master
 env:
 - TEST_SUITE=lint
+- TEST_SUITE=test
 script: npm run $TEST_SUITE
