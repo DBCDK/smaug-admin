@@ -9,7 +9,7 @@
     "build": "webpack --define process.env.NODE_ENV='\"production\"' --progress --colors -p",
     "build:dev": "webpack --progress --colors --watch -d",
     "lint": "eslint ./src --cache",
-    "test": "LOG_LEVEL=off mocha src/utils/test.util.js --compilers js:babel-core/register -w --recursive src/**/__tests__/*",
+    "test": "LOG_LEVEL=off mocha src/utils/test.util.js --compilers js:babel-core/register --recursive src/**/__tests__/*",
     "testverbose": "LOG_LEVEL=debug mocha --compilers js:babel-core/register --recursive src/**/__tests__/*"
   },
   "keywords": [
