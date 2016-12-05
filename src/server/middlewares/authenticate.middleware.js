@@ -1,3 +1,9 @@
+/**
+ * Check if user is logged in.
+ *
+ * @param ctx
+ * @param next
+ */
 export default async function authenticate(ctx, next) {
   if (!ctx.session.smaug.loggedIn && ctx.url !== '/login') {
     try {

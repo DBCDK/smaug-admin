@@ -4,7 +4,12 @@ import Client from '../client/components/clientForm/clientFormContainer.componen
 import Newclient from '../client/components/createClient/newClient.component';
 import LoginForm from '../client/components/loginForm/loginFormContainer.component';
 
-
+/**
+ * Super simple routing from an ID to a top component.
+ *
+ * @param pageId
+ * @returns {*}
+ */
 export default function getComponentFromId(pageId) {
   switch (pageId) {
     case 'clientform':

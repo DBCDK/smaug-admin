@@ -2,10 +2,8 @@ import React from 'react';
 import request from 'superagent';
 
 export function TokenForm({onSubmit}) {
-
   return (
     <div className="tokenform"><a className="createtoken" href="#getToken" onClick={onSubmit}>Token</a></div>
-
   );
 }
 

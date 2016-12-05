@@ -1,6 +1,6 @@
 /**
  * @file
- * Configure and start our server
+ * Configure and start server
  */
 
 // Libraries

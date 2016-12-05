@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Helper file for running tests in a simulated browser environment and using ES6
+ */
+
 require('babel-register')();
 
 var jsdom = require('jsdom').jsdom;
