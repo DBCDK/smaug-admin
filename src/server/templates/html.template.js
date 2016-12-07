@@ -1,3 +1,15 @@
+/**
+ * Main page template
+ *
+ * @param title
+ * @param content
+ * @param links
+ * @param id
+ * @param userLoggedIn
+ * @param state
+ * @returns {String}
+ */
+
 export function html({title, content = '', links = [], id = 'clientlist', userLoggedIn = false, state = {}}) {
   return `
 <!DOCTYPE html>

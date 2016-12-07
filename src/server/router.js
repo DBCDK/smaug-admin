@@ -1,3 +1,8 @@
+/**
+ * @file
+ * contains all koa routing in the application.
+ */
+
 import KoaRouter from 'koa-router';
 
 // Utils
@@ -8,6 +13,9 @@ import renderPage from '../utils/renderPage.util';
 
 const router = new KoaRouter();
 
+/**
+ * Shows a list of service clients.
+ */
 router.get('/', async (ctx) => {
   const state = {};
   try {
@@ -21,15 +29,24 @@ router.get('/', async (ctx) => {
   ctx.body = renderPage('clientList', 'Client List', ctx.session.smaug.loggedIn, state);
 });
 
+/**
+ * Login route.
+ */
 router.get('/login', ctx => {
   ctx.body = renderPage('login', 'Login to Smaug Admin', false, {uri: ctx.session.smaug.uri});
 });
 
+/**
+ * Logout route
+ */
 router.get('/logout', ctx => {
   ctx.session.smaug = {};
   ctx.redirect('/login');
 });
 
+/**
+ * Post login credentials.
+ */
 router.post('/login', ctx => {
   const body = ctx.request.body;
   try {
@@ -42,14 +59,18 @@ router.post('/login', ctx => {
   }
 });
 
-
+/**
+ * Edit a single client.
+ */
 router.get('/client/:id', async (ctx) => {
   const id = ctx.params.id;
   const client = await ctx.api.getClient(id);
   ctx.body = renderPage('clientform', 'Edit Client', ctx.session.smaug.loggedIn, client);
 });
 
-
+/**
+ * Post a single client.
+ */
 router.post('/client/:id', async (ctx) => {
   const body = ctx.request.body;
   const id = ctx.params.id;
@@ -61,6 +82,9 @@ router.post('/client/:id', async (ctx) => {
   ctx.body = renderPage('clientform', 'Edit Client', ctx.session.smaug.loggedIn, client);
 });
 
+/**
+ * Get token for a client.
+ */
 router.get('/token/:id', async (ctx) => {
   try {
     const id = ctx.params.id;
@@ -73,11 +97,16 @@ router.get('/token/:id', async (ctx) => {
 
 });
 
-
+/**
+ * Form for Creating new clients.
+ */
 router.get('/add', (ctx) => {
   ctx.body = renderPage('clientform', 'Create new client', ctx.session.smaug.loggedIn);
 });
 
+/**
+ * Post a new client.
+ */
 router.post('/add', async (ctx) => {
   const body = ctx.request.body;
   const client = await ctx.api.createClient({
@@ -89,6 +118,9 @@ router.post('/add', async (ctx) => {
   ctx.body = renderPage('newclient', 'New client created', ctx.session.smaug.loggedIn, client);
 });
 
+/**
+ * Delete a client.
+ */
 router.post('/remove/:id', async (ctx) => {
   const id = ctx.params.id;
   await ctx.api.deleteClient(id);

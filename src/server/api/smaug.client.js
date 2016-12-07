@@ -1,5 +1,11 @@
 import request from 'superagent';
 
+/**
+ * Client for Smaug api.
+ *
+ * @constructor
+ * Needs a config object with uri, user and password
+ */
 export default class SmaugClient {
   constructor(config) {
     this.config = config;

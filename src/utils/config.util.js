@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Converts environment variables to a config object.
+ */
+
 const env = process.env; // eslint-disable-line no-process-env
 
 export default {

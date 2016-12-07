@@ -4,6 +4,12 @@ import getComponentFromId from './getComponentFromId.util';
 import Page from '../client/components/page/pageContainer.component';
 import {html} from '../server/templates/html.template';
 
+/**
+ * Hardcoded menu links
+ *
+ * @param userLoggedIn
+ * @returns {*[]}
+ */
 function getMenuLinks(userLoggedIn) {
   const links = [
     {
@@ -25,6 +31,15 @@ function getMenuLinks(userLoggedIn) {
   return links;
 }
 
+/**
+ * Helper function for wrapping a top component in a page layout.
+ *
+ * @param id
+ * @param title
+ * @param userLoggedIn
+ * @param state
+ * @returns {*}
+ */
 export default function renderPage(id, title, userLoggedIn, state = {}) {
   const links = getMenuLinks(userLoggedIn);
   const Component = getComponentFromId(id);
