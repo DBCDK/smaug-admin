@@ -16,7 +16,6 @@ yarn.lock
 # ==========
 reports
 report.xml
-static/*.css
 
 # ==========
 # ENV #
@@ -27,4 +26,8 @@ static/*.css
 # ESLINT #
 # ==========
 .eslintcache
-public
+
+# ==========
+# CSS #
+# ==========
+public/*/*.map
