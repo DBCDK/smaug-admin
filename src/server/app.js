@@ -6,7 +6,7 @@
 // Libraries
 import Koa from 'koa';
 import session from 'koa-session2';
-import bodyParser from 'koa-bodyParser';
+import bodyParser from 'koa-bodyparser';
 import convert from 'koa-convert';
 import serve from 'koa-static';
 
