@@ -21,7 +21,7 @@ export default async({baseClientId, spreadSheetId, secretFile}) => {
     const values = await sheetApi.get('Napp');
     clientParser(values).forEach(client => {
       const newClient = wrapClientInBaseClient(client, baseClient);
-      upsertClient(client, newClient, sheetApi)
+      upsertClient(client, newClient, sheetApi);
 
     });
   }
@@ -35,11 +35,10 @@ function wrapClientInBaseClient(client, baseClient) {
     name: client.name,
     config: Object.assign({}, baseClient.config, client.config, DDBCMSConfig(client.library)),
     contact: baseClient.contact
-  }
+  };
 }
 
 async function upsertClient(client, newClient, sheetApi) {
-  console.log(client);
   if (client.id) {
     smaugClient.setClient(client.id, newClient);
   }

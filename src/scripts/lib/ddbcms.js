@@ -14,10 +14,10 @@ export default function DDBCMSConfig(library) {
     [library]: {
       ddbcms: {
         api: ddbPath,
-        password: createDDBCMSPassword(library),
+        password: createDDBCMSPassword(library)
       }
     }
-  }
+  };
 }
 
 /**

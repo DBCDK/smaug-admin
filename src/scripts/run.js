@@ -23,18 +23,18 @@ const argv = require('yargs')
   .demandCommand(1)
   .command('create', 'Bulk Create smaug clients', {
     baseClientId: {
-      alias: 'b',
+      alias: 'b'
     },
     spreadSheetId: {
-      alias: 's',
+      alias: 's'
     },
     secretFile: {
-      alias: 'f',
+      alias: 'f'
     }
   })
   .argv;
-const command = argv._[0];
 
+const command = argv._[0];
 const methods = {
   create: require('./bulkCreate/bulkCreate').default
 };

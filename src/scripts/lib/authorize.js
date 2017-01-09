@@ -16,7 +16,7 @@ const TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-smaug-scripts';
  * @param {function} callback The callback to call with the authorized client.
  */
 export default function authorize(credentials) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const clientSecret = credentials.installed.client_secret;
     const clientId = credentials.installed.client_id;
     const redirectUrl = credentials.installed.redirect_uris[0];
@@ -27,7 +27,8 @@ export default function authorize(credentials) {
     fs.readFile(TOKEN_PATH, function (err, token) {
       if (err) {
         getNewToken(oauth2Client, resolve);
-      } else {
+      }
+      else {
         oauth2Client.credentials = JSON.parse(token);
         resolve(oauth2Client);
       }
@@ -76,8 +77,9 @@ function getNewToken(oauth2Client, callback) {
 function storeToken(token) {
   try {
     fs.mkdirSync(TOKEN_DIR);
-  } catch (err) {
-    if (err.code != 'EEXIST') {
+  }
+  catch (err) {
+    if (err.code !== 'EEXIST') {
       throw err;
     }
   }

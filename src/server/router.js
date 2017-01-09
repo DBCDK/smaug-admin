@@ -123,6 +123,7 @@ router.post('/add', async (ctx) => {
  */
 router.post('/remove/:id', async (ctx) => {
   const id = ctx.params.id;
+  console.log(`remove ${id}`);
   await ctx.api.deleteClient(id);
   ctx.redirect('/');
 });
