@@ -19,11 +19,11 @@ export function TokenView({client, token, close}) {
         <h2>{`Token for ${client.name}`}</h2>
         <div className="element token">
           <label>Token ID</label>
-          <div className="value">{token.id}</div>
+          <div className="value">{token.access_token}</div>
         </div>
         <div className="element expires">
           <label>The token expires on:</label>
-          <div className="value">{(new Date(token.expires)).toLocaleTimeString('us-US', expiresOptions)}</div>
+          <div className="value">{(new Date(Date.now() + token.expires_in * 1000)).toLocaleTimeString('us-US', expiresOptions)}</div>
         </div>
       </div>
     </div>

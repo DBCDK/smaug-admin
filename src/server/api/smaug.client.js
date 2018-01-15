@@ -43,7 +43,8 @@ export default class SmaugClient {
   }
 
   getToken(id) {
-    return this.promiseRequest('get', `/clients/token/${id}`).then(response => response.body);
+    return this.promiseRequest('post', `/clients/token/${id}`, {grant_type: 'password', username: '@', password: '@'})
+      .then(response => response.body);
   }
 
   login(config = this.config) {
