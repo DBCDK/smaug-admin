@@ -4,10 +4,10 @@ import {expect} from 'chai';
 import sinon from 'sinon';
 import request from 'superagent';
 
-import TokenContainer, {TokenView} from '../components/token/tokenContainer.component';
+import TokenContainer, {TokenView, expiresDate} from '../components/token/tokenContainer.component';
 
 const client = {id: 'test', name: 'testName'};
-const token = {id: 'tokenId', expires: '12-02-2016'};
+const token = {access_token: 'tokenId', expires_in: 3600};
 
 describe('<TokenContainer />', () => {
   const wrapper = mount(<TokenContainer client={client}/>);
@@ -46,7 +46,8 @@ describe('<TokenContainer />', () => {
     const component = render(<TokenView client={client} token={token} />);
     expect(component.text()).to.contain('testName');
     expect(component.text()).to.contain('tokenId');
-    expect(component.text()).to.contain('Friday, Dec 2, 2016');
+    const date = expiresDate(token.expires_in);
+    expect(component.text()).to.contain(date);
   });
 })
 ;

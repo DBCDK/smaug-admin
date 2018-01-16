@@ -1,6 +1,14 @@
 import React from 'react';
 import request from 'superagent';
 
+export function expiresDate(expires_in) {
+  const expiresOptions = {
+    weekday: 'long', year: 'numeric', month: 'short',
+    day: 'numeric', hour: '2-digit', minute: '2-digit'
+  };
+  return (new Date(Date.now() + expires_in * 1000)).toLocaleTimeString('us-US', expiresOptions);
+}
+
 export function TokenForm({onSubmit}) {
   return (
     <div className="tokenform"><a className="createtoken" href="#getToken" onClick={onSubmit}>Token</a></div>
@@ -8,10 +16,6 @@ export function TokenForm({onSubmit}) {
 }
 
 export function TokenView({client, token, close}) {
-  const expiresOptions = {
-    weekday: 'long', year: 'numeric', month: 'short',
-    day: 'numeric', hour: '2-digit', minute: '2-digit'
-  };
   return (
     <div className="tokenview">
       <div className="overlay background" onClick={close}></div>
@@ -19,11 +23,11 @@ export function TokenView({client, token, close}) {
         <h2>{`Token for ${client.name}`}</h2>
         <div className="element token">
           <label>Token ID</label>
-          <div className="value">{token.id}</div>
+          <div className="value">{token.access_token}</div>
         </div>
         <div className="element expires">
           <label>The token expires on:</label>
-          <div className="value">{(new Date(token.expires)).toLocaleTimeString('us-US', expiresOptions)}</div>
+          <div className="value">{expiresDate(token.expires_in)}</div>
         </div>
       </div>
     </div>
