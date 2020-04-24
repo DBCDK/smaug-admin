@@ -19,8 +19,8 @@ describe('<ContactContainer />', () => {
 
   it('parses contacts', function () {
     const contacts = {
-      test: {name: 'test'},
-      owner: {name: 'owner'}
+      owner: {name: 'owner'},
+      test: {name: 'test'}
     };
     const component = mount(<ContactContainer contacts={contacts}/>);
     expect(component.find('.contact-row')).to.have.length(2);
