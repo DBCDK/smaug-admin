@@ -50,7 +50,7 @@ function getNewToken(oauth2Client, callback) {
     access_type: 'offline',
     scope: SCOPES
   });
-  console.log('Authorize this app by visiting this url: ', authUrl);
+  console.log('Authorize this app by visiting this url: ', authUrl); // eslint-disable-line no-console
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -59,7 +59,7 @@ function getNewToken(oauth2Client, callback) {
     rl.close();
     oauth2Client.getToken(code, function (err, token) {
       if (err) {
-        console.log('Error while trying to retrieve access token', err);
+        console.log('Error while trying to retrieve access token', err); // eslint-disable-line no-console
         return;
       }
       oauth2Client.credentials = token;
@@ -84,5 +84,5 @@ function storeToken(token) {
     }
   }
   fs.writeFile(TOKEN_PATH, JSON.stringify(token));
-  console.log('Token stored to ' + TOKEN_PATH);
+  console.log('Token stored to ' + TOKEN_PATH); // eslint-disable-line no-console
 }

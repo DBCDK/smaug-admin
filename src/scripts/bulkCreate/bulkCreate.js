@@ -26,7 +26,7 @@ export default async({baseClientId, spreadSheetId, secretFile}) => {
     });
   }
   catch (e) {
-    console.error('create failed', e);
+    console.error('create failed', e); // eslint-disable-line no-console
   }
 };
 

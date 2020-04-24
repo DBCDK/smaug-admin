@@ -26,11 +26,11 @@ app.name = 'Smaug Admin';
 const PORT = config.port;
 
 app.on('error', (err) => {
-  console.error('Server error', {error: err.message, stack: err.stack});
+  console.error('Server error', {error: err.message, stack: err.stack}); // eslint-disable-line no-console
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is up and running on port ${PORT}!`);
+  console.log(`Server is up and running on port ${PORT}!`); // eslint-disable-line no-console
 });
 
 // Apply middlewares
