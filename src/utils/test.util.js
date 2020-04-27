@@ -3,6 +3,10 @@
  * Helper file for running tests in a simulated browser environment and using ES6
  */
 
+import {configure} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+configure({adapter: new Adapter()});
+
 require('babel-register')();
 
 var jsdom = require('jsdom').jsdom;

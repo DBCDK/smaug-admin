@@ -39,4 +39,5 @@ const methods = {
   create: require('./bulkCreate/bulkCreate').default
 };
 
+// eslint-disable-next-line no-console
 methods[command] && methods[command](argv) || console.error(`Unsupported command ${command}`);

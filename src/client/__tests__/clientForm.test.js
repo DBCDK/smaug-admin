@@ -12,24 +12,24 @@ describe('<ClientFormContainer />', () => {
   });
   const wrapper = mount(<ClientFormContainer/>);
   it('contains an <ClientForm/> component', function () {
-    expect(wrapper.node.hasError).to.be.false;
+    expect(wrapper.instance().hasError).to.be.false;
     expect(wrapper.find(ClientForm)).to.have.length(1);
   });
 
   it('toggles error state', function () {
-    expect(wrapper.node.hasError).to.be.false;
-    wrapper.node.setErrorState(true);
-    expect(wrapper.node.hasError).to.be.true;
+    expect(wrapper.instance().hasError).to.be.false;
+    wrapper.instance().setErrorState(true);
+    expect(wrapper.instance().hasError).to.be.true;
     const preventDefault = sinon.spy();
-    wrapper.node.onSubmit({preventDefault});
+    wrapper.instance().onSubmit({preventDefault});
     expect(preventDefault).to.have.property('callCount', 1);
   });
 
   it('prevents submitting on errors and add alert', function () {
-    wrapper.node.setErrorState(true);
+    wrapper.instance().setErrorState(true);
     const preventDefault = sinon.spy();
     global.alert = sinon.spy();
-    wrapper.node.onSubmit({preventDefault});
+    wrapper.instance().onSubmit({preventDefault});
     expect(preventDefault).to.have.property('callCount', 1);
     expect(global.alert).to.have.property('callCount', 1);
   });
