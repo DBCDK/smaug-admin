@@ -11,6 +11,7 @@ def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
 def BUILD_NAME = "$PRODUCT :: $BRANCH_NAME"
 def DOCKER_REPO = "docker-ux.dbc.dk"
 def DOCKER_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}:${BUILD_NUMBER}"
+def DOCKER_COMPOSE_NAME = "compose-${DOCKER_NAME}"
 def DOCKER_STATUS = ''
 pipeline {
     agent {
@@ -27,11 +28,11 @@ pipeline {
         stage('Run docker') {
             steps {
                 script {
-                    sh """
-                        docker run --env-file test.env -p 8030:8030 --name=$CONTAINER_NAME $DOCKER_NAME &
-                        # Wait for 10 seconds for the container to be set up correct before the test
-                        sleep 10
-                    """
+                  ansiColor("xterm") {
+                    sh "echo Integrating..."
+                    sh "docker-compose -f docker-compose.yml -p ${DOCKER_COMPOSE_NAME} build"
+                    sh "IMAGE=${DOCKER_NAME} docker-compose -f docker-compose.yml -p ${DOCKER_COMPOSE_NAME} run e2e"
+                  }
                 }
             }
         }
