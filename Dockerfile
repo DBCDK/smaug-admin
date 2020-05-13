@@ -8,6 +8,7 @@ COPY . .
 COPY .babelrc .
 COPY .eslintrc .
 COPY .editorconfig .
+COPY e2e/cypress.json .
 
 ENV CI=true
 
