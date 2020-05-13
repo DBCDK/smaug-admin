@@ -63,11 +63,9 @@ pipeline {
                     echo Hello
                     docker ps -a
                     echo $DOCKER_NAME
-                    DOCKER_ID=docker ps | grep $DOCKER_NAME | cut -d" " -f1-1
-                    echo $DOCKER_ID
-                    docker kill $DOCKER_NAME
-                    docker rm $DOCKER_NAME
-                    docker rmi $DOCKER_NAME
+#                    docker kill $DOCKER_NAME
+#                    docker rm $DOCKER_NAME
+#                    docker rmi $DOCKER_NAME
                 """
               junit 'e2e/reports/*.xml'
             }
