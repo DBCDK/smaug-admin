@@ -30,7 +30,7 @@ pipeline {
                 script {
                   ansiColor("xterm") {
                     sh "echo Integrating..."
-                    sh "pwd; ls -l"
+                    sh "pwd; ls -l; ls -l e2e"
                     sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
                     sh "IMAGE=${DOCKER_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run e2e"
                   }
