@@ -9,7 +9,7 @@ properties([
 def PRODUCT = "smaug-admin"
 def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
 def BUILD_NAME = "$PRODUCT :: $BRANCH_NAME"
-def DOCKER_REPO = "docker-ux.dbc.dk"
+def DOCKER_REPO = "docker-frontend.dbc.dk"
 def DOCKER_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}:${BUILD_NUMBER}"
 def DOCKER_COMPOSE_NAME = "compose-${DOCKER_NAME}"
 def DOCKER_STATUS = ''
@@ -30,7 +30,6 @@ pipeline {
                 script {
                   ansiColor("xterm") {
                     sh "echo Integrating..."
-                    sh "pwd; ls -l; ls -l e2e"
                     sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
                     sh "IMAGE=${DOCKER_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run e2e"
                   }
@@ -63,8 +62,11 @@ pipeline {
                 sh """
                     echo Hello
                     docker ps -a
-                    docker kill $CONTAINER_NAME
-                    docker rm $CONTAINER_NAME
+                    echo $DOCKER_NAME
+                    DOCKER_ID=`docker ps | grep $DOCKER_NAME | awk "{print $1}"`
+                    echo $DOCKER_ID
+                    docker kill $DOCKER_NAME
+                    docker rm $DOCKER_NAME
                     docker rmi $DOCKER_NAME
                 """
               junit 'e2e/reports/*.xml'

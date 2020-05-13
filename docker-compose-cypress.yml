@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: '${IMAGE:-docker-ux.dbc.dk/content-first:latest}'
+    image: '${IMAGE:-docker-frontend.dbc.dk/smaug-admin:latest}'
     command: bash -c 'node src/server/index.js'
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
