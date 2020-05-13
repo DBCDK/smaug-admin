@@ -25,34 +25,14 @@ pipeline {
                 }
             }
         }
-        stage('Run docker') {
+        stage('Integration test') {
             steps {
                 script {
                   ansiColor("xterm") {
                     sh "echo Integrating..."
-                    sh "docker-compose -f docker-compose.yml -p ${DOCKER_COMPOSE_NAME} build"
-                    sh "IMAGE=${DOCKER_NAME} docker-compose -f docker-compose.yml -p ${DOCKER_COMPOSE_NAME} run e2e"
+                    sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
+                    sh "IMAGE=${DOCKER_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run e2e"
                   }
-                }
-            }
-        }
-        stage ('Check container is running correct') {
-            when {
-                branch "master"
-            }
-            steps {
-                script {
-                    DOCKER_STATUS = sh (
-                        script: "docker exec $CONTAINER_NAME /bin/bash -c \"curl -I http://localhost:8030/login | grep HTTP | cut -d ' ' -f2\"",
-                        returnStdout: true
-                    ).trim()
-                    // If DOCKER_STATUS == 200, then there is a working webpage and all is well
-                    if (DOCKER_STATUS == "200") {
-                        echo "Succes"
-                    } else {
-                        echo "Build failed"
-                        currentBuild.result = 'FAILURE'
-                    }
                 }
             }
         }
@@ -85,6 +65,7 @@ pipeline {
                     docker rm $CONTAINER_NAME
                     docker rmi $DOCKER_NAME
                 """
+              junit 'e2e/reports/*.xml'
             }
         }
     }
