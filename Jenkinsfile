@@ -62,8 +62,8 @@ pipeline {
             script {
                 sh """
                     echo Hello
-                    docker kill $CONTAINER_NAME
-                    docker rm $CONTAINER_NAME
+                    docker kill $DOCKER_COMPOSE_NAME
+                    docker rm $DOCKER_COMPOSE_NAME
                     docker rmi $DOCKER_NAME
                 """
               junit 'e2e/reports/*.xml'
