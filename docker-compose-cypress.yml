@@ -8,7 +8,7 @@ services:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     image: docker.dbc.dk/cypress:latest
     volumes:
-      - '.:./e2e:/app/e2e:/home/node/app/e2e'
+      - './e2e:/home/node/app/e2e'
     depends_on:
       - web
     environment:
