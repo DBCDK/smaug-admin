@@ -20,7 +20,6 @@ RUN npm set progress=false && \
   npm install
 
 # build statics
-#RUN npm run build && \
 RUN npm run build && \
   cp -R --preserve=links public prod_build/public && \
   cp -R --preserve=links src prod_build/src && \
@@ -34,10 +33,8 @@ RUN npm run test && npm run lint
 # ---- Release ----
 FROM $NODE_BASEIMAGE AS release
 ENV BABEL_CACHE_PATH=~/app/babel.cache.json
-# ENV PORT=8080
 WORKDIR /home/node/app
 COPY --chown=node:node --from=build /home/node/app/prod_build ./
-# EXPOSE 8080
 EXPOSE 1234
 USER node
 CMD node src/server/index.js
