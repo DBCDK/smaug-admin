@@ -61,11 +61,7 @@ pipeline {
         always {
             script {
                 sh """
-                    echo Hello
-                    docker ps -a
-                    echo $DOCKER_NAME
                     CONTAINER_ID=`docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
-                    echo \$CONTAINER_ID
                     docker kill \$CONTAINER_ID
                     docker rm \$CONTAINER_ID
                     IMAGE_ID=`docker images -a | grep $IMAGE_NAME | grep " $BUILD_NUMBER " | awk '{print \$3}'`
