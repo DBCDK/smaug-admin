@@ -63,11 +63,10 @@ pipeline {
                     echo Hello
                     docker ps -a
                     echo $DOCKER_NAME
-                    DOCKER_ID=`docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
-                    echo $DOCKER_ID
-                    docker kill $DOCKER_ID
-                    docker rm $DOCKER_ID
-                    docker rmi $DOCKER_ID
+                    echo `docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
+                    docker kill $DOCKER_NAME
+                    docker rm $DOCKER_NAME
+                    docker rmi $DOCKER_NAME
                 """
             }
         }
