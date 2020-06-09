@@ -10,7 +10,8 @@ def PRODUCT = "smaug-admin"
 def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
 def BUILD_NAME = "$PRODUCT :: $BRANCH_NAME"
 def DOCKER_REPO = "docker-ux.dbc.dk"
-def DOCKER_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}:${BUILD_NUMBER}"
+def IMAGE_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}"
+def DOCKER_NAME = "${IMAGE_NAME}:${BUILD_NUMBER}"
 def DOCKER_COMPOSE_NAME = "compose-${DOCKER_NAME}"
 def DOCKER_STATUS = ''
 pipeline {
@@ -67,7 +68,8 @@ pipeline {
                     echo \$CONTAINER_ID
                     docker kill \$CONTAINER_ID
                     docker rm \$CONTAINER_ID
-                    docker images -a
+                    IMAGE_ID=`docker images -a | grep $IMAGE_NAME | grep " $BUILD_NUMBER " | '{print \$3}'`
+                    docker rmi \$IMAGE_ID
                 """
             }
         }
