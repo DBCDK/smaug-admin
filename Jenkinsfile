@@ -65,9 +65,9 @@ pipeline {
                     echo $DOCKER_NAME
                     CONTAINER_ID=`docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
                     echo \$CONTAINER_ID
-                    docker kill `docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
-                    docker rm `docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
-                    docker rmi `docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
+                    docker kill \$CONTAINER_ID
+                    docker rm \$CONTAINER_ID
+                    docker rmi \$CONTAINER_ID
                 """
             }
         }
