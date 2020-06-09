@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
+    image: '${IMAGE:-docker-frontend.dbc.dk/smaug-admin:latest}'
+    command: bash -c 'node src/server/index.js'
+  e2e:
+    ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
+    image: docker.dbc.dk/cypress:latest
+    volumes:
+      - './e2e:/app/e2e'
+    depends_on:
+      - web
+    environment:
+      - CYPRESS_baseUrl=http://web:1234
+    command: bash -c 'until $$(curl --output /dev/null --silent --head --fail http://web:1234/ready); do printf '.'; sleep 5; done; npm run cy'
