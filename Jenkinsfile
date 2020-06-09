@@ -67,9 +67,6 @@ pipeline {
                     docker kill `docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
                     docker rm `docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
                     docker rmi `docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
-#                    docker kill $DOCKER_NAME
-#                    docker rm $DOCKER_NAME
-#                    docker rmi $DOCKER_NAME
                 """
             }
         }
