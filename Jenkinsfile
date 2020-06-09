@@ -68,7 +68,7 @@ pipeline {
                     echo \$CONTAINER_ID
                     docker kill \$CONTAINER_ID
                     docker rm \$CONTAINER_ID
-                    IMAGE_ID=`docker images -a | grep $IMAGE_NAME | grep " $BUILD_NUMBER " | '{print \$3}'`
+                    IMAGE_ID=`docker images -a | grep $IMAGE_NAME | grep " $BUILD_NUMBER " | awk '{print \$3}'`
                     docker rmi \$IMAGE_ID
                 """
             }
