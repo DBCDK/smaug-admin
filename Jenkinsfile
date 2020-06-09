@@ -64,9 +64,9 @@ pipeline {
                     docker ps -a
                     echo $DOCKER_NAME
                     docker ps | grep $DOCKER_NAME
-#                    docker kill $DOCKER_NAME
-#                    docker rm $DOCKER_NAME
-#                    docker rmi $DOCKER_NAME
+                    docker kill $DOCKER_NAME
+                    docker rm $DOCKER_NAME
+                    docker rmi $DOCKER_NAME
                 """
             }
         }
