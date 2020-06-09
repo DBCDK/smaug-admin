@@ -67,7 +67,7 @@ pipeline {
                     echo \$CONTAINER_ID
                     docker kill \$CONTAINER_ID
                     docker rm \$CONTAINER_ID
-                    docker rmi \$CONTAINER_ID
+                    docker images -a
                 """
             }
         }
