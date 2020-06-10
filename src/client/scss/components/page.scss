@@ -10,8 +10,73 @@
 .wrapper {
   position: relative;
 }
+
+.logo {
+  min-width: 190px;
+}
+
+.find-link {
+  position: absolute;
+  top: 1rem;
+  right: 130px;
+}
+
 .logout {
   position: absolute;
   top: 1rem;
   right: 0;
+}
+
+
+.menu-container {
+  margin-left: 24px;
+  display: flex;
+  width: 100%;
+}
+
+.menu-container .left-menu,
+.menu-container .right-menu {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.menu-container .left-menu {
+  justify-content: flex-start;
+}
+
+.menu-container .right-menu {
+  justify-content: flex-end;
+}
+
+.menu-container .menu-item {
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.menu-container .search-form {
+  background: white;
+  position: relative;
+  width: 300px;
+}
+
+.menu-container .search-input {
+  outline: none;
+  padding-left: 36px;
+}
+
+.menu-container .search-button {
+  position: absolute;
+  top: 6px;
+  border: none;
+  background: inherit;
+}
+
+.menu-container .search-button svg {
+  height: 20px;
+  width: 20px;
+}
+
+.menu-container .search-button:focus {
+  outline: none;
 }
