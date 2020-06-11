@@ -22,17 +22,17 @@ const RootComponent = getComponentFromId(pageData.id || 'clientList');
 
 const {state, ...pageState} = pageData;
 
-const MainPage = (props) => {
-  const [searchString, setSearchString] = useState(state.searchString ||'');
+const MainPage = () => {
+  const [searchString, setSearchString] = useState(state.searchString || '');
   const onSearch = search => {
-    window.location.pathname = "/find/" + search;
+    window.location.pathname = '/find/' + search;
     setSearchString(search);
-  }
+  };
   return (
     <Page {...pageState} searchString={searchString} onSearch={onSearch}>
       <RootComponent {...state} searchString={searchString}/>
     </Page>
-  )
-}
+  );
+};
 
 ReactDOM.render(<MainPage/>, rootContainer);

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Highlight = ({children, highlight}) => {
   if (!highlight) {
-    return <div className="highlight">{children}</div>
+    return <div className="highlight">{children}</div>;
   }
   const regexp = new RegExp(highlight, 'gi');
   const matches = children.match(regexp);

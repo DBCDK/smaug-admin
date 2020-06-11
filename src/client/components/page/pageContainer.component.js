@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import MagnifyingGlass from "../svg/MagnifyingGlass";
+import MagnifyingGlass from '../svg/MagnifyingGlass';
 
 const noop = () => {
 };
@@ -9,15 +9,16 @@ const InputField = ({value = '', onSearch = noop}) => {
   const onSubmit = e => {
     onSearch(search);
     e.preventDefault();
-  }
+  };
   return <form onSubmit={onSubmit} className='search-form'>
     <button type="submit" className='search-button'><MagnifyingGlass/></button>
-    <input type="text" name="find" value={search} className='search-input' placeholder="Search clients and configurations"
+    <input type="text" name="find" value={search} className='search-input'
+           placeholder="Search clients and configurations"
            onInput={e => setSearch(e.target.value)} onChange={e => setSearch(e.target.value)}/>
-  </form>
+  </form>;
   // In the above input tag, onChange is not able to handle deletion of the last character from the input field
   // - onInput handles it correctly therefore both onInput and onChange are used.
-}
+};
 
 const Menu = ({userLoggedIn = false, findValue = '', onSearch = noop}) =>
   <div className='menu-container'>
@@ -29,7 +30,7 @@ const Menu = ({userLoggedIn = false, findValue = '', onSearch = noop}) =>
       {userLoggedIn && <div className='menu-item'><InputField value={findValue} onSearch={onSearch}/></div>}
       {userLoggedIn && <div className='menu-item'><a href='/logout'>Log out</a></div>}
     </div>
-  </div>
+  </div>;
 
 
 const PageContainer = ({children, id, title, userLoggedIn = false, searchString = '', onSearch = noop}) =>
@@ -45,6 +46,6 @@ const PageContainer = ({children, id, title, userLoggedIn = false, searchString 
       <h1>{title}</h1>
       {children}
     </div>
-  </div>
+  </div>;
 
 export default PageContainer;

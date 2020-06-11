@@ -1,8 +1,9 @@
 import React from 'react';
 import {dot} from 'dot-object';
-import Highlight from '../highlight/highlight.component'
+import Highlight from '../highlight/highlight.component';
 
-const Hits = ({id, hits, search}) => hits.map(hit => <Highlight key={`${id}-${hit}`} highlight={search}>{hit}</Highlight>)
+const Hits = ({id, hits, search}) => hits.map(hit => <Highlight key={`${id}-${hit}`}
+                                                                highlight={search}>{hit}</Highlight>);
 
 const FindListElement = ({id, name, hits, search}) => (
   <div className="client" key={id}>
@@ -41,14 +42,15 @@ const filteredItems = (lines, list) => {
     }
     if (Array.isArray(foundItems[index].hits)) {
       foundItems[index].hits.push(record);
-    } else {
+    }
+    else {
       foundItems[index].hits = [record];
     }
   });
   return foundItems;
-}
+};
 
-const Find = ({uri = '', searchString='', list = []}) => {
+const Find = ({searchString = '', list = []}) => {
   const clientDotConfigAsArray = Object.entries(dot(list)).map(([key, value]) => `${key}:${value}`);
   const matching_lines = clientDotConfigAsArray.filter(lineInConfig =>
     lineInConfig.toLowerCase().includes(searchString.toLowerCase()));
@@ -58,6 +60,6 @@ const Find = ({uri = '', searchString='', list = []}) => {
       <FindList list={foundItems} search={searchString}/>
     </div>
   );
-}
+};
 
 export default Find;

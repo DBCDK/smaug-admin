@@ -12,7 +12,7 @@
 export default function ClientParser(rows) {
   if (rows.length > 1) {
     const headers = rows.shift();
-    return rows.map((row, i)=> {
+    return rows.map((row, i) => {
       const client = parseRow(row, headers);
       client.index = i + 1;
       return client;
@@ -33,7 +33,9 @@ function parseRow(row, headers) {
   const client = {
     config: {}
   };
-  clientInfo.forEach(el => client[el] = row.shift());
+  clientInfo.forEach(el => {
+    client[el] = row.shift();
+  });
 
   row.forEach((element, i) => {
     if (element) {
