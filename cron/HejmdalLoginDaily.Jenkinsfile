@@ -7,14 +7,14 @@ pipeline {
   triggers {
     cron("55 23 * * *")
   }
-  withCredentials([usernamePassword(credentialsId: 'elk_user', usernameVariable: 'ELK_USER', passwordVariable: 'ELK_PWD')]) {
-    environment {
-      ELK_URI = "https://${ELK_USER}:${ELK_PWD}@elk.dbc.dk:9100/k8s-frontend-prod-*"
-      STAT_FILE = "hejmdal_login_daily.json"
-      STAT_FILTER = '{"app":"hejmdal", "level":"INFO", "baseUrl":"/login"}'
-      ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
-      ARTIFACTORY_LOGIN = credentials("artifactory_login")
-  } }
+  environment {
+    ELK_CREDENTIALS = credentials('elk_user');
+    ELK_URI = "https://${ELK_CREDENTIALS_USR}:${ELK_CREDENTIALS_PWD}@elk.dbc.dk:9100/k8s-frontend-prod-*"
+    STAT_FILE = "hejmdal_login_daily.json"
+    STAT_FILTER = '{"app":"hejmdal", "level":"INFO", "baseUrl":"/login"}'
+    ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
+    ARTIFACTORY_LOGIN = credentials("artifactory_login")
+  }
   stages {
     stage('Install dependencies') {
       steps { script {
