@@ -1,0 +1,31 @@
+{
+  "name": "smaug-admin-cron",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Batch til generering af brugs-statistik",
+  "scripts": {
+    "prettier": "prettier --single-quote --print-width 120 --no-bracket-spacing --write '*.js'"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "author": "DBCDK",
+  "license": "GPL-3.0",
+  "proxy": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DBCDK/smaug-admin.git"
+  },
+  "dependencies": {
+    "dbc-node-logger": "^2.0.9",
+    "elasticsearch": "^16.7.1",
+    "getopts": "^2.2.5"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "singleQuote": true
+  }
+}
