@@ -24,7 +24,7 @@ pipeline {
     }
     stage('Create stat files from elk') {
       steps { script {
-        sh "rm -f ${STAT_FILE}*.json"
+        sh "rm -f ${STAT_FILE}"
         withCredentials([usernamePassword(credentialsId: 'amazon', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           sh "node cron/fetch_statistics.js -m -h ${ELK_URI} -f ${STAT_FILTER} -o ${STAT_FILE}"
       } } }
