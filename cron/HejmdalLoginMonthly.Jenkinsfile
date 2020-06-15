@@ -9,7 +9,7 @@ pipeline {
   }
   environment {
     ELK_CREDENTIALS = credentials('elk_user');
-    ELK_URI = "https://${ELK_CREDENTIALS_USR}:${ELK_CREDENTIALS_PWD}@elk.dbc.dk:9100/k8s-frontend-prod-*"
+    ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
     YYYY_MM = sh(script: 'date "+%Y-%m"', returnStdout: true).trim()
     STAT_FILE = "hejmdal_login_${YYYY_MM}.json"
     STAT_FILTER = '{"app":"hejmdal", "level":"INFO", "baseUrl":"/login"}'
