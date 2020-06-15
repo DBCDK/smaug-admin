@@ -5,7 +5,7 @@ pipeline {
     label "devel10"
   }
   triggers {
-    cron("H 3 * * *")
+    cron("55 23 * * *")
   }
   withCredentials([usernamePassword(credentialsId: 'elk_user', usernameVariable: 'ELK_USER', passwordVariable: 'ELK_PWD')]) {
     environment {
