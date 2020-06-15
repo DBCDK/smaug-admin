@@ -8,6 +8,7 @@ pipeline {
     cron("55 23 * * *")
   }
   environment {
+    MONTHLY = '-m'
     ELK_CREDENTIALS = credentials('elk_user');
     ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
     YYYY_MM = sh(script: 'date "+%Y-%m"', returnStdout: true).trim()
@@ -25,9 +26,8 @@ pipeline {
     stage('Create stat files from elk') {
       steps { script {
         sh "rm -f ${STAT_FILE}"
-        withCredentials([usernamePassword(credentialsId: 'amazon', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-          sh "node cron/fetch_statistics.js -m -h ${ELK_URI} -f ${STAT_FILTER} -o ${STAT_FILE}"
-      } } }
+        sh "node cron/fetch_statistics.js ${MONTHLY} -h ${ELK_URI} -f ${STAT_FILTER} -o ${STAT_FILE}"
+      } }
     }
   }
   post {
