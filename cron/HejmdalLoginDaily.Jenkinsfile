@@ -24,7 +24,7 @@ pipeline {
     stage('Create stat files from elk') {
       steps { script {
         sh "rm -f ${STAT_FILE}"
-        sh "node cron/fetch_statistics.js -h ${ELK_URI} -f ${STAT_FILTER} -o ${STAT_FILE}"
+        sh "node cron/fetch_statistics.js -h '${ELK_URI}' -f '${STAT_FILTER}' -o ${STAT_FILE}"
       } }
     }
   }
