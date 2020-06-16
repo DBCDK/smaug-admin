@@ -42,9 +42,9 @@ pipeline {
     }
     success {
       script {
-        sh "echo archive ${STAT_FILE}"
-        archiveArtifacts "${STAT_FILE}"
         if ("${env.BRANCH_NAME}" == 'master') {
+          sh "echo archive ${STAT_FILE}"
+          archiveArtifacts "${STAT_FILE}"
           sh "echo push to ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
           sh "curl -u ${ARTIFACTORY_LOGIN} -T ${STAT_FILE} ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
           slackSend(channel: 'fe-drift',
