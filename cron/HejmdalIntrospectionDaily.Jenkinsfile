@@ -42,16 +42,16 @@ pipeline {
     }
     success {
       script {
-        sh "echo archive ${STAT_FILE}"
-        archiveArtifacts "${STAT_FILE}"
-        sh "echo push to ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
-        sh "curl -u ${ARTIFACTORY_LOGIN} -T ${STAT_FILE} ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
-        if ("${env.BRANCH_NAME}" == 'master') {
+//        if ("${env.BRANCH_NAME}" == 'master') {
+          sh "echo archive ${STAT_FILE}"
+          archiveArtifacts "${STAT_FILE}"
+          sh "echo push to ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
+          sh "curl -u ${ARTIFACTORY_LOGIN} -T ${STAT_FILE} ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
           slackSend(channel: 'fe-drift',
             color: 'good',
             message: "${env.JOB_NAME} #${env.BUILD_NUMBER} completed, and pushed ${STAT_FILE} to ${ARTIFACTORY_FE_GENERIC}",
             tokenCredentialId: 'slack-global-integration-token')
-        }
+//        }
       }
     }
     fixed {
