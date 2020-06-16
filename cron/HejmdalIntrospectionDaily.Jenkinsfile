@@ -9,7 +9,7 @@ pipeline {
   }
   environment {
     MONTHLY = " "
-    STAT_FILE = "hejmdal_login_daily.json"
+    STAT_FILE = "hejmdal_introspection_daily.json"
     STAT_FILTER = '{"app":"hejmdal", "level":"INFO", "baseUrl":"/introspection"}'
     ELK_CREDENTIALS = credentials('elk_user');
     ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
