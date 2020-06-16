@@ -11,7 +11,7 @@ pipeline {
     MONTHLY = '-m'
     YYYY_MM = sh(script: 'date "+%Y-%m"', returnStdout: true).trim()
     STAT_FILE = "hejmdal_introspection_${YYYY_MM}.json"
-    STAT_FILTER = '{"app":"hejmdal", "level":"INFO", "baseUrl":"/introspectioni"}'
+    STAT_FILTER = '{"app":"hejmdal", "level":"INFO", "baseUrl":"/introspection"}'
     ELK_CREDENTIALS = credentials('elk_user');
     ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
     ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
