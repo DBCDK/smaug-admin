@@ -128,4 +128,21 @@ router.post('/remove/:id', async (ctx) => {
   ctx.redirect('/');
 });
 
+/**
+ * Find a client
+ */
+router.get('/find/:key?', async (ctx) => {
+  const state = {};
+  try {
+    const list = await ctx.api.getClientList();
+    state.list = Array.isArray(list) && list || [];
+    state.searchString = ctx.params.key;
+  }
+  catch (e) {
+    state.error = 'No contact to SMAUG';
+  }
+
+  ctx.body = renderPage('find', 'Search', ctx.session.smaug.loggedIn, state);
+});
+
 export default router;

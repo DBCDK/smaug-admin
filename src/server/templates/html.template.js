@@ -3,14 +3,13 @@
  *
  * @param title
  * @param content
- * @param links
  * @param id
  * @param userLoggedIn
  * @param state
  * @returns {String}
  */
 
-export function html({title, content = '', links = [], id = 'clientlist', userLoggedIn = false, state = {}}) {
+export function html({title, content = '', id = 'clientlist', userLoggedIn = false, state = {}}) {
   return `
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@ export function html({title, content = '', links = [], id = 'clientlist', userLo
   </head>
   <body>
       <div id="content">${content}</div>
-      <script id="pagedata" type='application/json'>${JSON.stringify({id, title, userLoggedIn, state, links})}</script>
+      <script id="pagedata" type='application/json'>${JSON.stringify({id, title, userLoggedIn, state})}</script>
       <script src="/js/index.js"></script>
       <link href="/jsoneditor.min.css" " media="all" rel="stylesheet" />
   </body>

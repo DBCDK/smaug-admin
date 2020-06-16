@@ -4,7 +4,7 @@
  */
 
 import ReactDOM from 'react-dom';
-import React from 'react';
+import React, {useState} from 'react';
 
 // Components
 import Page from './components/page/pageContainer.component';
@@ -22,7 +22,17 @@ const RootComponent = getComponentFromId(pageData.id || 'clientList');
 
 const {state, ...pageState} = pageData;
 
-ReactDOM.render(
-  <Page {...pageState}>
-    <RootComponent {...state}/>
-  </Page>, rootContainer);
+const MainPage = () => {
+  const [searchString, setSearchString] = useState(state.searchString || '');
+  const onSearch = search => {
+    window.location.pathname = '/find/' + search;
+    setSearchString(search);
+  };
+  return (
+    <Page {...pageState} searchString={searchString} onSearch={onSearch}>
+      <RootComponent {...state} searchString={searchString}/>
+    </Page>
+  );
+};
+
+ReactDOM.render(<MainPage/>, rootContainer);
