@@ -64,9 +64,10 @@ export default function ClientForm({id, secret, name = '', contact = null, confi
         <div className="element submit updateclient">
           <input type="submit" value="Save Client" disabled={hasErrors} />
         </div>
-        <form onSubmit={remove} action={'/remove/' + id} method="post" className="removeclient ">
-          <input className="element deleteclient" type="submit" value="Delete" />
-        </form>
+
+      </form>
+      <form onSubmit={remove} action={'/remove/' + id} method="post" className="removeclient ">
+        <input className="element deleteclient" type="submit" value="Delete" />
       </form>
 
     </div>
