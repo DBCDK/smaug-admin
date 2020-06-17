@@ -31929,12 +31929,12 @@
 	        'div',
 	        { className: 'element submit updateclient' },
 	        _react2.default.createElement('input', { type: 'submit', value: 'Save Client', disabled: hasErrors })
-	      ),
-	      _react2.default.createElement(
-	        'form',
-	        { onSubmit: remove, action: '/remove/' + id, method: 'post', className: 'removeclient ' },
-	        _react2.default.createElement('input', { className: 'element deleteclient', type: 'submit', value: 'Delete' })
 	      )
+	    ),
+	    _react2.default.createElement(
+	      'form',
+	      { onSubmit: remove, action: '/remove/' + id, method: 'post', className: 'removeclient ' },
+	      _react2.default.createElement('input', { className: 'element deleteclient', type: 'submit', value: 'Delete' })
 	    )
 	  );
 	}
