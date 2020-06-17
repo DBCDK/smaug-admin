@@ -4,7 +4,7 @@
  */
 
 import ReactDOM from 'react-dom';
-import React from 'react';
+import React, {useState} from 'react';
 
 // Components
 import Page from './components/page/pageContainer.component';
@@ -19,10 +19,17 @@ const rootContainer = document.getElementById('content');
 const pageData = JSON.parse(document.getElementById('pagedata').innerHTML || {});
 
 const RootComponent = getComponentFromId(pageData.id || 'clientList');
-
 const {state, ...pageState} = pageData;
 
-ReactDOM.render(
-  <Page {...pageState}>
-    <RootComponent {...state}/>
-  </Page>, rootContainer);
+const MainPage = () => {
+  const [searchString, setSearchString] = useState('');
+
+  return (
+    <Page {...pageState} onChange={setSearchString}>
+      <RootComponent {...state} searchString={searchString}/>
+    </Page>
+  );
+};
+ReactDOM.render(<MainPage />, rootContainer);
+
+

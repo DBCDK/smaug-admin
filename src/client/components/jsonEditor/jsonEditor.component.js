@@ -18,6 +18,14 @@ export default class JEditor extends React.Component {
     this.editor = new JSONEditor(container, options, this.props.json);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.json !== this.props.json) {
+      let newText = this.props.json;
+      this.editor.setText(JSON.stringify(newText, null, 2));
+      this.onChange();
+    }
+  }
+
   onChange() {
     const json = this.editor.getText();
     this.setState({json});
@@ -28,18 +36,17 @@ export default class JEditor extends React.Component {
     try {
       JSON.parse(json);
       return true;
-    }
-    catch (error) {
+    } catch (error) {
       return false;
     }
   }
 
   render() {
     return (
-      <div className={`element ${this.props.name}`}>
+      <div className={"element "+this.props.name +" "+this.props.isVisible}>
         <label htmlFor={this.props.name}>{this.props.name}</label>
         <div ref="jsoneditor" style={{width: '100%', height: '400px'}}></div>
-        <input type="hidden" name={this.props.name} id={this.props.name} value={this.state.json}/>
+        <input type="hidden" name={this.props.name} id={this.props.name} value={this.state.json} />
       </div>
 
     );

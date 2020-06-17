@@ -4,10 +4,25 @@
     font-weight: bold;
     font-size: 1rem;
   }
+
   label {
-    font-weight: bold;
+    font-family: HelveticaNeue-Medium;
+    font-size: 22px;
+    font-weight: 500;
+    height: 26px;
+    letter-spacing: 0;
+  }
+
+  .jeditor-hide {
+    display: none;
+  }
+
+  .updateclient, .removeclient {
+    margin-left: 30px;
+    display: inline-flex;
   }
 }
+
 
 .emptylist {
   margin-bottom: 2rem;
