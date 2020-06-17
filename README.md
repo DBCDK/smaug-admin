@@ -22,6 +22,11 @@ Adressen på den aktuelle version at borchk servicen
 - `SMAUG_URI` : URI til Smaug admin api
 - `SMAUG_USER` : Bruger til Smaug admin api
 - `SMAUG_PASSWORD` : Password til smaug admin api
+
+## Opsætning af lokalt udviklingsmiljø med docker-compose
+Således kan man køre smaug-admin og smaug-backend isoleret i et lokalt miljø:
+`docker-compose -f docker-compose-dev.yml up`
+
    
 ## Tests
 For at afvikle tests kør `npm run test`. Tests afvikles med mocha og bruger jsdom til at simulere et browser miljø

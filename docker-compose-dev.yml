@@ -1,0 +1,53 @@
+version: '3'
+services:
+  redis:
+    image: redis:5.0.6
+  database:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=smaug
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  smaug:
+    image: '${IMAGE:-docker-ux.dbc.dk/smaug-master:34}'
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - PORT_ADMIN=3002
+      - PORT_CONFIG=3003
+      - MOCK_CULR=1
+      - MOCK_BORCHK=1
+      - "ADMIN_USERS={\"admin\": \"admin\"}"
+      - DEFAULT_LIBRARY_ID=190101
+      - SERVICE_REQUESTER=login.bib.dk
+      - BORCHK_WSDL=https://borchk.addi.dk/2.5/?wsdl
+      - CONFIG_USER_SALT=xxx
+      - CONFIG_NETPUNKT_USER=xxx
+      - CONFIG_NETPUNKT_GROUP=xxx
+      - CONFIG_NETPUNKT_PASSWORD=xxx
+      - CONFIG_PERFORMANCE_PASSWORD=xxx
+      - CONFIG_PERFORMANCE_USERNAME=xxx
+      - DATABASE_URI=postgres://smaug@database/smaug
+      - REDIS=redis://redis
+    depends_on:
+      - database
+      - redis
+    ports:
+      - 3001:3001
+      - 3002:3002
+      - 3003:3003
+    command: bash -c 'while !</dev/tcp/database/5432; do sleep 1; done; npm run start'
+  smaugadmin:
+    depends_on:
+      - smaug
+    image: docker.dbc.dk/dbc-node:latest
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules/ ## we do not mount node_modules
+    working_dir: /home/node/app
+    command: bash -c 'npm install && npm run dev'
+    environment:
+      - SMAUG_URI=http://smaug:3002
+      # - SMAUG_USER=admin
+      # - SMAUG_PASSWORD=admin
+    ports:
+      - 1234:1234
