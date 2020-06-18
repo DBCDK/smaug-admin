@@ -22,7 +22,9 @@ export default function renderPage(id, title, userLoggedIn, state = {}) {
     state,
     userLoggedIn,
     content: ReactDOM.renderToString(
-      <Page id={id} title={title}><Component {...state} /></Page>
+      <Page id={id} title={title}>
+        <Component {...state} />
+      </Page>
     )
   });
 }

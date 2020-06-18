@@ -13,7 +13,8 @@ const Highlight = ({children, highlight}) => {
       let match = matches[i];
       parts[i] = (
         <React.Fragment key={i}>
-          {parts[i]}<span className="highlighted">{match}</span>
+          {parts[i]}
+          <span className="highlighted">{match}</span>
         </React.Fragment>
       );
     }

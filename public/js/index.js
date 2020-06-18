@@ -65,11 +65,11 @@
 	
 	var _pageContainer2 = _interopRequireDefault(_pageContainer);
 	
-	var _getComponentFromId = __webpack_require__(/*! ../utils/getComponentFromId.util */ 18);
+	var _getComponentFromId = __webpack_require__(/*! ../utils/getComponentFromId.util */ 19);
 	
 	var _getComponentFromId2 = _interopRequireDefault(_getComponentFromId);
 	
-	__webpack_require__(/*! ./scss/basic.scss */ 41);
+	__webpack_require__(/*! ./scss/basic.scss */ 44);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -95,14 +95,14 @@
 	var state = pageData.state,
 	    pageState = _objectWithoutProperties(pageData, ['state']);
 	
-	var MainPage = function MainPage(props) {
+	var MainPage = function MainPage() {
 	  var _useState = (0, _react.useState)(state.searchString || ''),
 	      _useState2 = _slicedToArray(_useState, 2),
 	      searchString = _useState2[0],
 	      setSearchString = _useState2[1];
 	
 	  var onSearch = function onSearch(search) {
-	    window.location.pathname = "/find/" + search;
+	    window.location.pathname = '/find/' + search;
 	    setSearchString(search);
 	  };
 	  return _react2.default.createElement(
@@ -29212,7 +29212,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _MagnifyingGlass = __webpack_require__(/*! ../svg/MagnifyingGlass */ 42);
+	var _MagnifyingGlass = __webpack_require__(/*! ../svg/MagnifyingGlass */ 18);
 	
 	var _MagnifyingGlass2 = _interopRequireDefault(_MagnifyingGlass);
 	
@@ -29243,7 +29243,8 @@
 	      { type: 'submit', className: 'search-button' },
 	      _react2.default.createElement(_MagnifyingGlass2.default, null)
 	    ),
-	    _react2.default.createElement('input', { type: 'text', name: 'find', value: search, className: 'search-input', placeholder: 'Search clients and configurations',
+	    _react2.default.createElement('input', { type: 'text', name: 'find', value: search, className: 'search-input',
+	      placeholder: 'Search clients and configurations',
 	      onInput: function onInput(e) {
 	        return setSearch(e.target.value);
 	      }, onChange: function onChange(e) {
@@ -29356,6 +29357,39 @@
 
 /***/ }),
 /* 18 */
+/*!******************************************************!*\
+  !*** ./src/client/components/svg/MagnifyingGlass.js ***!
+  \******************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(/*! react */ 4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MagnifyingGlass = function MagnifyingGlass(props) {
+	  return _react2.default.createElement(
+	    "svg",
+	    _extends({ xmlns: "http://www.w3.org/2000/svg", height: "24", viewBox: "0 0 24 24", width: "24" }, props),
+	    _react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
+	    _react2.default.createElement("path", {
+	      d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" })
+	  );
+	};
+	
+	exports.default = MagnifyingGlass;
+
+/***/ }),
+/* 19 */
 /*!**********************************************!*\
   !*** ./src/utils/getComponentFromId.util.js ***!
   \**********************************************/
@@ -29368,23 +29402,23 @@
 	});
 	exports.default = getComponentFromId;
 	
-	var _clientList = __webpack_require__(/*! ../client/components/clientList/clientList.component */ 19);
+	var _clientList = __webpack_require__(/*! ../client/components/clientList/clientList.component */ 20);
 	
 	var _clientList2 = _interopRequireDefault(_clientList);
 	
-	var _clientFormContainer = __webpack_require__(/*! ../client/components/clientForm/clientFormContainer.component */ 28);
+	var _clientFormContainer = __webpack_require__(/*! ../client/components/clientForm/clientFormContainer.component */ 31);
 	
 	var _clientFormContainer2 = _interopRequireDefault(_clientFormContainer);
 	
-	var _newClient = __webpack_require__(/*! ../client/components/createClient/newClient.component */ 35);
+	var _newClient = __webpack_require__(/*! ../client/components/createClient/newClient.component */ 38);
 	
 	var _newClient2 = _interopRequireDefault(_newClient);
 	
-	var _loginFormContainer = __webpack_require__(/*! ../client/components/loginForm/loginFormContainer.component */ 36);
+	var _loginFormContainer = __webpack_require__(/*! ../client/components/loginForm/loginFormContainer.component */ 39);
 	
 	var _loginFormContainer2 = _interopRequireDefault(_loginFormContainer);
 	
-	var _find = __webpack_require__(/*! ../client/components/find/find.component */ 38);
+	var _find = __webpack_require__(/*! ../client/components/find/find.component */ 41);
 	
 	var _find2 = _interopRequireDefault(_find);
 	
@@ -29412,7 +29446,7 @@
 	} // Components
 
 /***/ }),
-/* 19 */
+/* 20 */
 /*!******************************************************************!*\
   !*** ./src/client/components/clientList/clientList.component.js ***!
   \******************************************************************/
@@ -29429,7 +29463,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _tokenContainer = __webpack_require__(/*! ../token/tokenContainer.component */ 20);
+	var _tokenContainer = __webpack_require__(/*! ../token/tokenContainer.component */ 21);
 	
 	var _tokenContainer2 = _interopRequireDefault(_tokenContainer);
 	
@@ -29568,7 +29602,7 @@
 	}
 
 /***/ }),
-/* 20 */
+/* 21 */
 /*!*****************************************************************!*\
   !*** ./src/client/components/token/tokenContainer.component.js ***!
   \*****************************************************************/
@@ -29590,7 +29624,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _superagent = __webpack_require__(/*! superagent */ 21);
+	var _superagent = __webpack_require__(/*! superagent */ 22);
 	
 	var _superagent2 = _interopRequireDefault(_superagent);
 	
@@ -29726,7 +29760,7 @@
 	exports.default = TokenContainer;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /*!************************************!*\
   !*** ./~/superagent/lib/client.js ***!
   \************************************/
@@ -29746,11 +29780,11 @@
 	  root = this;
 	}
 	
-	var Emitter = __webpack_require__(/*! component-emitter */ 22);
-	var RequestBase = __webpack_require__(/*! ./request-base */ 23);
-	var isObject = __webpack_require__(/*! ./is-object */ 24);
-	var ResponseBase = __webpack_require__(/*! ./response-base */ 25);
-	var Agent = __webpack_require__(/*! ./agent-base */ 27);
+	var Emitter = __webpack_require__(/*! component-emitter */ 23);
+	var RequestBase = __webpack_require__(/*! ./request-base */ 24);
+	var isObject = __webpack_require__(/*! ./is-object */ 25);
+	var ResponseBase = __webpack_require__(/*! ./response-base */ 26);
+	var Agent = __webpack_require__(/*! ./agent-base */ 28);
 	
 	/**
 	 * Noop.
@@ -30655,7 +30689,7 @@
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /*!**************************************!*\
   !*** ./~/component-emitter/index.js ***!
   \**************************************/
@@ -30839,7 +30873,7 @@
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /*!******************************************!*\
   !*** ./~/superagent/lib/request-base.js ***!
   \******************************************/
@@ -30850,7 +30884,7 @@
 	/**
 	 * Module of mixed-in functions shared between node and client code
 	 */
-	var isObject = __webpack_require__(/*! ./is-object */ 24);
+	var isObject = __webpack_require__(/*! ./is-object */ 25);
 	
 	/**
 	 * Expose `RequestBase`.
@@ -31542,7 +31576,7 @@
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /*!***************************************!*\
   !*** ./~/superagent/lib/is-object.js ***!
   \***************************************/
@@ -31566,7 +31600,7 @@
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /*!*******************************************!*\
   !*** ./~/superagent/lib/response-base.js ***!
   \*******************************************/
@@ -31578,7 +31612,7 @@
 	 * Module dependencies.
 	 */
 	
-	var utils = __webpack_require__(/*! ./utils */ 26);
+	var utils = __webpack_require__(/*! ./utils */ 27);
 	
 	/**
 	 * Expose `ResponseBase`.
@@ -31711,7 +31745,7 @@
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /*!***********************************!*\
   !*** ./~/superagent/lib/utils.js ***!
   \***********************************/
@@ -31791,7 +31825,7 @@
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /*!****************************************!*\
   !*** ./~/superagent/lib/agent-base.js ***!
   \****************************************/
@@ -31820,7 +31854,9 @@
 
 
 /***/ }),
-/* 28 */
+/* 29 */,
+/* 30 */,
+/* 31 */
 /*!***************************************************************************!*\
   !*** ./src/client/components/clientForm/clientFormContainer.component.js ***!
   \***************************************************************************/
@@ -31840,7 +31876,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _clientForm = __webpack_require__(/*! ./clientForm.component */ 29);
+	var _clientForm = __webpack_require__(/*! ./clientForm.component */ 32);
 	
 	var _clientForm2 = _interopRequireDefault(_clientForm);
 	
@@ -31896,7 +31932,7 @@
 	exports.default = ClientFormContainer;
 
 /***/ }),
-/* 29 */
+/* 32 */
 /*!******************************************************************!*\
   !*** ./src/client/components/clientForm/clientForm.component.js ***!
   \******************************************************************/
@@ -31913,11 +31949,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jsonEditor = __webpack_require__(/*! ../jsonEditor/jsonEditor.component */ 30);
+	var _jsonEditor = __webpack_require__(/*! ../jsonEditor/jsonEditor.component */ 33);
 	
 	var _jsonEditor2 = _interopRequireDefault(_jsonEditor);
 	
-	var _contactContainer = __webpack_require__(/*! ../contact/contactContainer.component */ 32);
+	var _contactContainer = __webpack_require__(/*! ../contact/contactContainer.component */ 35);
 	
 	var _contactContainer2 = _interopRequireDefault(_contactContainer);
 	
@@ -32015,7 +32051,7 @@
 	}
 
 /***/ }),
-/* 30 */
+/* 33 */
 /*!******************************************************************!*\
   !*** ./src/client/components/jsonEditor/jsonEditor.component.js ***!
   \******************************************************************/
@@ -32033,7 +32069,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jsoneditorMin = __webpack_require__(/*! jsoneditor/dist/jsoneditor.min.js */ 31);
+	var _jsoneditorMin = __webpack_require__(/*! jsoneditor/dist/jsoneditor.min.js */ 34);
 	
 	var _jsoneditorMin2 = _interopRequireDefault(_jsoneditorMin);
 	
@@ -32113,7 +32149,7 @@
 	exports.default = JEditor;
 
 /***/ }),
-/* 31 */
+/* 34 */
 /*!*********************************************!*\
   !*** ./~/jsoneditor/dist/jsoneditor.min.js ***!
   \*********************************************/
@@ -32170,7 +32206,7 @@
 	//# sourceMappingURL=jsoneditor.map
 
 /***/ }),
-/* 32 */
+/* 35 */
 /*!*********************************************************************!*\
   !*** ./src/client/components/contact/contactContainer.component.js ***!
   \*********************************************************************/
@@ -32188,7 +32224,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _contact = __webpack_require__(/*! ./contact.component */ 33);
+	var _contact = __webpack_require__(/*! ./contact.component */ 36);
 	
 	var _contact2 = _interopRequireDefault(_contact);
 	
@@ -32262,7 +32298,7 @@
 	exports.default = ContactContainer;
 
 /***/ }),
-/* 33 */
+/* 36 */
 /*!************************************************************!*\
   !*** ./src/client/components/contact/contact.component.js ***!
   \************************************************************/
@@ -32282,7 +32318,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _contactRow = __webpack_require__(/*! ./contactRow.component */ 34);
+	var _contactRow = __webpack_require__(/*! ./contactRow.component */ 37);
 	
 	var _contactRow2 = _interopRequireDefault(_contactRow);
 	
@@ -32314,7 +32350,7 @@
 	}
 
 /***/ }),
-/* 34 */
+/* 37 */
 /*!***************************************************************!*\
   !*** ./src/client/components/contact/contactRow.component.js ***!
   \***************************************************************/
@@ -32410,7 +32446,7 @@
 	}
 
 /***/ }),
-/* 35 */
+/* 38 */
 /*!*******************************************************************!*\
   !*** ./src/client/components/createClient/newClient.component.js ***!
   \*******************************************************************/
@@ -32499,7 +32535,7 @@
 	}
 
 /***/ }),
-/* 36 */
+/* 39 */
 /*!*************************************************************************!*\
   !*** ./src/client/components/loginForm/loginFormContainer.component.js ***!
   \*************************************************************************/
@@ -32519,7 +32555,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _loginForm = __webpack_require__(/*! ./loginForm.component */ 37);
+	var _loginForm = __webpack_require__(/*! ./loginForm.component */ 40);
 	
 	var _loginForm2 = _interopRequireDefault(_loginForm);
 	
@@ -32553,7 +32589,7 @@
 	exports.default = LoginFormContainer;
 
 /***/ }),
-/* 37 */
+/* 40 */
 /*!****************************************************************!*\
   !*** ./src/client/components/loginForm/loginForm.component.js ***!
   \****************************************************************/
@@ -32622,7 +32658,7 @@
 	}
 
 /***/ }),
-/* 38 */
+/* 41 */
 /*!******************************************************!*\
   !*** ./src/client/components/find/find.component.js ***!
   \******************************************************/
@@ -32642,9 +32678,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _dotObject = __webpack_require__(/*! dot-object */ 39);
+	var _dotObject = __webpack_require__(/*! dot-object */ 42);
 	
-	var _highlight = __webpack_require__(/*! ../highlight/highlight.component */ 40);
+	var _highlight = __webpack_require__(/*! ../highlight/highlight.component */ 43);
 	
 	var _highlight2 = _interopRequireDefault(_highlight);
 	
@@ -32657,7 +32693,8 @@
 	  return hits.map(function (hit) {
 	    return _react2.default.createElement(
 	      _highlight2.default,
-	      { key: id + '-' + hit, highlight: search },
+	      { key: id + '-' + hit,
+	        highlight: search },
 	      hit
 	    );
 	  });
@@ -32754,9 +32791,7 @@
 	};
 	
 	var Find = function Find(_ref7) {
-	  var _ref7$uri = _ref7.uri,
-	      uri = _ref7$uri === undefined ? '' : _ref7$uri,
-	      _ref7$searchString = _ref7.searchString,
+	  var _ref7$searchString = _ref7.searchString,
 	      searchString = _ref7$searchString === undefined ? '' : _ref7$searchString,
 	      _ref7$list = _ref7.list,
 	      list = _ref7$list === undefined ? [] : _ref7$list;
@@ -32782,7 +32817,7 @@
 	exports.default = Find;
 
 /***/ }),
-/* 39 */
+/* 42 */
 /*!*******************************!*\
   !*** ./~/dot-object/index.js ***!
   \*******************************/
@@ -33376,7 +33411,7 @@
 
 
 /***/ }),
-/* 40 */
+/* 43 */
 /*!****************************************************************!*\
   !*** ./src/client/components/highlight/highlight.component.js ***!
   \****************************************************************/
@@ -33434,46 +33469,13 @@
 	exports.default = Highlight;
 
 /***/ }),
-/* 41 */
+/* 44 */
 /*!************************************!*\
   !*** ./src/client/scss/basic.scss ***!
   \************************************/
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 42 */
-/*!******************************************************!*\
-  !*** ./src/client/components/svg/MagnifyingGlass.js ***!
-  \******************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(/*! react */ 4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var MagnifyingGlass = function MagnifyingGlass(props) {
-	  return _react2.default.createElement(
-	    "svg",
-	    _extends({ xmlns: "http://www.w3.org/2000/svg", height: "24", viewBox: "0 0 24 24", width: "24" }, props),
-	    _react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
-	    _react2.default.createElement("path", {
-	      d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" })
-	  );
-	};
-	
-	exports.default = MagnifyingGlass;
 
 /***/ })
 /******/ ]);

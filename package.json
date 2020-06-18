@@ -12,7 +12,8 @@
     "test": "LOG_LEVEL=off mocha src/utils/test.util.js --compilers js:babel-core/register --recursive src/**/__tests__/*",
     "testverbose": "LOG_LEVEL=debug mocha --compilers js:babel-core/register --recursive src/**/__tests__/*",
     "cy:run": "npx cypress run --project ./e2e",
-    "cy:open": "npx cypress@latest open --project ./e2e"
+    "cy:open": "npx cypress@latest open --project ./e2e",
+    "prettier": "prettier --no-bracket-spacing --single-quote --write \"src/**/*.js\""
   },
   "keywords": [
     "admin",
@@ -66,6 +67,7 @@
     "postcss-loader": "^1.1.1",
     "react-addons-test-utils": "^15.6.2",
     "sass-loader": "^4.0.2",
-    "webpack": "^1.15.0"
+    "webpack": "^1.15.0",
+    "prettier": "^1.17.0"
   }
 }

@@ -16,7 +16,9 @@ import getComponentFromId from '../utils/getComponentFromId.util';
 import './scss/basic.scss';
 
 const rootContainer = document.getElementById('content');
-const pageData = JSON.parse(document.getElementById('pagedata').innerHTML || {});
+const pageData = JSON.parse(
+  document.getElementById('pagedata').innerHTML || {}
+);
 
 const RootComponent = getComponentFromId(pageData.id || 'clientList');
 
@@ -30,9 +32,9 @@ const MainPage = () => {
   };
   return (
     <Page {...pageState} searchString={searchString} onSearch={onSearch}>
-      <RootComponent {...state} searchString={searchString}/>
+      <RootComponent {...state} searchString={searchString} />
     </Page>
   );
 };
 
-ReactDOM.render(<MainPage/>, rootContainer);
+ReactDOM.render(<MainPage />, rootContainer);

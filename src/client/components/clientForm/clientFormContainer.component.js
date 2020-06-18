@@ -21,7 +21,11 @@ export default class ClientFormContainer extends React.Component {
 
   render() {
     return (
-      <Client onSubmit={e => this.onSubmit(e)} setErrorState={state => this.setErrorState(state)} {...this.props} />
+      <Client
+        onSubmit={e => this.onSubmit(e)}
+        setErrorState={state => this.setErrorState(state)}
+        {...this.props}
+      />
     );
   }
 }

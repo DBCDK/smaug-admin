@@ -75,10 +75,8 @@ function addValueToConfig(path, value, config) {
 function deepPath(path, value, config) {
   if (path.length === 1) {
     config[path[0]] = value;
-  }
-  else {
+  } else {
     config[path[0]] = config[path[0]] || {};
     deepPath(path.slice(1, path.length), value, config[path[0]]);
   }
 }
-

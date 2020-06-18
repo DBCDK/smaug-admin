@@ -2,8 +2,7 @@ import React from 'react';
 import Token from '../token/tokenContainer.component';
 
 function clientListElement({id, name, contact}) {
-
-  const submit = (e) => {
+  const submit = e => {
     const confirmed = confirm(`Are you sure you want to delete:\n${name}?`); // eslint-disable-line no-alert
     if (!confirmed) {
       e.preventDefault();
@@ -11,16 +10,20 @@ function clientListElement({id, name, contact}) {
   };
   return (
     <div className="client" key={id}>
-      <a href={`/client/${id}`} className="name">{name}</a>
-      <a href={`/client/${id}`} className="id">{id}</a>
-      <a href={`/client/${id}`} className="owner">{contact.owner && contact.owner.name || ''}</a>
+      <a href={`/client/${id}`} className="name">
+        {name}
+      </a>
+      <a href={`/client/${id}`} className="id">
+        {id}
+      </a>
+      <a href={`/client/${id}`} className="owner">
+        {(contact.owner && contact.owner.name) || ''}
+      </a>
       <Token client={{id, name}} />
       <form onSubmit={submit} action={`/remove/${id}`} method="post">
-        <input className="deleteclient" type="submit" value="delete"/>
+        <input className="deleteclient" type="submit" value="delete" />
       </form>
-
     </div>
-
   );
 }
 
@@ -35,28 +38,26 @@ function ClientList({list}) {
           <label className="label-owner">token</label>
           <label className="label-owner">Delete</label>
         </div>
-        <div className="elements">
-          {list.map(clientListElement)}
-        </div>
+        <div className="elements">{list.map(clientListElement)}</div>
       </div>
-      <a className="createclient" href="/add">+ Create a new client</a>
+      <a className="createclient" href="/add">
+        + Create a new client
+      </a>
     </div>
   );
 }
 
 function ClientListError({error}) {
-  return (
-    <div className="clientlist error">
-      {error}
-    </div>
-  );
+  return <div className="clientlist error">{error}</div>;
 }
 
 function ClientListEmpty() {
   return (
     <div className="clientlist empty">
       <p>No clients created yet.</p>
-      <a className="createclient" href="/add">+ Create a new client</a>
+      <a className="createclient" href="/add">
+        + Create a new client
+      </a>
     </div>
   );
 }
@@ -64,8 +65,7 @@ function ClientListEmpty() {
 export default function ClientListContainer({error, list = []}) {
   if (error) {
     return ClientListError({error});
-  }
-  else if (list.length === 0) {
+  } else if (list.length === 0) {
     return ClientListEmpty();
   }
 

@@ -11,8 +11,7 @@ const smaugClient = new SmaugClient({
   password: process.env.SMAUG_PASSWORD || 'password'
 });
 
-
-export default async({baseClientId, spreadSheetId, secretFile}) => {
+export default async ({baseClientId, spreadSheetId, secretFile}) => {
   try {
     const secret = require(path.join(process.cwd(), secretFile));
     const auth = await authorize(secret);
@@ -22,10 +21,8 @@ export default async({baseClientId, spreadSheetId, secretFile}) => {
     clientParser(values).forEach(client => {
       const newClient = wrapClientInBaseClient(client, baseClient);
       upsertClient(client, newClient, sheetApi);
-
     });
-  }
-  catch (e) {
+  } catch (e) {
     console.error('create failed', e); // eslint-disable-line no-console
   }
 };
@@ -33,7 +30,12 @@ export default async({baseClientId, spreadSheetId, secretFile}) => {
 function wrapClientInBaseClient(client, baseClient) {
   return {
     name: client.name,
-    config: Object.assign({}, baseClient.config, client.config, DDBCMSConfig(client.library)),
+    config: Object.assign(
+      {},
+      baseClient.config,
+      client.config,
+      DDBCMSConfig(client.library)
+    ),
     contact: baseClient.contact
   };
 }
@@ -41,11 +43,13 @@ function wrapClientInBaseClient(client, baseClient) {
 async function upsertClient(client, newClient, sheetApi) {
   if (client.id) {
     smaugClient.setClient(client.id, newClient);
-  }
-  else {
+  } else {
     const response = await smaugClient.createClient(newClient);
     const addHeaderToIndex = 1;
     sheetApi.update(`Napp!C${client.index + addHeaderToIndex}`, response.id);
-    sheetApi.update(`Napp!D${client.index + addHeaderToIndex}`, response.secret);
+    sheetApi.update(
+      `Napp!D${client.index + addHeaderToIndex}`,
+      response.secret
+    );
   }
 }

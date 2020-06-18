@@ -3,15 +3,26 @@ import request from 'superagent';
 
 export function expiresDate(expires_in) {
   const expiresOptions = {
-    weekday: 'long', year: 'numeric', month: 'short',
-    day: 'numeric', hour: '2-digit', minute: '2-digit'
+    weekday: 'long',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
   };
-  return (new Date(Date.now() + expires_in * 1000)).toLocaleTimeString('us-US', expiresOptions);
+  return new Date(Date.now() + expires_in * 1000).toLocaleTimeString(
+    'us-US',
+    expiresOptions
+  );
 }
 
 export function TokenForm({onSubmit}) {
   return (
-    <div className="tokenform"><a className="createtoken" href="#getToken" onClick={onSubmit}>Token</a></div>
+    <div className="tokenform">
+      <a className="createtoken" href="#getToken" onClick={onSubmit}>
+        Token
+      </a>
+    </div>
   );
 }
 
@@ -34,9 +45,7 @@ export function TokenView({client, token, close}) {
   );
 }
 
-
 export default class TokenContainer extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,8 +62,7 @@ export default class TokenContainer extends React.Component {
     e.preventDefault();
     if (this.state.token.id) {
       this.setState({showToken: true});
-    }
-    else {
+    } else {
       request.get(`/token/${client.id}`).end((err, res) => {
         this.setState({showToken: true, token: JSON.parse(res.text)});
       });
@@ -62,8 +70,17 @@ export default class TokenContainer extends React.Component {
   }
 
   render() {
-    return this.state.showToken
-      && TokenView({client: this.props.client, token: this.state.token, close: () => this.onClose()})
-      || TokenForm({client: this.props.client, onSubmit: (e) => this.onSubmit(e, this.props.client)});
+    return (
+      (this.state.showToken &&
+        TokenView({
+          client: this.props.client,
+          token: this.state.token,
+          close: () => this.onClose()
+        })) ||
+      TokenForm({
+        client: this.props.client,
+        onSubmit: e => this.onSubmit(e, this.props.client)
+      })
+    );
   }
 }
