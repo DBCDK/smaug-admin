@@ -28,8 +28,7 @@ export default class JEditor extends React.Component {
     try {
       JSON.parse(json);
       return true;
-    }
-    catch (error) {
+    } catch (error) {
       return false;
     }
   }
@@ -39,9 +38,13 @@ export default class JEditor extends React.Component {
       <div className={`element ${this.props.name}`}>
         <label htmlFor={this.props.name}>{this.props.name}</label>
         <div ref="jsoneditor" style={{width: '100%', height: '400px'}}></div>
-        <input type="hidden" name={this.props.name} id={this.props.name} value={this.state.json}/>
+        <input
+          type="hidden"
+          name={this.props.name}
+          id={this.props.name}
+          value={this.state.json}
+        />
       </div>
-
     );
   }
 }

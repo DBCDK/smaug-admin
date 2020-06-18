@@ -13,28 +13,38 @@ export default class ContactContainer extends React.Component {
     if (Object.keys(contacts).length === 0) {
       contacts.owner = {};
     }
-    return Object.keys(contacts).map((role) => {
-      return {
-        role,
-        contact: contacts[role]
-      };
-    }).sort(contact => {
-      return contact.role.toLowerCase() !== 'owner';
-    });
+    return Object.keys(contacts)
+      .map(role => {
+        return {
+          role,
+          contact: contacts[role]
+        };
+      })
+      .sort(contact => {
+        return contact.role.toLowerCase() !== 'owner';
+      });
   }
 
   addContact(e) {
     e.preventDefault();
-    this.setState({contacts: this.state.contacts.concat([{role: '', contact: ''}])});
+    this.setState({
+      contacts: this.state.contacts.concat([{role: '', contact: ''}])
+    });
   }
 
   removeContact(e, index) {
     e.preventDefault();
-    this.setState({contacts: this.state.contacts.filter((c, i) => i !== index)});
+    this.setState({
+      contacts: this.state.contacts.filter((c, i) => i !== index)
+    });
   }
   render() {
     return (
-      <Contact contacts={this.state.contacts} addContact={e => this.addContact(e)} removeContact={(e, index) => this.removeContact(e, index)} />
+      <Contact
+        contacts={this.state.contacts}
+        addContact={e => this.addContact(e)}
+        removeContact={(e, index) => this.removeContact(e, index)}
+      />
     );
   }
 }

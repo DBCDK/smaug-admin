@@ -9,7 +9,13 @@
  * @returns {String}
  */
 
-export function html({title, content = '', id = 'clientlist', userLoggedIn = false, state = {}}) {
+export function html({
+  title,
+  content = '',
+  id = 'clientlist',
+  userLoggedIn = false,
+  state = {}
+}) {
   return `
 <!DOCTYPE html>
 <html>
@@ -20,7 +26,12 @@ export function html({title, content = '', id = 'clientlist', userLoggedIn = fal
   </head>
   <body>
       <div id="content">${content}</div>
-      <script id="pagedata" type='application/json'>${JSON.stringify({id, title, userLoggedIn, state})}</script>
+      <script id="pagedata" type='application/json'>${JSON.stringify({
+        id,
+        title,
+        userLoggedIn,
+        state
+      })}</script>
       <script src="/js/index.js"></script>
       <link href="/jsoneditor.min.css" " media="all" rel="stylesheet" />
   </body>

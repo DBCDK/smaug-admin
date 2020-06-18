@@ -29,11 +29,22 @@ export default class SpreadSheet {
 
   call(method, params) {
     return new Promise((resolve, reject) => {
-      const options = Object.assign({}, {
-        auth: this.auth,
-        spreadsheetId: this.spreadsheetId
-      }, params);
-      googleApi.sheets('v4').spreadsheets.values[method](options, (err, response) => err && reject(err) || resolve(response && response.values || response));
+      const options = Object.assign(
+        {},
+        {
+          auth: this.auth,
+          spreadsheetId: this.spreadsheetId
+        },
+        params
+      );
+      googleApi
+        .sheets('v4')
+        .spreadsheets.values[method](
+          options,
+          (err, response) =>
+            (err && reject(err)) ||
+            resolve((response && response.values) || response)
+        );
     });
   }
 }

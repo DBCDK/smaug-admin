@@ -40,5 +40,8 @@ function createDDBCMSPassword(library, secret = ddbSecretKey) {
  * @returns {*}
  */
 function createSha1(library, secret) {
-  return crypto.createHash('sha1').update(`${library}${secret}`).digest('hex');
+  return crypto
+    .createHash('sha1')
+    .update(`${library}${secret}`)
+    .digest('hex');
 }
