@@ -154,7 +154,7 @@ router.post('/add', async ctx => {
     name: body.name,
     config: JSON.parse(body.config),
     contact: contactListToObject(body.contact),
-    enabled: !!body.enabled
+    enabled: body.enabled === 'true' || body.enabled === 'on'
   });
 
   ctx.body = renderPage(
