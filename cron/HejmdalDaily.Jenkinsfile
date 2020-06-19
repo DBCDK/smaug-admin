@@ -5,13 +5,13 @@ pipeline {
     label "devel10"
   }
   triggers {
-    cron("55 23 28-31 * *")
+    cron("02 02 * * *")
   }
   environment {
-    MONTHLY = '-m'
-    YYYY_MM = sh(script: 'date "+%Y-%m"', returnStdout: true).trim()
-    STAT_FILE = "hejmdal_introspection_${YYYY_MM}.json"
-    STAT_FILTER = '{"app":"hejmdal", "level":"INFO", "baseUrl":"/introspection"}'
+    MONTHLY = " "
+    STAT_FILE = "hejmdal_daily.json"
+    STAT_FILTER = '{"app":"hejmdal", "level":"INFO"}'
+    STAT_ENDPOINT = '{"baseUrl":["/login","/introspection"]}'
     ELK_CREDENTIALS = credentials('elk_user');
     ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
     ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
@@ -26,7 +26,7 @@ pipeline {
     stage('Create stat files from elk') {
       steps { script {
         sh "rm -f ${STAT_FILE}"
-        sh "node cron/fetch_statistics.js '${MONTHLY}' -h '${ELK_URI}' -f '${STAT_FILTER}' -o '${STAT_FILE}'"
+        sh "node cron/fetch_statistics.js '${MONTHLY}' -h '${ELK_URI}' -f '${STAT_FILTER}' -e '${STAT_ENDPOINT}' -o '${STAT_FILE}'"
       } }
     }
   }

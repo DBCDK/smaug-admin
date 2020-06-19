@@ -16,7 +16,7 @@ const hourSum = {
     "field": "timestamp",
     "calendar_interval": "1h",
     "time_zone": "Europe/Copenhagen",
-    "min_doc_count": 1
+    "min_doc_count": 0
   }
 }
 const daySum = {
@@ -24,7 +24,7 @@ const daySum = {
     "field": "timestamp",
     "calendar_interval": "1d",
     "time_zone": "Europe/Copenhagen",
-    "min_doc_count": 1
+    "min_doc_count": 0
   }
 }
 const search = {
@@ -38,11 +38,16 @@ const now = new Date();
 
 /* -- main ----------------------------------------------------------------------------------- */
 
-const [host, filters, outfile, monthly] = getFileInfoOrDie(process.argv.slice(2));
+const [host, filters, endpoints, outfile, monthly] = getFileInfoOrDie(process.argv.slice(2));
 try {
   oFilters = JSON.parse(filters);
 } catch (e) {
   usage('filter(s) should be valid json\n - ' + filters + '\n - ' + e.message);
+}
+try {
+  oEndpoints = JSON.parse(endpoints);
+} catch (e) {
+  usage('endpoint(s) should be valid json\n - ' + endpoints + '\n - ' + e.message);
 }
 console.log('Start at', now);
 client = new ElasticSearch.Client({
@@ -58,47 +63,38 @@ else {
   search.body.query.bool.filter = setQueryFilter(oFilters, "2000-01-01", "9999-12-31");
 }
 console.log('Search:', JSON.stringify(search, null, 2));
-client.search(search).then(function(resp) {
-  const res = Object.assign({created: now}, {filter: oFilters}, {sums: parseResult(resp)});
+ESearch(search, oEndpoints).then(function(resp){
+  const res = Object.assign({created: now}, {filter: oFilters}, {endpoint: resp});
   writeFile(outfile, JSON.stringify(res, null, 2));
-  console.log('End at', new Date());
-}, function(err) {
-  console.trace(err.message);
+  console.log('Exit at', new Date());
 });
 
 /* -- helpers ----------------------------------------------------------------------------------- */
-function parseResult(eResult) {
-  const daySum = [];
-  eResult.aggregations.daysum.buckets.forEach(obj => {
+async function ESearch (search, endpoints) {
+  const resp = {};
+  for (const field in endpoints) {
+    for (const ep in endpoints[field]) {
+      const endpoint = endpoints[field][ep];
+      resp[endpoint] = {};
+      let thisSearch = JSON.parse(JSON.stringify(search));
+      thisSearch.body.query.bool.filter.push({"match_phrase": {[field]: endpoint}});
+      const xx = await client.search(thisSearch);
+      Object.keys(xx.aggregations).forEach(sum => {
+        resp[endpoint][sum] = parseAggr(xx.aggregations[sum]);
+      })
+    }
+  }
+  return resp;
+}
+function parseAggr(aggr) {
+  const res = [];
+  aggr.buckets.forEach(obj => {
     date = new Date(obj.key_as_string);
-    daySum.push({date: date.toISOString(), count: obj.doc_count});
+    res.push({date: date.toISOString(), count: obj.doc_count});
   });
-  const hourSum = [];
-  eResult.aggregations.hoursum.buckets.forEach(obj => {
-    hourSum.push({date: obj.key_as_string, count: obj.doc_count});
-  });
-  return {daySum: daySum, hourSum: hourSum};
+  return res;
 }
 
-/*
-  const query = {
-  "bool": {
-    "filter": [
-      {"match_phrase": {"app": "hejmdal"}},
-      {"match_phrase": {"level": "INFO"}},
-      {"match_phrase": {"baseUrl": "/login"}},
-      {"range": {
-          "timestamp": {
-            "gte": "2020-05-01",
-            "lte": "2020-05-31",
-            "format": "strict_date_optional_time"
-          }
-        }
-      }
-    ]
-  }
-}
-*/
 function setQueryFilter(filters, from, to) {
   const filter = [];
   filter.push({range: {timestamp:{gte:from, lte:to, format:"strict_date_optional_time"}}});
@@ -119,8 +115,9 @@ function writeFile(fileName, buffer) {
 function getFileInfoOrDie(args) {
   const options = getopts(args, {
     alias: {
-      host: 'h',
+      endpoint: 'e',
       filter: 'f',
+      host: 'h',
       output: 'o',
       monthly: 'm'
     }
@@ -134,17 +131,23 @@ function getFileInfoOrDie(args) {
   if (!options['f']) {
     usage('missing filter(s)');
   }
-  return [options['h'], options['f'], options['o'], options['m']];
+  if (!options['e']) {
+    usage('missing endpoint(s)');
+  }
+  return [options['h'], options['f'], options['e'], options['o'], options['m']];
 }
 
 function usage(error) {
+  const scriptName = __filename.split(/[\\/]/).pop();
   const errorTxt = error ? '\nError: ' + error + '\n\n' : '';
   console.log(
     'Create a json file with day and hours sums for last 30-ish days.\n' +
     'Option -m will only produce sums for the current month (normally used on the last day of each month)' +
     '\n%sUsage \n %s [options]\n\n' +
     'Options:\n' +
-    ' -h [ElasticSearch host] -s [filter(s)] -o  output [json-file] -m\n',errorTxt, __filename);
+    ' -h [ElasticSearch host] -f [filter(s)] -e [endpoint(s)] -o  output [json-file] -m\n' +
+    '\nExample:\n' +
+    scriptName + ' -h http://elk.dk -f \'{"app": "my_app", "level": "INFO"}\' -e \'{"endpointName": ["endp-1", endp-2"]}\' -o myFile.json',errorTxt, scriptName);
   process.exit(1);
 }
 
