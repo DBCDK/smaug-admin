@@ -60,13 +60,13 @@ pipeline {
     post {
         always {
             script {
-                sh """
-                    CONTAINER_ID=`docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
-                    // docker kill \$CONTAINER_ID
-                    // docker rm \$CONTAINER_ID
-                    IMAGE_ID=`docker images -a | grep $IMAGE_NAME | grep " $BUILD_NUMBER " | awk '{print \$3}'`
-                    // docker rmi \$IMAGE_ID
-                """
+//                sh """
+//                    CONTAINER_ID=`docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
+//                    docker kill \$CONTAINER_ID
+//                    docker rm \$CONTAINER_ID
+//                    IMAGE_ID=`docker images -a | grep $IMAGE_NAME | grep " $BUILD_NUMBER " | awk '{print \$3}'`
+//                    docker rmi \$IMAGE_ID
+//                """
             }
         }
     }
