@@ -1,16 +1,19 @@
 /**
  * @file
+ *
+ * Produce stats for one or more endpoints, using aggregations:
+ * https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html
+ * https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
+ *
+ * -f (filter) is used to select the application and log-level
+ * -e (endpoint) is used to specify the field containing the endpoint(s) and the endpoint(s) to extract stats from
+ *
  */
 
-// import {CONFIG} from '../src/utils/config.util';
-// https://kb.objectrocket.com/elasticsearch/how-to-aggregate-a-filtered-set-in-elasticsearch-using-nodejs
-
-// const Logger = require('dbc-node-logger');
 const getopts = require('getopts');
 const fs = require('fs');
 const ElasticSearch = require('elasticsearch');
 
-// const host = 'https://zabbix:zabbix@elk.dbc.dk:9100/k8s-frontend-prod-*';
 const hourSum = {
   "date_histogram": {
     "field": "timestamp",
@@ -50,9 +53,7 @@ try {
   usage('endpoint(s) should be valid json\n - ' + endpoints + '\n - ' + e.message);
 }
 console.log('Start at', now);
-client = new ElasticSearch.Client({
-  host: host
-});
+client = new ElasticSearch.Client({host: host});
 
 if (monthly) {
   console.log('Get monthly stats');
@@ -63,14 +64,21 @@ else {
   search.body.query.bool.filter = setQueryFilter(oFilters, "2000-01-01", "9999-12-31");
 }
 console.log('Search:', JSON.stringify(search, null, 2));
-ESearch(search, oEndpoints).then(function(resp){
+elkSearch(search, oEndpoints).then(function(resp){
   const res = Object.assign({created: now}, {filter: oFilters}, {endpoint: resp});
   writeFile(outfile, JSON.stringify(res, null, 2));
   console.log('Exit at', new Date());
 });
 
-/* -- helpers ----------------------------------------------------------------------------------- */
-async function ESearch (search, endpoints) {
+/* -- private ----------------------------------------------------------------------------------- */
+/**
+ * Loop endpoint(s) and collect stats for each of them
+ *
+ * @param search
+ * @param endpoints
+ * @returns {Promise<{}>}
+ */
+async function elkSearch (search, endpoints) {
   const resp = {};
   for (const field in endpoints) {
     for (const ep in endpoints[field]) {
@@ -78,14 +86,20 @@ async function ESearch (search, endpoints) {
       resp[endpoint] = {};
       let thisSearch = JSON.parse(JSON.stringify(search));
       thisSearch.body.query.bool.filter.push({"match_phrase": {[field]: endpoint}});
-      const xx = await client.search(thisSearch);
-      Object.keys(xx.aggregations).forEach(sum => {
-        resp[endpoint][sum] = parseAggr(xx.aggregations[sum]);
+      const elkResponse = await client.search(thisSearch);
+      Object.keys(elkResponse.aggregations).forEach(sum => {
+        resp[endpoint][sum] = parseAggr(elkResponse.aggregations[sum]);
       })
     }
   }
   return resp;
 }
+
+/**
+ *
+ * @param aggr
+ * @returns {[]}
+ */
 function parseAggr(aggr) {
   const res = [];
   aggr.buckets.forEach(obj => {
@@ -95,6 +109,13 @@ function parseAggr(aggr) {
   return res;
 }
 
+/**
+ *
+ * @param filters
+ * @param from
+ * @param to
+ * @returns {[]}
+ */
 function setQueryFilter(filters, from, to) {
   const filter = [];
   filter.push({range: {timestamp:{gte:from, lte:to, format:"strict_date_optional_time"}}});
@@ -104,6 +125,11 @@ function setQueryFilter(filters, from, to) {
   return filter;
 }
 
+/**
+ *
+ * @param fileName
+ * @param buffer
+ */
 function writeFile(fileName, buffer) {
   try {
     return fs.writeFileSync(fileName, buffer);
@@ -112,6 +138,11 @@ function writeFile(fileName, buffer) {
   }
 }
 
+/**
+ *
+ * @param args
+ * @returns {any[]}
+ */
 function getFileInfoOrDie(args) {
   const options = getopts(args, {
     alias: {
@@ -137,6 +168,10 @@ function getFileInfoOrDie(args) {
   return [options['h'], options['f'], options['e'], options['o'], options['m']];
 }
 
+/**
+ *
+ * @param error
+ */
 function usage(error) {
   const scriptName = __filename.split(/[\\/]/).pop();
   const errorTxt = error ? '\nError: ' + error + '\n\n' : '';
