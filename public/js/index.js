@@ -69,7 +69,7 @@
 	
 	var _getComponentFromId2 = _interopRequireDefault(_getComponentFromId);
 	
-	__webpack_require__(/*! ./scss/basic.scss */ 44);
+	__webpack_require__(/*! ./scss/basic.scss */ 43);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29243,13 +29243,19 @@
 	      { type: 'submit', className: 'search-button' },
 	      _react2.default.createElement(_MagnifyingGlass2.default, null)
 	    ),
-	    _react2.default.createElement('input', { type: 'text', name: 'find', value: search, className: 'search-input',
+	    _react2.default.createElement('input', {
+	      type: 'text',
+	      name: 'find',
+	      value: search,
+	      className: 'search-input',
 	      placeholder: 'Search clients and configurations',
 	      onInput: function onInput(e) {
 	        return setSearch(e.target.value);
-	      }, onChange: function onChange(e) {
+	      },
+	      onChange: function onChange(e) {
 	        return setSearch(e.target.value);
-	      } })
+	      }
+	    })
 	  );
 	  // In the above input tag, onChange is not able to handle deletion of the last character from the input field
 	  // - onInput handles it correctly therefore both onInput and onChange are used.
@@ -29320,8 +29326,7 @@
 	      onSearch = _ref3$onSearch === undefined ? noop : _ref3$onSearch;
 	  return _react2.default.createElement(
 	    'div',
-	    {
-	      className: 'page-wrapper' },
+	    { className: 'page-wrapper' },
 	    _react2.default.createElement(
 	      'header',
 	      { className: 'header' },
@@ -29337,7 +29342,11 @@
 	            'Smaug Admin'
 	          )
 	        ),
-	        _react2.default.createElement(Menu, { userLoggedIn: userLoggedIn, findValue: searchString, onSearch: onSearch })
+	        _react2.default.createElement(Menu, {
+	          userLoggedIn: userLoggedIn,
+	          findValue: searchString,
+	          onSearch: onSearch
+	        })
 	      )
 	    ),
 	    _react2.default.createElement(
@@ -29379,10 +29388,16 @@
 	var MagnifyingGlass = function MagnifyingGlass(props) {
 	  return _react2.default.createElement(
 	    "svg",
-	    _extends({ xmlns: "http://www.w3.org/2000/svg", height: "24", viewBox: "0 0 24 24", width: "24" }, props),
+	    _extends({
+	      xmlns: "http://www.w3.org/2000/svg",
+	      height: "24",
+	      viewBox: "0 0 24 24",
+	      width: "24"
+	    }, props),
 	    _react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
 	    _react2.default.createElement("path", {
-	      d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" })
+	      d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+	    })
 	  );
 	};
 	
@@ -29406,19 +29421,19 @@
 	
 	var _clientList2 = _interopRequireDefault(_clientList);
 	
-	var _clientFormContainer = __webpack_require__(/*! ../client/components/clientForm/clientFormContainer.component */ 31);
+	var _clientFormContainer = __webpack_require__(/*! ../client/components/clientForm/clientFormContainer.component */ 29);
 	
 	var _clientFormContainer2 = _interopRequireDefault(_clientFormContainer);
 	
-	var _newClient = __webpack_require__(/*! ../client/components/createClient/newClient.component */ 38);
+	var _newClient = __webpack_require__(/*! ../client/components/createClient/newClient.component */ 37);
 	
 	var _newClient2 = _interopRequireDefault(_newClient);
 	
-	var _loginFormContainer = __webpack_require__(/*! ../client/components/loginForm/loginFormContainer.component */ 39);
+	var _loginFormContainer = __webpack_require__(/*! ../client/components/loginForm/loginFormContainer.component */ 38);
 	
 	var _loginFormContainer2 = _interopRequireDefault(_loginFormContainer);
 	
-	var _find = __webpack_require__(/*! ../client/components/find/find.component */ 41);
+	var _find = __webpack_require__(/*! ../client/components/find/find.component */ 40);
 	
 	var _find2 = _interopRequireDefault(_find);
 	
@@ -29473,7 +29488,6 @@
 	  var id = _ref.id,
 	      name = _ref.name,
 	      contact = _ref.contact;
-	
 	
 	  var submit = function submit(e) {
 	    var confirmed = confirm('Are you sure you want to delete:\n' + name + '?'); // eslint-disable-line no-alert
@@ -29638,8 +29652,12 @@
 	
 	function expiresDate(expires_in) {
 	  var expiresOptions = {
-	    weekday: 'long', year: 'numeric', month: 'short',
-	    day: 'numeric', hour: '2-digit', minute: '2-digit'
+	    weekday: 'long',
+	    year: 'numeric',
+	    month: 'short',
+	    day: 'numeric',
+	    hour: '2-digit',
+	    minute: '2-digit'
 	  };
 	  return new Date(Date.now() + expires_in * 1000).toLocaleTimeString('us-US', expiresOptions);
 	}
@@ -29746,11 +29764,18 @@
 	    value: function render() {
 	      var _this3 = this;
 	
-	      return this.state.showToken && TokenView({ client: this.props.client, token: this.state.token, close: function close() {
+	      return this.state.showToken && TokenView({
+	        client: this.props.client,
+	        token: this.state.token,
+	        close: function close() {
 	          return _this3.onClose();
-	        } }) || TokenForm({ client: this.props.client, onSubmit: function onSubmit(e) {
+	        }
+	      }) || TokenForm({
+	        client: this.props.client,
+	        onSubmit: function onSubmit(e) {
 	          return _this3.onSubmit(e, _this3.props.client);
-	        } });
+	        }
+	      });
 	    }
 	  }]);
 	
@@ -31854,9 +31879,7 @@
 
 
 /***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */
+/* 29 */
 /*!***************************************************************************!*\
   !*** ./src/client/components/clientForm/clientFormContainer.component.js ***!
   \***************************************************************************/
@@ -31870,69 +31893,38 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	exports.default = ClientFormContainer;
 	
 	var _react = __webpack_require__(/*! react */ 4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _clientForm = __webpack_require__(/*! ./clientForm.component */ 32);
+	var _clientForm = __webpack_require__(/*! ./clientForm.component */ 30);
 	
 	var _clientForm2 = _interopRequireDefault(_clientForm);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function ClientFormContainer(props) {
+	  var _useState = (0, _react.useState)(false),
+	      _useState2 = _slicedToArray(_useState, 2),
+	      hasError = _useState2[0],
+	      setHasError = _useState2[1];
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ClientFormContainer = function (_React$Component) {
-	  _inherits(ClientFormContainer, _React$Component);
-	
-	  function ClientFormContainer(props) {
-	    _classCallCheck(this, ClientFormContainer);
-	
-	    var _this = _possibleConstructorReturn(this, (ClientFormContainer.__proto__ || Object.getPrototypeOf(ClientFormContainer)).call(this, props));
-	
-	    _this.hasError = false;
-	    return _this;
-	  }
-	
-	  _createClass(ClientFormContainer, [{
-	    key: 'onSubmit',
-	    value: function onSubmit(e) {
-	      if (this.hasError) {
-	        e.preventDefault();
-	        alert('The config JSON is not valid'); // eslint-disable-line no-alert
-	      }
+	  var onSubmit = function onSubmit(e) {
+	    if (hasError) {
+	      e.preventDefault();
+	      alert('The config JSON is not valid'); // eslint-disable-line no-alert
 	    }
-	  }, {
-	    key: 'setErrorState',
-	    value: function setErrorState(hasError) {
-	      this.hasError = hasError;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+	  };
 	
-	      return _react2.default.createElement(_clientForm2.default, _extends({ onSubmit: function onSubmit(e) {
-	          return _this2.onSubmit(e);
-	        }, setErrorState: function setErrorState(state) {
-	          return _this2.setErrorState(state);
-	        } }, this.props));
-	    }
-	  }]);
-	
-	  return ClientFormContainer;
-	}(_react2.default.Component);
-	
-	exports.default = ClientFormContainer;
+	  return _react2.default.createElement(_clientForm2.default, _extends({ onSubmit: onSubmit, setErrorState: setHasError }, props));
+	}
 
 /***/ }),
-/* 32 */
+/* 30 */
 /*!******************************************************************!*\
   !*** ./src/client/components/clientForm/clientForm.component.js ***!
   \******************************************************************/
@@ -31943,19 +31935,28 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
 	exports.default = ClientForm;
 	
 	var _react = __webpack_require__(/*! react */ 4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jsonEditor = __webpack_require__(/*! ../jsonEditor/jsonEditor.component */ 33);
+	var _jsonEditor = __webpack_require__(/*! ../jsonEditor/jsonEditor.component */ 31);
 	
 	var _jsonEditor2 = _interopRequireDefault(_jsonEditor);
 	
-	var _contactContainer = __webpack_require__(/*! ../contact/contactContainer.component */ 35);
+	var _contactContainer = __webpack_require__(/*! ../contact/contactContainer.component */ 33);
 	
 	var _contactContainer2 = _interopRequireDefault(_contactContainer);
+	
+	var _AdgangsplatformForm = __webpack_require__(/*! ./AdgangsplatformForm.component */ 36);
+	
+	var _AdgangsplatformForm2 = _interopRequireDefault(_AdgangsplatformForm);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -32015,6 +32016,34 @@
 	      setErrorState = _ref3.setErrorState,
 	      hasErrors = _ref3.hasErrors;
 	
+	  var _useState = (0, _react.useState)(config),
+	      _useState2 = _slicedToArray(_useState, 2),
+	      jsonConfig = _useState2[0],
+	      setJsonConfig = _useState2[1];
+	
+	  var _useState3 = (0, _react.useState)(false),
+	      _useState4 = _slicedToArray(_useState3, 2),
+	      showJson = _useState4[0],
+	      setShowJson = _useState4[1];
+	
+	  var updateJEditor = function updateJEditor(config) {
+	    setJsonConfig(_extends({}, config));
+	  };
+	
+	  var toggleJson = function toggleJson() {
+	    setShowJson(!showJson);
+	  };
+	
+	  var remove = function remove(e) {
+	    var confirmed = confirm('Are you sure you want to delete:\n' + name + '?'); // eslint-disable-line no-alert
+	    if (!confirmed) {
+	      e.preventDefault();
+	    }
+	  };
+	  var showEditor = function showEditor() {
+	    return showJson ? 'jeditor-visible' : 'jeditor-hide';
+	  };
+	
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'clientform' },
@@ -32031,8 +32060,13 @@
 	          { htmlFor: 'name' },
 	          'Name'
 	        ),
-	        _react2.default.createElement('input', { name: 'name', type: 'text', defaultValue: name, placeholder: 'the name of the service client',
-	          required: 'required' })
+	        _react2.default.createElement('input', {
+	          name: 'name',
+	          type: 'text',
+	          defaultValue: name,
+	          placeholder: 'the name of the service client',
+	          required: 'required'
+	        })
 	      ),
 	      _react2.default.createElement(
 	        'label',
@@ -32040,18 +32074,38 @@
 	        'Contacts'
 	      ),
 	      _react2.default.createElement(_contactContainer2.default, { contacts: contact }),
-	      _react2.default.createElement(_jsonEditor2.default, { name: 'config', json: config, setErrorState: setErrorState }),
+	      _react2.default.createElement(_AdgangsplatformForm2.default, {
+	        jsonConfig: jsonConfig,
+	        updateJEditor: updateJEditor,
+	        toggleJson: toggleJson
+	      }),
+	      _react2.default.createElement(_jsonEditor2.default, {
+	        name: 'config',
+	        json: jsonConfig,
+	        setErrorState: setErrorState,
+	        isVisible: showEditor()
+	      }),
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'element submit' },
+	        { className: 'element submit updateclient' },
 	        _react2.default.createElement('input', { type: 'submit', value: 'Save Client', disabled: hasErrors })
 	      )
+	    ),
+	    _react2.default.createElement(
+	      'form',
+	      {
+	        onSubmit: remove,
+	        action: '/remove/' + id,
+	        method: 'post',
+	        className: 'removeclient '
+	      },
+	      _react2.default.createElement('input', { className: 'element deleteclient', type: 'submit', value: 'Delete' })
 	    )
 	  );
 	}
 
 /***/ }),
-/* 33 */
+/* 31 */
 /*!******************************************************************!*\
   !*** ./src/client/components/jsonEditor/jsonEditor.component.js ***!
   \******************************************************************/
@@ -32069,7 +32123,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jsoneditorMin = __webpack_require__(/*! jsoneditor/dist/jsoneditor.min.js */ 34);
+	var _jsoneditorMin = __webpack_require__(/*! jsoneditor/dist/jsoneditor.min.js */ 32);
 	
 	var _jsoneditorMin2 = _interopRequireDefault(_jsoneditorMin);
 	
@@ -32110,6 +32164,15 @@
 	      this.editor = new _jsoneditorMin2.default(container, options, this.props.json);
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      if (prevProps.json !== this.props.json) {
+	        var newText = this.props.json;
+	        this.editor.setText(JSON.stringify(newText, null, 2));
+	        this.onChange();
+	      }
+	    }
+	  }, {
 	    key: 'onChange',
 	    value: function onChange() {
 	      var json = this.editor.getText();
@@ -32131,14 +32194,21 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'element ' + this.props.name },
+	        {
+	          className: 'element ' + this.props.name + ' ' + this.props.isVisible
+	        },
 	        _react2.default.createElement(
 	          'label',
 	          { htmlFor: this.props.name },
 	          this.props.name
 	        ),
 	        _react2.default.createElement('div', { ref: 'jsoneditor', style: { width: '100%', height: '400px' } }),
-	        _react2.default.createElement('input', { type: 'hidden', name: this.props.name, id: this.props.name, value: this.state.json })
+	        _react2.default.createElement('input', {
+	          type: 'hidden',
+	          name: this.props.name,
+	          id: this.props.name,
+	          value: this.state.json
+	        })
 	      );
 	    }
 	  }]);
@@ -32149,7 +32219,7 @@
 	exports.default = JEditor;
 
 /***/ }),
-/* 34 */
+/* 32 */
 /*!*********************************************!*\
   !*** ./~/jsoneditor/dist/jsoneditor.min.js ***!
   \*********************************************/
@@ -32206,7 +32276,7 @@
 	//# sourceMappingURL=jsoneditor.map
 
 /***/ }),
-/* 35 */
+/* 33 */
 /*!*********************************************************************!*\
   !*** ./src/client/components/contact/contactContainer.component.js ***!
   \*********************************************************************/
@@ -32224,7 +32294,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _contact = __webpack_require__(/*! ./contact.component */ 36);
+	var _contact = __webpack_require__(/*! ./contact.component */ 34);
 	
 	var _contact2 = _interopRequireDefault(_contact);
 	
@@ -32269,26 +32339,34 @@
 	    key: 'addContact',
 	    value: function addContact(e) {
 	      e.preventDefault();
-	      this.setState({ contacts: this.state.contacts.concat([{ role: '', contact: '' }]) });
+	      this.setState({
+	        contacts: this.state.contacts.concat([{ role: '', contact: '' }])
+	      });
 	    }
 	  }, {
 	    key: 'removeContact',
 	    value: function removeContact(e, index) {
 	      e.preventDefault();
-	      this.setState({ contacts: this.state.contacts.filter(function (c, i) {
+	      this.setState({
+	        contacts: this.state.contacts.filter(function (c, i) {
 	          return i !== index;
-	        }) });
+	        })
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 	
-	      return _react2.default.createElement(_contact2.default, { contacts: this.state.contacts, addContact: function addContact(e) {
+	      return _react2.default.createElement(_contact2.default, {
+	        contacts: this.state.contacts,
+	        addContact: function addContact(e) {
 	          return _this2.addContact(e);
-	        }, removeContact: function removeContact(e, index) {
+	        },
+	        removeContact: function removeContact(e, index) {
 	          return _this2.removeContact(e, index);
-	        } });
+	        }
+	      });
 	    }
 	  }]);
 	
@@ -32298,7 +32376,7 @@
 	exports.default = ContactContainer;
 
 /***/ }),
-/* 36 */
+/* 34 */
 /*!************************************************************!*\
   !*** ./src/client/components/contact/contact.component.js ***!
   \************************************************************/
@@ -32318,7 +32396,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _contactRow = __webpack_require__(/*! ./contactRow.component */ 37);
+	var _contactRow = __webpack_require__(/*! ./contactRow.component */ 35);
 	
 	var _contactRow2 = _interopRequireDefault(_contactRow);
 	
@@ -32330,7 +32408,12 @@
 	      addContact = _ref.addContact;
 	
 	  var contactRows = contacts.map(function (contact, index) {
-	    return _react2.default.createElement(_contactRow2.default, _extends({ key: contact.role + index }, contact, { removeContact: removeContact, index: index }));
+	    return _react2.default.createElement(_contactRow2.default, _extends({
+	      key: contact.role + index
+	    }, contact, {
+	      removeContact: removeContact,
+	      index: index
+	    }));
 	  });
 	  return _react2.default.createElement(
 	    'div',
@@ -32350,7 +32433,7 @@
 	}
 
 /***/ }),
-/* 37 */
+/* 35 */
 /*!***************************************************************!*\
   !*** ./src/client/components/contact/contactRow.component.js ***!
   \***************************************************************/
@@ -32386,8 +32469,14 @@
 	        { htmlFor: "role" },
 	        "Role"
 	      ),
-	      _react2.default.createElement("input", { name: "contact[" + index + "].role", readOnly: role === 'owner' && true, type: "text", defaultValue: role || '',
-	        placeholder: "Contact role", required: "required" })
+	      _react2.default.createElement("input", {
+	        name: "contact[" + index + "].role",
+	        readOnly: role === 'owner' && true,
+	        type: "text",
+	        defaultValue: role || '',
+	        placeholder: "Contact role",
+	        required: "required"
+	      })
 	    ),
 	    _react2.default.createElement(
 	      "div",
@@ -32397,8 +32486,13 @@
 	        { htmlFor: "name" },
 	        "Name"
 	      ),
-	      _react2.default.createElement("input", { name: "contact[" + index + "].name", type: "text", defaultValue: contact.name || '',
-	        placeholder: "Contact name", required: "required" })
+	      _react2.default.createElement("input", {
+	        name: "contact[" + index + "].name",
+	        type: "text",
+	        defaultValue: contact.name || '',
+	        placeholder: "Contact name",
+	        required: "required"
+	      })
 	    ),
 	    _react2.default.createElement(
 	      "div",
@@ -32408,8 +32502,13 @@
 	        { htmlFor: "email" },
 	        "Email"
 	      ),
-	      _react2.default.createElement("input", { name: "contact[" + index + "].email", type: "email", defaultValue: contact.email || '',
-	        placeholder: "Contact email", required: "required" })
+	      _react2.default.createElement("input", {
+	        name: "contact[" + index + "].email",
+	        type: "email",
+	        defaultValue: contact.email || '',
+	        placeholder: "Contact email",
+	        required: "required"
+	      })
 	    ),
 	    _react2.default.createElement(
 	      "div",
@@ -32419,8 +32518,12 @@
 	        { htmlFor: "phone" },
 	        "Phone"
 	      ),
-	      _react2.default.createElement("input", { name: "contact[" + index + "].phone", type: "text", defaultValue: contact.phone || '',
-	        placeholder: "Contact phone" })
+	      _react2.default.createElement("input", {
+	        name: "contact[" + index + "].phone",
+	        type: "text",
+	        defaultValue: contact.phone || '',
+	        placeholder: "Contact phone"
+	      })
 	    ),
 	    _react2.default.createElement(
 	      "div",
@@ -32446,7 +32549,587 @@
 	}
 
 /***/ }),
-/* 38 */
+/* 36 */
+/*!***************************************************************************!*\
+  !*** ./src/client/components/clientForm/AdgangsplatformForm.component.js ***!
+  \***************************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	exports.default = AdgangsplatformForm;
+	
+	var _react = __webpack_require__(/*! react */ 4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function AdgangsplatformForm(props) {
+	  var updateJEditor = props.updateJEditor,
+	      toggleJson = props.toggleJson,
+	      jsonConfig = props.jsonConfig;
+	
+	
+	  var isJSON = function isJSON(str) {
+	    try {
+	      JSON.parse(str);
+	    } catch (e) {
+	      return false;
+	    }
+	    return true;
+	  };
+	
+	  var checkForServices = function checkForServices(type) {
+	    return jsonConfig.services ? jsonConfig.services.filter(function (t) {
+	      return t === type;
+	    }).length > 0 : false;
+	  };
+	  var checkForAttributes = function checkForAttributes(type) {
+	    return jsonConfig.attributes ? Object.keys(jsonConfig.attributes).filter(function (t) {
+	      return t === type;
+	    }).length > 0 : false;
+	  };
+	  var checkForIdProviders = function checkForIdProviders(type) {
+	    return jsonConfig.identityProviders ? jsonConfig.identityProviders.filter(function (t) {
+	      return t === type;
+	    }).length > 0 : false;
+	  };
+	  var checkForSignOut = function checkForSignOut() {
+	    if (jsonConfig.logoutScreen) {
+	      return jsonConfig.logoutScreen !== ('skip' || false);
+	    }
+	  };
+	
+	  var _useState = (0, _react.useState)(checkForServices('OpenPlatform')),
+	      _useState2 = _slicedToArray(_useState, 2),
+	      openPlatform = _useState2[0],
+	      setOpenplatform = _useState2[1];
+	
+	  var _useState3 = (0, _react.useState)(checkForServices('Login.bib.dk')),
+	      _useState4 = _slicedToArray(_useState3, 2),
+	      bib = _useState4[0],
+	      setBib = _useState4[1];
+	
+	  var _useState5 = (0, _react.useState)(checkForAttributes('cpr')),
+	      _useState6 = _slicedToArray(_useState5, 2),
+	      userCPR = _useState6[0],
+	      setUserCPR = _useState6[1];
+	
+	  var _useState7 = (0, _react.useState)(checkForAttributes('userId')),
+	      _useState8 = _slicedToArray(_useState7, 2),
+	      userID = _useState8[0],
+	      setUserID = _useState8[1];
+	
+	  var _useState9 = (0, _react.useState)(checkForAttributes('uniqueId')),
+	      _useState10 = _slicedToArray(_useState9, 2),
+	      uniqueID = _useState10[0],
+	      setUniqueID = _useState10[1];
+	
+	  var _useState11 = (0, _react.useState)(checkForAttributes('libraries')),
+	      _useState12 = _slicedToArray(_useState11, 2),
+	      libraries = _useState12[0],
+	      setLibraries = _useState12[1];
+	
+	  var _useState13 = (0, _react.useState)(checkForAttributes('municipalityAgencyId')),
+	      _useState14 = _slicedToArray(_useState13, 2),
+	      muniNo = _useState14[0],
+	      setMuniNo = _useState14[1];
+	
+	  var _useState15 = (0, _react.useState)(checkForIdProviders('borchk')),
+	      _useState16 = _slicedToArray(_useState15, 2),
+	      borchk = _useState16[0],
+	      setBorchk = _useState16[1];
+	
+	  var _useState17 = (0, _react.useState)(checkForIdProviders('nemlogin')),
+	      _useState18 = _slicedToArray(_useState17, 2),
+	      nemLogin = _useState18[0],
+	      setNemLogin = _useState18[1];
+	
+	  var _useState19 = (0, _react.useState)(checkForIdProviders('unilogin')),
+	      _useState20 = _slicedToArray(_useState19, 2),
+	      uniLogin = _useState20[0],
+	      setUniLogin = _useState20[1];
+	
+	  var _useState21 = (0, _react.useState)(checkForSignOut()),
+	      _useState22 = _slicedToArray(_useState21, 2),
+	      showSignOut = _useState22[0],
+	      setShowSignOut = _useState22[1];
+	
+	  var getSignOutPath = function getSignOutPath() {
+	    return jsonConfig.singleLogoutPath ? jsonConfig.singleLogoutPath : '';
+	  };
+	  var getAgencyId = function getAgencyId() {
+	    return jsonConfig.agencyId ? jsonConfig.agencyId : '';
+	  };
+	  var getLogo = function getLogo() {
+	    return jsonConfig.logoColor ? jsonConfig.logoColor : '';
+	  };
+	  var getDisplayName = function getDisplayName() {
+	    return jsonConfig.displayName ? jsonConfig.displayName : '';
+	  };
+	  var getredirectUris = function getredirectUris() {
+	    var incomingURIs = isJSON(jsonConfig.redirectUris) ? jsonConfig.redirectUris : JSON.stringify(jsonConfig.redirectUris, null, 2);
+	    return incomingURIs;
+	  };
+	
+	  var _useState23 = (0, _react.useState)(getAgencyId()),
+	      _useState24 = _slicedToArray(_useState23, 2),
+	      agencyId = _useState24[0],
+	      setAgencyId = _useState24[1];
+	
+	  var _useState25 = (0, _react.useState)(getLogo()),
+	      _useState26 = _slicedToArray(_useState25, 2),
+	      logoColor = _useState26[0],
+	      setLogoColor = _useState26[1];
+	
+	  var _useState27 = (0, _react.useState)(getDisplayName()),
+	      _useState28 = _slicedToArray(_useState27, 2),
+	      displayName = _useState28[0],
+	      setDisplayName = _useState28[1];
+	
+	  var _useState29 = (0, _react.useState)(getSignOutPath()),
+	      _useState30 = _slicedToArray(_useState29, 2),
+	      singleSignoutPath = _useState30[0],
+	      setSingleSignoutPath = _useState30[1];
+	
+	  var _useState31 = (0, _react.useState)(getredirectUris()),
+	      _useState32 = _slicedToArray(_useState31, 2),
+	      redirectUris = _useState32[0],
+	      setRedirectUris = _useState32[1];
+	
+	  var getServices = function getServices() {
+	    var arr = [];
+	    bib ? arr.push('Login.bib.dk') : arr.filter(function (e) {
+	      return e === 'Login.bib.dk';
+	    });
+	    openPlatform ? arr.push('OpenPlatform') : arr.filter(function (e) {
+	      return e === 'OpenPlatform';
+	    });
+	    return arr;
+	  };
+	  var getAttributes = function getAttributes() {
+	    var attObj = _extends({}, jsonConfig.attributes);
+	    userCPR ? attObj['cpr'] = {} : delete attObj.cpr;
+	    userID ? attObj['userId'] = {} : delete attObj.userId;
+	    uniqueID ? attObj['uniqueId'] = {} : delete attObj.uniqueId;
+	    libraries ? attObj['libraries'] = {} : delete attObj.libraries;
+	    muniNo ? attObj['MuniNo'] = {} : delete attObj.MuniNo;
+	    return attObj;
+	  };
+	  var getIdProviders = function getIdProviders() {
+	    var arr = [];
+	    borchk ? arr.push('borchk') : arr.filter(function (e) {
+	      return e === 'borchk';
+	    });
+	    nemLogin ? arr.push('nemlogin') : arr.filter(function (e) {
+	      return e === 'nemlogin';
+	    });
+	    uniLogin ? arr.push('unilogin') : arr.filter(function (e) {
+	      return e === 'unilogin';
+	    });
+	    return arr;
+	  };
+	
+	  var formatAndSetRedirectUris = function formatAndSetRedirectUris(json) {
+	    var formattedJson = isJSON(json) ? JSON.parse(json) : json;
+	    setRedirectUris(formattedJson);
+	  };
+	
+	  var saveTextToJSON = function saveTextToJSON(e, fn) {
+	    var jsonOUT = _extends({}, props.jsonConfig);
+	    fn(e.target.value);
+	    jsonOUT[e.target.id] = e.target.value;
+	    // clean up
+	    if (!e.target.value) {
+	      delete jsonOUT[e.target.id];
+	    }
+	    if (e.target.id === 'redirectUris') {
+	      jsonOUT[e.target.id] = isJSON(e.target.value) ? JSON.parse(e.target.value) : e.target.value;
+	    }
+	    // send
+	    updateJEditor(jsonOUT);
+	  };
+	
+	  (0, _react.useEffect)(function () {
+	    var jsonOUT = jsonConfig;
+	    jsonOUT['attributes'] = getAttributes();
+	    jsonOUT['services'] = getServices();
+	    jsonOUT['identityProviders'] = getIdProviders();
+	    jsonOUT['logoutScreen'] = showSignOut;
+	
+	    // clean up
+	    if (jsonOUT.services.length < 1) {
+	      delete jsonOUT.services;
+	    }
+	    if (jsonOUT.identityProviders.length < 1) {
+	      delete jsonOUT.identityProviders;
+	    }
+	    if (Object.keys(jsonOUT.attributes).length < 1) {
+	      delete jsonOUT.attributes;
+	    }
+	    // send
+	    updateJEditor(jsonOUT);
+	  }, [openPlatform, bib, userCPR, userID, uniqueID, libraries, muniNo, borchk, nemLogin, uniLogin, showSignOut]);
+	
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'adgangsForm-line' },
+	    _react2.default.createElement(
+	      'span',
+	      { className: 'adgangsForm-title-top' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'adgangsForm-title' },
+	        _react2.default.createElement(
+	          'label',
+	          null,
+	          'Services'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'adgangsForm-toggle', onClick: toggleJson },
+	        'Edit configuration as json EDITS'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'adgangsForm' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'adgangsForm-choosePlatform-container', id: 'services' },
+	        _react2.default.createElement(
+	          'input-label',
+	          null,
+	          'Use client for selected services'
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'openPlatform' },
+	          _react2.default.createElement('input', {
+	            id: 'openPlatform',
+	            type: 'checkbox',
+	            checked: openPlatform,
+	            onChange: function onChange() {
+	              return setOpenplatform(!openPlatform);
+	            }
+	          }),
+	          _react2.default.createElement(
+	            'input-label',
+	            null,
+	            'OpenPlatform'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'bib' },
+	          _react2.default.createElement('input', {
+	            id: 'bib',
+	            type: 'checkbox',
+	            checked: bib,
+	            onChange: function onChange() {
+	              return setBib(!bib);
+	            }
+	          }),
+	          _react2.default.createElement(
+	            'input-label',
+	            null,
+	            'Login.bib.dk'
+	          )
+	        )
+	      ),
+	      bib && _react2.default.createElement(
+	        'div',
+	        { className: 'adgangsForm-formSection' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'adgangsForm-title-top' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'adgangsForm-title' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Configure login.bib.dk'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'adgangsForm-formBg' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-label' },
+	            'Agency Id'
+	          ),
+	          _react2.default.createElement('input', {
+	            id: 'agencyId',
+	            type: 'text',
+	            defaultValue: agencyId,
+	            placeholder: 'Type library no of agency',
+	            onChange: function onChange(e) {
+	              return saveTextToJSON(e, setAgencyId);
+	            },
+	            required: 'required'
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-label' },
+	            'Logo color'
+	          ),
+	          _react2.default.createElement('input', {
+	            id: 'logoColor',
+	            type: 'text',
+	            defaultValue: logoColor,
+	            placeholder: 'Type color as HEX value',
+	            onChange: function onChange(e) {
+	              return saveTextToJSON(e, setLogoColor);
+	            }
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'adgangsForm-checkbox-section', id: 'attributes' },
+	            _react2.default.createElement(
+	              'input-label',
+	              null,
+	              'User attributes to retrieve at sign in'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'userCPR' },
+	              _react2.default.createElement('input', {
+	                id: 'userCPR',
+	                type: 'checkbox',
+	                checked: userCPR,
+	                onChange: function onChange() {
+	                  return setUserCPR(!userCPR);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'User CPR'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'userID' },
+	              _react2.default.createElement('input', {
+	                id: 'userID',
+	                type: 'checkbox',
+	                checked: userID,
+	                onChange: function onChange() {
+	                  return setUserID(!userID);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'User ID (retrieved from the library, which is selected at sign in)'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'uniqueID' },
+	              _react2.default.createElement('input', {
+	                id: 'uniqueID',
+	                type: 'checkbox',
+	                checked: uniqueID,
+	                onChange: function onChange() {
+	                  return setUniqueID(!uniqueID);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'Unique ID (from CULR)'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'libraries' },
+	              _react2.default.createElement('input', {
+	                id: 'libraries',
+	                type: 'checkbox',
+	                checked: libraries,
+	                onChange: function onChange() {
+	                  return setLibraries(!libraries);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'Libraries'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'muniNo' },
+	              _react2.default.createElement('input', {
+	                id: 'muniNo',
+	                type: 'checkbox',
+	                checked: muniNo,
+	                onChange: function onChange() {
+	                  return setMuniNo(!muniNo);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'Municipality no'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-label' },
+	            'Display name'
+	          ),
+	          _react2.default.createElement('input', {
+	            id: 'displayName',
+	            type: 'text',
+	            defaultValue: displayName,
+	            placeholder: 'Type name to display to user',
+	            onChange: function onChange(e) {
+	              return saveTextToJSON(e, setDisplayName);
+	            },
+	            required: 'required'
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            {
+	              className: 'adgangsForm-checkbox-section',
+	              id: 'identityProviders'
+	            },
+	            _react2.default.createElement(
+	              'input-label',
+	              null,
+	              'Identity providers'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              _react2.default.createElement('input', {
+	                id: 'borchk',
+	                type: 'checkbox',
+	                checked: borchk,
+	                onChange: function onChange() {
+	                  return setBorchk(!borchk);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'Borchk'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              _react2.default.createElement('input', {
+	                id: 'nemlogin',
+	                type: 'checkbox',
+	                checked: nemLogin,
+	                onChange: function onChange() {
+	                  return setNemLogin(!nemLogin);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'NemLogin'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              _react2.default.createElement('input', {
+	                id: 'unilogin',
+	                type: 'checkbox',
+	                checked: uniLogin,
+	                onChange: function onChange() {
+	                  return setUniLogin(!uniLogin);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                'UniLogin'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'adgangsForm-checkbox-section', id: 'logoutScreen' },
+	            _react2.default.createElement(
+	              'input-label',
+	              null,
+	              'Sign out screen'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              _react2.default.createElement('input', {
+	                id: 'showSignOut',
+	                type: 'checkbox',
+	                checked: !!showSignOut,
+	                onChange: function onChange() {
+	                  return setShowSignOut(!showSignOut);
+	                }
+	              }),
+	              _react2.default.createElement(
+	                'input-label',
+	                null,
+	                ' ',
+	                'Show sign out screen to user, when signing out'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-label' },
+	            ' Single sign out path'
+	          ),
+	          _react2.default.createElement('input', {
+	            id: 'singleLogoutPath',
+	            type: 'text',
+	            defaultValue: singleSignoutPath,
+	            placeholder: 'Type URL to redirect to, when user signs out',
+	            onChange: function onChange(e) {
+	              return saveTextToJSON(e, setSingleSignoutPath);
+	            }
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-label' },
+	            'Redirect URIs'
+	          ),
+	          _react2.default.createElement('textarea', {
+	            id: 'redirectUris',
+	            defaultValue: redirectUris,
+	            placeholder: ' Type allowed URLs which the user can be redirected to, when signing out',
+	            onChange: function onChange(e) {
+	              return saveTextToJSON(e, formatAndSetRedirectUris);
+	            },
+	            required: 'required'
+	          })
+	        )
+	      )
+	    )
+	  );
+	}
+
+/***/ }),
+/* 37 */
 /*!*******************************************************************!*\
   !*** ./src/client/components/createClient/newClient.component.js ***!
   \*******************************************************************/
@@ -32535,7 +33218,7 @@
 	}
 
 /***/ }),
-/* 39 */
+/* 38 */
 /*!*************************************************************************!*\
   !*** ./src/client/components/loginForm/loginFormContainer.component.js ***!
   \*************************************************************************/
@@ -32555,7 +33238,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _loginForm = __webpack_require__(/*! ./loginForm.component */ 40);
+	var _loginForm = __webpack_require__(/*! ./loginForm.component */ 39);
 	
 	var _loginForm2 = _interopRequireDefault(_loginForm);
 	
@@ -32589,7 +33272,7 @@
 	exports.default = LoginFormContainer;
 
 /***/ }),
-/* 40 */
+/* 39 */
 /*!****************************************************************!*\
   !*** ./src/client/components/loginForm/loginForm.component.js ***!
   \****************************************************************/
@@ -32626,7 +33309,13 @@
 	          { htmlFor: 'uri' },
 	          'Url'
 	        ),
-	        _react2.default.createElement('input', { type: 'text', name: 'uri', placeholder: 'https://auth.dbc.dk', autoComplete: 'on', defaultValue: uri })
+	        _react2.default.createElement('input', {
+	          type: 'text',
+	          name: 'uri',
+	          placeholder: 'https://auth.dbc.dk',
+	          autoComplete: 'on',
+	          defaultValue: uri
+	        })
 	      ),
 	      _react2.default.createElement(
 	        'div',
@@ -32658,7 +33347,7 @@
 	}
 
 /***/ }),
-/* 41 */
+/* 40 */
 /*!******************************************************!*\
   !*** ./src/client/components/find/find.component.js ***!
   \******************************************************/
@@ -32678,9 +33367,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _dotObject = __webpack_require__(/*! dot-object */ 42);
+	var _dotObject = __webpack_require__(/*! dot-object */ 41);
 	
-	var _highlight = __webpack_require__(/*! ../highlight/highlight.component */ 43);
+	var _highlight = __webpack_require__(/*! ../highlight/highlight.component */ 42);
 	
 	var _highlight2 = _interopRequireDefault(_highlight);
 	
@@ -32693,8 +33382,7 @@
 	  return hits.map(function (hit) {
 	    return _react2.default.createElement(
 	      _highlight2.default,
-	      { key: id + '-' + hit,
-	        highlight: search },
+	      { key: id + '-' + hit, highlight: search },
 	      hit
 	    );
 	  });
@@ -32736,7 +33424,13 @@
 	        name = _ref5$.name,
 	        hits = _ref5$.hits;
 	
-	    return _react2.default.createElement(FindListElement, { key: key, id: id, name: name, hits: hits, search: search });
+	    return _react2.default.createElement(FindListElement, {
+	      key: key,
+	      id: id,
+	      name: name,
+	      hits: hits,
+	      search: search
+	    });
 	  });
 	};
 	
@@ -32817,7 +33511,7 @@
 	exports.default = Find;
 
 /***/ }),
-/* 42 */
+/* 41 */
 /*!*******************************!*\
   !*** ./~/dot-object/index.js ***!
   \*******************************/
@@ -33411,7 +34105,7 @@
 
 
 /***/ }),
-/* 43 */
+/* 42 */
 /*!****************************************************************!*\
   !*** ./src/client/components/highlight/highlight.component.js ***!
   \****************************************************************/
@@ -33469,7 +34163,7 @@
 	exports.default = Highlight;
 
 /***/ }),
-/* 44 */
+/* 43 */
 /*!************************************!*\
   !*** ./src/client/scss/basic.scss ***!
   \************************************/

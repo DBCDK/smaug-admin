@@ -4,7 +4,7 @@
   "description": "An admin interface for Smaug webservice",
   "main": "src/index.js",
   "scripts": {
-    "dev": "STANDARD_CACHE_TIME=1 parallelshell \"npm run build:dev -s\" \"npm run serve -s\"",
+    "dev": "STANDARD_CACHE_TIME=1 run-p build:dev serve",
     "serve": "nodemon --exec node --no-stdin src/server/index.js",
     "build": "webpack --define process.env.NODE_ENV='\"production\"' --progress --colors -p",
     "build:dev": "webpack --progress --colors --watch -d",
@@ -46,7 +46,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "sinon": "^1.17.6",
-    "superagent": "^3.1.0",
+    "superagent": "^3.8.3",
     "yargs": "^6.6.0"
   },
   "devDependencies": {
@@ -65,7 +65,7 @@
     "mocha": "^3.2.0",
     "node-sass": "^4.14.0",
     "nodemon": "^1.11.0",
-    "parallelshell": "^2.0.0",
+    "npm-run-all": "^4.1.5",
     "postcss-loader": "^1.1.1",
     "prettier": "^1.17.0",
     "react-addons-test-utils": "^15.6.2",

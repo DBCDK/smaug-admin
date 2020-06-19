@@ -78,12 +78,66 @@
     background-color: #0550c7; }
 
 .clientform label {
-  font-weight: bold; }
+  font-family: HelveticaNeue-Medium;
+  font-size: 22px;
+  font-weight: 500;
+  height: 26px;
+  letter-spacing: 0; }
+
+.clientform .jeditor-hide {
+  display: none; }
+
+.clientform .updateclient, .clientform .removeclient {
+  margin-left: 30px;
+  display: inline-flex; }
 
 .emptylist {
   margin-bottom: 2rem;
   text-align: center;
   font-weight: bold; }
+
+.adgangsForm-line {
+  border-top: solid 1px #979797; }
+
+.adgangsForm-title-top {
+  display: inline-flex;
+  height: 34px;
+  width: 100%; }
+
+.adgangsForm-title {
+  margin-top: auto;
+  margin-bottom: 0; }
+
+.adgangsForm-toggle {
+  font-size: 16px;
+  font-family: HelveticaNeue-Bold;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: auto;
+  margin-bottom: 0;
+  text-decoration: underline;
+  cursor: pointer; }
+
+.adgangsForm-choosePlatform-container {
+  display: grid; }
+
+.adgangsForm-formSection {
+  margin-left: 31px; }
+
+.adgangsForm-formBg {
+  width: 100%;
+  background: whitesmoke;
+  border: 1px solid #979797; }
+
+.adgangsForm-checkbox-section {
+  display: grid; }
+
+.adgangsForm-formBg input {
+  width: 80%; }
+
+.adgangsForm-formBg textarea {
+  width: 80%;
+  height: 200px; }
 
 .clientlist {
   text-align: center; }
@@ -149,7 +203,9 @@
   padding: .5rem 1rem;
   background-color: #ee422e;
   color: #fff;
-  border: none; }
+  border: none;
+  font-weight: bold;
+  font-size: 1rem; }
   .deleteclient:hover {
     background-color: #a81e0e; }
 
@@ -212,12 +268,15 @@ input[type=password],
 input[type=email] {
   margin: 0;
   display: block;
-  width: 100%;
+  width: 80%;
   padding: .5rem 1rem;
   line-height: 1.25;
   color: #55595c;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.15); }
+
+input[type=checkbox] {
+  width: 20px; }
 
 label {
   display: inline-block; }
@@ -299,6 +358,12 @@ h1 {
 
 a {
   text-decoration: none; }
+
+.input-label {
+  font-size: 16px;
+  font-family: HelveticaNeue-Bold;
+  font-weight: bold;
+  letter-spacing: 0; }
 
 .wrapper {
   max-width: 1024px;
