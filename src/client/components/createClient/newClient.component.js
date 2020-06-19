@@ -16,8 +16,12 @@ export default function newClient({id, secret, name = ''}) {
         <div className="value">{secret}</div>
         <div className="notice">NB! Secret will not be shown again</div>
       </div>
-      <a className="editclient btn" href={`/client/${id}`}>Edit Client</a>
-      <a className="createclient btn" href="/add" >Create another Client</a>
+      <a className="editclient btn" href={`/client/${id}`}>
+        Edit Client
+      </a>
+      <a className="createclient btn" href="/add">
+        Create another Client
+      </a>
     </div>
   );
 }

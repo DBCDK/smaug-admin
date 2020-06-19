@@ -12,7 +12,8 @@
     "test": "LOG_LEVEL=off mocha src/utils/test.util.js --compilers js:babel-core/register --recursive src/**/__tests__/*",
     "testverbose": "LOG_LEVEL=debug mocha --compilers js:babel-core/register --recursive src/**/__tests__/*",
     "cy:run": "npx cypress run --project ./e2e",
-    "cy:open": "npx cypress@latest open --project ./e2e"
+    "cy:open": "npx cypress@latest open --project ./e2e",
+    "prettier": "prettier --no-bracket-spacing --single-quote --write \"src/**/*.js\""
   },
   "keywords": [
     "admin",
@@ -31,6 +32,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "cypress": "^4.4.1",
+    "dot-object": "^2.1.3",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
     "jsdom": "^9.8.3",
@@ -56,6 +58,8 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^3.9.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^6.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "mocha": "^3.2.0",
@@ -63,6 +67,7 @@
     "nodemon": "^1.11.0",
     "parallelshell": "^2.0.0",
     "postcss-loader": "^1.1.1",
+    "prettier": "^1.17.0",
     "react-addons-test-utils": "^15.6.2",
     "sass-loader": "^4.0.2",
     "webpack": "^1.15.0"

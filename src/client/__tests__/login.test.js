@@ -6,8 +6,7 @@ import LoginFormContainer from '../components/loginForm/loginFormContainer.compo
 
 describe('<LoginFormContainer />', () => {
   const wrapper = mount(<LoginFormContainer />);
-  it('contains an <LoginFormContainer/> component', function () {
+  it('contains an <LoginFormContainer/> component', function() {
     expect(wrapper.find('.loginform')).to.have.length(1);
   });
-
 });

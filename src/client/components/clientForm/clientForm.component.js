@@ -21,22 +21,36 @@ function ClientID({id}) {
   );
 }
 
-export default function ClientForm({id, secret, name = '', contact = null, config = {}, onSubmit, setErrorState, hasErrors}) {
+export default function ClientForm({
+  id,
+  secret,
+  name = '',
+  contact = null,
+  config = {},
+  onSubmit,
+  setErrorState,
+  hasErrors
+}) {
   return (
     <div className="clientform">
       <form method="post" onSubmit={onSubmit}>
-        { id && ClientID({id}) || ''}
-        { secret && ClientSecret({secret}) || ''}
+        {(id && ClientID({id})) || ''}
+        {(secret && ClientSecret({secret})) || ''}
         <div className="element name">
           <label htmlFor="name">Name</label>
-          <input name="name" type="text" defaultValue={name} placeholder="the name of the service client"
-                 required="required"/>
+          <input
+            name="name"
+            type="text"
+            defaultValue={name}
+            placeholder="the name of the service client"
+            required="required"
+          />
         </div>
         <label>Contacts</label>
-        <Contacts contacts={contact}/>
-        <JEditor name="config" json={config} setErrorState={setErrorState}/>
+        <Contacts contacts={contact} />
+        <JEditor name="config" json={config} setErrorState={setErrorState} />
         <div className="element submit">
-          <input type="submit" value="Save Client" disabled={hasErrors}/>
+          <input type="submit" value="Save Client" disabled={hasErrors} />
         </div>
       </form>
     </div>
