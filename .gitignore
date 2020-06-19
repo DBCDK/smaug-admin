@@ -21,6 +21,7 @@ report.xml
 # ENV #
 # ==========
 *.env
+src/utils/config.util.js
 
 # ==========
 # ESLINT #
@@ -31,3 +32,6 @@ report.xml
 # CSS #
 # ==========
 public/*/*.map
+public/css/index.css
+
+public/js/index.js
