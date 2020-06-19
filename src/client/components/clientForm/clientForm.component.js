@@ -32,12 +32,12 @@ export default function ClientForm({
   onSubmit,
   setErrorState,
   hasErrors,
-  enabled,
+  enabled
 }) {
   const [jsonConfig, setJsonConfig] = useState(config);
   const [showJson, setShowJson] = useState(false);
 
-  const updateJEditor = (config) => {
+  const updateJEditor = config => {
     setJsonConfig({...config});
   };
 
@@ -45,7 +45,7 @@ export default function ClientForm({
     setShowJson(!showJson);
   };
 
-  const remove = (e) => {
+  const remove = e => {
     const confirmed = confirm(`Are you sure you want to delete:\n${name}?`); // eslint-disable-line no-alert
     if (!confirmed) {
       e.preventDefault();
