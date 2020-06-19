@@ -11,7 +11,7 @@ pipeline {
     YYYY_MM = sh(script: 'date "+%Y-%m"', returnStdout: true).trim()
     STAT_FILE = "openplatform_${YYYY_MM}.json"
     STAT_FILTER = '{"app":"serviceprovider", "level":"INFO"}'
-    STAT_ENDPOINT = '{"name":["work","search"]}'
+    STAT_ENDPOINT = '{"name":["work","suggest","recommend","search","storage","user","order"]}'
     ELK_CREDENTIALS = credentials('elk_user');
     ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
     ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
