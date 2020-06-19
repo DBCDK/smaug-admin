@@ -43,7 +43,7 @@ pipeline {
     }
     success {
       script {
-//        if ("${env.BRANCH_NAME}" == 'master') {
+        if ("${env.BRANCH_NAME}" == 'master') {
           sh "echo archive ${STAT_FILE}"
           archiveArtifacts "${STAT_FILE}"
           sh "echo push to ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
@@ -52,7 +52,7 @@ pipeline {
             color: 'good',
             message: "${env.JOB_NAME} #${env.BUILD_NUMBER} completed, and pushed ${STAT_FILE} to ${ARTIFACTORY_FE_GENERIC}",
             tokenCredentialId: 'slack-global-integration-token')
-//        }
+        }
       }
     }
     fixed {
