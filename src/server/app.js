@@ -25,7 +25,7 @@ const app = new Koa();
 app.name = 'Smaug Admin';
 const PORT = config.port;
 
-app.on('error', (err) => {
+app.on('error', err => {
   console.error('Server error', {error: err.message, stack: err.stack}); // eslint-disable-line no-console
 });
 

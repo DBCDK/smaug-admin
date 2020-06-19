@@ -3,6 +3,7 @@ import ClientList from '../client/components/clientList/clientList.component';
 import Client from '../client/components/clientForm/clientFormContainer.component';
 import Newclient from '../client/components/createClient/newClient.component';
 import LoginForm from '../client/components/loginForm/loginFormContainer.component';
+import Find from '../client/components/find/find.component';
 
 /**
  * Super simple routing from an ID to a top component.
@@ -18,6 +19,8 @@ export default function getComponentFromId(pageId) {
       return Newclient;
     case 'login':
       return LoginForm;
+    case 'find':
+      return Find;
     default:
       return ClientList;
   }

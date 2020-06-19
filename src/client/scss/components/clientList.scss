@@ -57,6 +57,8 @@
 
 .deleteclient {
   @include button(#ee422e);
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .editclient {

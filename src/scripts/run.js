@@ -31,8 +31,7 @@ const argv = require('yargs')
     secretFile: {
       alias: 'f'
     }
-  })
-  .argv;
+  }).argv;
 
 const command = argv._[0];
 const methods = {
@@ -40,4 +39,5 @@ const methods = {
 };
 
 // eslint-disable-next-line no-console
-methods[command] && methods[command](argv) || console.error(`Unsupported command ${command}`);
+(methods[command] && methods[command](argv)) ||
+  console.error(`Unsupported command ${command}`);

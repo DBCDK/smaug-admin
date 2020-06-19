@@ -9,15 +9,13 @@ export default async function authenticate(ctx, next) {
     try {
       await ctx.api.login();
       ctx.session.smaug.loggedIn = true;
-    }
-    catch (e) {
+    } catch (e) {
       ctx.redirect('/login');
     }
   }
   if (ctx.session.smaug.loggedIn && ctx.url === '/login') {
     ctx.redirect('/');
-  }
-  else {
+  } else {
     await next();
   }
 }

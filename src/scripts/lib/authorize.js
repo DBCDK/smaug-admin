@@ -3,10 +3,10 @@ const readline = require('readline');
 const googleAuth = require('google-auth-library');
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-const TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-  process.env.USERPROFILE) + '/.credentials/';
+const TOKEN_DIR =
+  (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) +
+  '/.credentials/';
 const TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-smaug-scripts';
-
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -16,7 +16,7 @@ const TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-smaug-scripts';
  * @param {function} callback The callback to call with the authorized client.
  */
 export default function authorize(credentials) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const clientSecret = credentials.installed.client_secret;
     const clientId = credentials.installed.client_id;
     const redirectUrl = credentials.installed.redirect_uris[0];
@@ -24,16 +24,14 @@ export default function authorize(credentials) {
     const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     // Check if we have previously stored a token.
-    fs.readFile(TOKEN_PATH, function (err, token) {
+    fs.readFile(TOKEN_PATH, function(err, token) {
       if (err) {
         getNewToken(oauth2Client, resolve);
-      }
-      else {
+      } else {
         oauth2Client.credentials = JSON.parse(token);
         resolve(oauth2Client);
       }
     });
-
   });
 }
 
@@ -55,9 +53,9 @@ function getNewToken(oauth2Client, callback) {
     input: process.stdin,
     output: process.stdout
   });
-  rl.question('Enter the code from that page here: ', function (code) {
+  rl.question('Enter the code from that page here: ', function(code) {
     rl.close();
-    oauth2Client.getToken(code, function (err, token) {
+    oauth2Client.getToken(code, function(err, token) {
       if (err) {
         console.log('Error while trying to retrieve access token', err); // eslint-disable-line no-console
         return;
@@ -77,8 +75,7 @@ function getNewToken(oauth2Client, callback) {
 function storeToken(token) {
   try {
     fs.mkdirSync(TOKEN_DIR);
-  }
-  catch (err) {
+  } catch (err) {
     if (err.code !== 'EEXIST') {
       throw err;
     }
