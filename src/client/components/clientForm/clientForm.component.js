@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import JEditor from '../jsonEditor/jsonEditor.component';
 import Contacts from '../contact/contactContainer.component';
 import AdgangsplatformForm from './AdgangsplatformForm.component';
+import AutoSuggester from '../suggester/suggester.component';
 
 function ClientSecret({secret}) {
   return (
@@ -53,6 +54,9 @@ export default function ClientForm({
     return showJson ? 'jeditor-visible' : 'jeditor-hide';
   };
 
+  const [label, setLabel] = useState(config.label || '');
+  config.label = label;
+
   return (
     <div className="clientform">
       <form method="post" onSubmit={onSubmit}>
@@ -74,6 +78,14 @@ export default function ClientForm({
           jsonConfig={jsonConfig}
           updateJEditor={updateJEditor}
           toggleJson={toggleJson}
+        />
+        <label htmlFor="label">Label</label>
+        <AutoSuggester
+          name="label"
+          className="label-suggester"
+          value={label}
+          onChange={e => setLabel(e.target.value)}
+          placeholder="label for service client"
         />
         <JEditor
           name="config"

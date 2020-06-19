@@ -12,5 +12,17 @@ export default function ClientFormContainer(props) {
     }
   };
 
-  return <Client onSubmit={onSubmit} setErrorState={setHasError} {...props} />;
+  setErrorState(hasError) {
+    this.hasError = hasError;
+  }
+
+  render() {
+    return (
+      <Client
+        onSubmit={e => this.onSubmit(e)}
+        setErrorState={state => this.setErrorState(state)}
+        {...this.props}
+      />
+    );
+  }
 }

@@ -14,6 +14,14 @@ import renderPage from '../utils/renderPage.util';
 const router = new KoaRouter();
 
 /**
+ * Get clients
+ */
+router.get('/api/clients', async ctx => {
+  const list = await ctx.api.getClientList();
+  ctx.body = (Array.isArray(list) && list) || [];
+});
+
+/**
  * Shows a list of service clients.
  */
 router.get('/', async ctx => {
