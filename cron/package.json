@@ -17,7 +17,6 @@
     "url": "git+https://github.com/DBCDK/smaug-admin.git"
   },
   "dependencies": {
-    "dbc-node-logger": "^2.0.9",
     "elasticsearch": "^16.7.1",
     "getopts": "^2.2.5"
   },
