@@ -8,12 +8,15 @@ input[type=password],
 input[type=email] {
   margin: 0;
   display: block;
-  width: 100%;
+  width: 80%;
   padding: .5rem 1rem;
   line-height: 1.25;
   color: #55595c;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, .15);
+}
+input[type=checkbox] {
+  width:20px;
 }
 
 label {

@@ -5,15 +5,14 @@ import sinon from 'sinon';
 import JEditor from '../components/jsonEditor/jsonEditor.component';
 
 describe('<JEditor />', () => {
-
-  it('contains an <JEditor/> component', function () {
+  it('contains an <JEditor/> component', function() {
     const wrapper = mount(<JEditor name="config" />);
     expect(wrapper.find('input[name="config"]')).to.have.length(1);
   });
 
-  it('returns error when faulty json', function () {
+  it('returns error when faulty json', function() {
     const callback = sinon.spy();
-    const wrapper = mount(<JEditor name="config" setErrorState={callback}/>);
+    const wrapper = mount(<JEditor name="config" setErrorState={callback} />);
     const editor = wrapper.instance().editor;
 
     // editor method is mocked to provide fake json
@@ -27,9 +26,9 @@ describe('<JEditor />', () => {
     expect(callback.getCall(0).args[0]).to.be.true;
   });
 
-  it('returns no error when valid json', function () {
+  it('returns no error when valid json', function() {
     const callback = sinon.spy();
-    const wrapper = mount(<JEditor name="config" setErrorState={callback}/>);
+    const wrapper = mount(<JEditor name="config" setErrorState={callback} />);
     const editor = wrapper.instance().editor;
     editor.getText = () => '{"json": "valid"}';
     wrapper.instance().editor._onChange();

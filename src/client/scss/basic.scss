@@ -11,11 +11,13 @@ $secondary-color: #222;
 @import "mixins/overlay";
 @import "components/page";
 @import "components/clientForm";
+@import "components/adgangsplatformForm";
 @import "components/clientList";
 @import "components/contact";
 @import "components/forms";
 @import "components/loginForm";
 @import "components/tokenview";
+@import "components/find";
 
 div, form, input, p {
   box-sizing: border-box;
@@ -46,6 +48,13 @@ a {
   text-decoration: none;
 }
 
+.input-label{
+  font-size: 16px;
+  font-family: HelveticaNeue-Bold;
+  font-weight: bold;
+  letter-spacing: 0;
+}
+
 .wrapper {
   max-width: 1024px;
   margin-left: auto;
@@ -55,11 +64,13 @@ a {
 .header {
   background-color: #373a3c;
   color: white;
-  .wrapper * {
-    display: inline-block;
-  }
 
+  .wrapper {
+    display: flex;
+    line-height: 56px;
+  }
   .logo {
+    min-width: fit-content;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 1.5em;
@@ -72,9 +83,6 @@ a {
     &:hover {
       color: darken(white, 30%);
     }
-  }
-  li + li {
-    margin-left: 1rem;
   }
 }
 
