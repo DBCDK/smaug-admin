@@ -6,7 +6,6 @@ WORKDIR /home/node/app
 # copy project file
 COPY . .
 COPY .babelrc .
-COPY .eslintrc .
 COPY .editorconfig .
 
 ENV CI=true
