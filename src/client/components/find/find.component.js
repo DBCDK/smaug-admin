@@ -15,7 +15,7 @@ const FindListElement = ({id, name, hits, search}) => (
       <Highlight highlight={search}>{name}</Highlight>
     </a>
     <a href={`/client/${id}`} className="hit">
-      <Hits id={id} hits={hits} search={search} />
+      <Hits id={id} hits={hits} search={search}/>
     </a>
   </div>
 );
@@ -39,7 +39,7 @@ const FindList = ({list, search}) => (
         <label className="label-hits">Hits</label>
       </div>
       <div className="elements">
-        <FindListElements list={list} search={search} />
+        <FindListElements list={list} search={search}/>
       </div>
     </div>
   </div>
@@ -56,7 +56,8 @@ const filteredItems = (lines, list) => {
     }
     if (Array.isArray(foundItems[index].hits)) {
       foundItems[index].hits.push(record);
-    } else {
+    }
+    else {
       foundItems[index].hits = [record];
     }
   });
@@ -73,7 +74,7 @@ const Find = ({searchString = '', list = []}) => {
   const foundItems = filteredItems(matching_lines, list);
   return (
     <div className="findform">
-      <FindList list={foundItems} search={searchString} />
+      <FindList list={foundItems} search={searchString}/>
     </div>
   );
 };

@@ -27,14 +27,14 @@ const {state, ...pageState} = pageData;
 const MainPage = () => {
   const [searchString, setSearchString] = useState(state.searchString || '');
   const onSearch = search => {
-    window.location.pathname = '/find/' + search;
+    window.location.pathname = '/find/' + encodeURIComponent(search);
     setSearchString(search);
   };
   return (
     <Page {...pageState} searchString={searchString} onSearch={onSearch}>
-      <RootComponent {...state} searchString={searchString} />
+      <RootComponent {...state} searchString={searchString}/>
     </Page>
   );
 };
 
-ReactDOM.render(<MainPage />, rootContainer);
+ReactDOM.render(<MainPage/>, rootContainer);
