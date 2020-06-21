@@ -1,7 +1,10 @@
 import React from 'react';
 
 const Highlight = ({children, highlight}) => {
-  const highlightRegExp = highlight.replace(/\.|\+|\[|\(|\)|\*|\?|\^|\$/gi, x => '\\' + x);
+  const highlightRegExp = highlight.replace(
+    /\.|\+|\[|\(|\)|\*|\?|\^|\$/gi,
+    x => '\\' + x
+  );
   if (!highlightRegExp) {
     return <div className="highlight">{children}</div>;
   }

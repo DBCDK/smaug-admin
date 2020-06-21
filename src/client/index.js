@@ -32,9 +32,9 @@ const MainPage = () => {
   };
   return (
     <Page {...pageState} searchString={searchString} onSearch={onSearch}>
-      <RootComponent {...state} searchString={searchString}/>
+      <RootComponent {...state} searchString={searchString} />
     </Page>
   );
 };
 
-ReactDOM.render(<MainPage/>, rootContainer);
+ReactDOM.render(<MainPage />, rootContainer);
