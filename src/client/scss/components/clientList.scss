@@ -51,6 +51,10 @@
     padding: 0 0.5rem;
     font-weight: bold;
   }
+
+  span {
+    cursor: pointer;
+  }
 }
 
 .client {
@@ -89,6 +93,7 @@
     border: 1px solid #979797;
     padding: 0.3rem 0.7rem;
     border-radius: 25px;
+    margin: 0 0 0 1rem;
   }
 
   .label a:hover {

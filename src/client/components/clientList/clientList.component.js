@@ -20,9 +20,9 @@ const ClientListElement = ({data}) => {
 
   return (
     <div className="client" key={id}>
-      <a href={`/client/${id}`} className="label">
+      <span href={`/client/${id}`} className="label">
         {label && <a href={`/find/${label}`}>{label}</a>}
-      </a>
+      </span>
       <a href={`/client/${id}`} className="name">
         {name}
       </a>
@@ -63,8 +63,7 @@ const Group = ({name, group, i}) => {
 function ClientList({list}) {
   const [sort, setSort] = useState('name');
 
-  const setLabelSort = () => {};
-
+  // Map to groups
   const unsorted_groups = _.groupBy(
     list.map(c => ({
       ...c,
@@ -72,6 +71,8 @@ function ClientList({list}) {
     })),
     'config.label'
   );
+
+  // Sort groups alphabetical
   const groups = sortByKeys(unsorted_groups);
 
   return (
@@ -79,16 +80,19 @@ function ClientList({list}) {
       <div className="clients">
         <div className="labels">
           <label className="label-label" onClick={() => setSort('label')}>
-            Label
+            <span>Label {sort === 'label' && <span>↓</span>}</span>
           </label>
           <label className="label-name" onClick={() => setSort('name')}>
-            Name
+            <span>Name {sort === 'name' && <span>↓</span>}</span>
           </label>
           <label className="label-id" onClick={() => setSort('id')}>
-            ID
+            <span>ID {sort === 'id' && <span>↓</span>}</span>
           </label>
-          <label className="label-owner" onClick={() => setSort('owner.name')}>
-            Owner
+          <label
+            className="label-owner"
+            onClick={() => setSort('contact.owner.name')}
+          >
+            <span>Owner {sort === 'contact.owner.name' && <span>↓</span>}</span>
           </label>
           <label className="label-owner">token</label>
         </div>
