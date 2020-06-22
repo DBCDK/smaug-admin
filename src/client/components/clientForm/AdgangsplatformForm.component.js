@@ -1,8 +1,8 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
 
 export default function AdgangsplatformForm(props) {
-  const {updateJEditor, toggleJson, jsonConfig} = props;
+  const { updateJEditor, toggleJson, jsonConfig, jsonEditState } = props;
 
   const isJSON = str => {
     try {
@@ -13,10 +13,12 @@ export default function AdgangsplatformForm(props) {
     return true;
   };
 
-  const checkForServices = type => {
-    return jsonConfig.services
-      ? jsonConfig.services.filter(t => t === type).length > 0
-      : false;
+  const checkForUses = type => {
+    let retvar = false;
+    if (Array.isArray(jsonConfig.uses)) {
+      retvar = jsonConfig.uses.filter(t => t === type).length > 0;
+    }
+    return retvar;
   };
   const checkForAttributes = type => {
     return jsonConfig.attributes
@@ -24,43 +26,45 @@ export default function AdgangsplatformForm(props) {
       : false;
   };
   const checkForIdProviders = type => {
-    return jsonConfig.identityProviders
-      ? jsonConfig.identityProviders.filter(t => t === type).length > 0
-      : false;
+    let retvar = false;
+    if (Array.isArray(jsonConfig.identityProviders)) {
+      retvar = jsonConfig.identityProviders.filter(t => t === type).length > 0;
+    }
+    return retvar;
   };
   const checkForSignOut = () => {
     if (jsonConfig.logoutScreen) {
-      return jsonConfig.logoutScreen !== ('skip' || false);
+      return jsonConfig.logoutScreen !== ("skip" || false);
     }
   };
 
   const [openPlatform, setOpenplatform] = useState(
-    checkForServices('OpenPlatform')
+    checkForUses("OpenPlatform")
   );
-  const [bib, setBib] = useState(checkForServices('Login.bib.dk'));
-  const [userCPR, setUserCPR] = useState(checkForAttributes('cpr'));
-  const [userID, setUserID] = useState(checkForAttributes('userId'));
-  const [uniqueID, setUniqueID] = useState(checkForAttributes('uniqueId'));
-  const [libraries, setLibraries] = useState(checkForAttributes('libraries'));
+  const [bib, setBib] = useState(checkForUses("Login.bib.dk"));
+  const [userCPR, setUserCPR] = useState(checkForAttributes("cpr"));
+  const [userID, setUserID] = useState(checkForAttributes("userId"));
+  const [uniqueID, setUniqueID] = useState(checkForAttributes("uniqueId"));
+  const [libraries, setLibraries] = useState(checkForAttributes("libraries"));
   const [muniNo, setMuniNo] = useState(
-    checkForAttributes('municipalityAgencyId')
+    checkForAttributes("municipalityAgencyId")
   );
-  const [borchk, setBorchk] = useState(checkForIdProviders('borchk'));
-  const [nemLogin, setNemLogin] = useState(checkForIdProviders('nemlogin'));
-  const [uniLogin, setUniLogin] = useState(checkForIdProviders('unilogin'));
+  const [borchk, setBorchk] = useState(checkForIdProviders("borchk"));
+  const [nemLogin, setNemLogin] = useState(checkForIdProviders("nemlogin"));
+  const [uniLogin, setUniLogin] = useState(checkForIdProviders("unilogin"));
   const [showSignOut, setShowSignOut] = useState(checkForSignOut());
 
   const getSignOutPath = () => {
-    return jsonConfig.singleLogoutPath ? jsonConfig.singleLogoutPath : '';
+    return jsonConfig.singleLogoutPath ? jsonConfig.singleLogoutPath : "";
   };
   const getAgencyId = () => {
-    return jsonConfig.agencyId ? jsonConfig.agencyId : '';
+    return jsonConfig.agencyId ? jsonConfig.agencyId : "";
   };
   const getLogo = () => {
-    return jsonConfig.logoColor ? jsonConfig.logoColor : '';
+    return jsonConfig.logoColor ? jsonConfig.logoColor : "";
   };
   const getDisplayName = () => {
-    return jsonConfig.displayName ? jsonConfig.displayName : '';
+    return jsonConfig.displayName ? jsonConfig.displayName : "";
   };
   const getredirectUris = () => {
     let incomingURIs = isJSON(jsonConfig.redirectUris)
@@ -75,7 +79,7 @@ export default function AdgangsplatformForm(props) {
   const [singleSignoutPath, setSingleSignoutPath] = useState(getSignOutPath());
   const [redirectUris, setRedirectUris] = useState(getredirectUris());
 
-  const getServices = () => {
+  const getUses = () => {
     let arr = [];
     bib ? arr.push('Login.bib.dk') : arr.filter(e => e === 'Login.bib.dk');
     openPlatform
@@ -84,19 +88,19 @@ export default function AdgangsplatformForm(props) {
     return arr;
   };
   const getAttributes = () => {
-    let attObj = {...jsonConfig.attributes};
-    userCPR ? (attObj['cpr'] = {}) : delete attObj.cpr;
-    userID ? (attObj['userId'] = {}) : delete attObj.userId;
-    uniqueID ? (attObj['uniqueId'] = {}) : delete attObj.uniqueId;
-    libraries ? (attObj['libraries'] = {}) : delete attObj.libraries;
-    muniNo ? (attObj['MuniNo'] = {}) : delete attObj.MuniNo;
+    let attObj = { ...jsonConfig.attributes };
+    userCPR ? (attObj["cpr"] = {}) : delete attObj.cpr;
+    userID ? (attObj["userId"] = {}) : delete attObj.userId;
+    uniqueID ? (attObj["uniqueId"] = {}) : delete attObj.uniqueId;
+    libraries ? (attObj["libraries"] = {}) : delete attObj.libraries;
+    muniNo ? (attObj["MuniNo"] = {}) : delete attObj.MuniNo;
     return attObj;
   };
   const getIdProviders = () => {
     let arr = [];
-    borchk ? arr.push('borchk') : arr.filter(e => e === 'borchk');
-    nemLogin ? arr.push('nemlogin') : arr.filter(e => e === 'nemlogin');
-    uniLogin ? arr.push('unilogin') : arr.filter(e => e === 'unilogin');
+    borchk ? arr.push("borchk") : arr.filter(e => e === "borchk");
+    nemLogin ? arr.push("nemlogin") : arr.filter(e => e === "nemlogin");
+    uniLogin ? arr.push("unilogin") : arr.filter(e => e === "unilogin");
     return arr;
   };
 
@@ -106,14 +110,14 @@ export default function AdgangsplatformForm(props) {
   };
 
   const saveTextToJSON = (e, fn) => {
-    let jsonOUT = {...props.jsonConfig};
+    let jsonOUT = { ...props.jsonConfig };
     fn(e.target.value);
     jsonOUT[e.target.id] = e.target.value;
     // clean up
     if (!e.target.value) {
       delete jsonOUT[e.target.id];
     }
-    if (e.target.id === 'redirectUris') {
+    if (e.target.id === "redirectUris") {
       jsonOUT[e.target.id] = isJSON(e.target.value)
         ? JSON.parse(e.target.value)
         : e.target.value;
@@ -122,16 +126,22 @@ export default function AdgangsplatformForm(props) {
     updateJEditor(jsonOUT);
   };
 
+  const getEditJsonBtnTitle = () => {
+    return jsonEditState
+      ? "Hide JSON formatting"
+      : "Edit configuration in JSON format";
+  };
+
   useEffect(() => {
     let jsonOUT = jsonConfig;
-    jsonOUT['attributes'] = getAttributes();
-    jsonOUT['services'] = getServices();
-    jsonOUT['identityProviders'] = getIdProviders();
-    jsonOUT['logoutScreen'] = showSignOut;
+    jsonOUT["attributes"] = getAttributes();
+    jsonOUT["uses"] = getUses();
+    jsonOUT["identityProviders"] = getIdProviders();
+    jsonOUT["logoutScreen"] = showSignOut;
 
     // clean up
-    if (jsonOUT.services.length < 1) {
-      delete jsonOUT.services;
+    if (jsonOUT.uses.length < 1) {
+      delete jsonOUT.uses;
     }
     if (jsonOUT.identityProviders.length < 1) {
       delete jsonOUT.identityProviders;
@@ -162,22 +172,22 @@ export default function AdgangsplatformForm(props) {
           <label>Services</label>
         </div>
         <div className="adgangsForm-toggle" onClick={toggleJson}>
-          Edit configuration as json EDITS
+          {getEditJsonBtnTitle()}
         </div>
       </span>
       <div className="adgangsForm">
-        <div className="adgangsForm-choosePlatform-container" id="services">
-          <input-label>Use client for selected services</input-label>
-          <span className="openPlatform">
+        <div className="adgangsForm-choosePlatform-container" id="uses">
+          <div className="input-label">Use client for selected services</div>
+          <span className="openPlatform input-label">
             <input
               id="openPlatform"
               type="checkbox"
               checked={openPlatform}
               onChange={() => setOpenplatform(!openPlatform)}
             />
-            <input-label>OpenPlatform</input-label>
+            <input-label className="input-label">OpenPlatform</input-label>
           </span>
-          <span className="bib">
+          <span className="bib input-label">
             <input
               id="bib"
               type="checkbox"
@@ -187,7 +197,7 @@ export default function AdgangsplatformForm(props) {
             <input-label>Login.bib.dk</input-label>
           </span>
         </div>
-        {bib && (
+        {bib && !jsonEditState && (
           <div className="adgangsForm-formSection">
             <div className="adgangsForm-title-top">
               <div className="adgangsForm-title">
@@ -216,9 +226,9 @@ export default function AdgangsplatformForm(props) {
 
               {/* User attributes at sign in */}
               <div className="adgangsForm-checkbox-section" id="attributes">
-                <input-label>
+                <div className="input-label">
                   User attributes to retrieve at sign in
-                </input-label>
+                </div>
                 <span className="userCPR">
                   <input
                     id="userCPR"
@@ -283,7 +293,7 @@ export default function AdgangsplatformForm(props) {
                 className="adgangsForm-checkbox-section"
                 id="identityProviders"
               >
-                <input-label>Identity providers</input-label>
+                <div className="input-label">Identity providers</div>
                 <span>
                   <input
                     id="borchk"
@@ -314,8 +324,8 @@ export default function AdgangsplatformForm(props) {
               </div>
 
               {/* Sign out screen  */}
-              <div className="adgangsForm-checkbox-section" id="logoutScreen">
-                <input-label>Sign out screen</input-label>
+              <div className="adgangsForm-checkbox-section input-label" id="logoutScreen">
+                Sign out screen
                 <span>
                   <input
                     id="showSignOut"
@@ -324,7 +334,7 @@ export default function AdgangsplatformForm(props) {
                     onChange={() => setShowSignOut(!showSignOut)}
                   />
                   <input-label>
-                    {' '}
+                    {" "}
                     Show sign out screen to user, when signing out
                   </input-label>
                 </span>
