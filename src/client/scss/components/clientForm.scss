@@ -3,6 +3,7 @@
     @include button();
     font-weight: bold;
     font-size: 1rem;
+
   }
 
   label {
@@ -18,8 +19,12 @@
   }
 
   .updateclient, .removeclient {
-    margin-left: 30px;
     display: inline-flex;
+    position: absolute;
+  }
+
+  .removeclient{
+    margin-left: 150px;
   }
 }
 

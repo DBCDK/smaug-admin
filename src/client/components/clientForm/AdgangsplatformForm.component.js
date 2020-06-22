@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 
 export default function AdgangsplatformForm(props) {
-  const {updateJEditor, toggleJson, jsonConfig} = props;
+  const {updateJEditor, toggleJson, jsonConfig, jsonEditState} = props;
 
   const isJSON = str => {
     try {
@@ -15,7 +15,7 @@ export default function AdgangsplatformForm(props) {
 
   const checkForServices = type => {
     return jsonConfig.services
-      ? jsonConfig.services.filter(t => t === type).length > 0
+      ? Object.keys(jsonConfig.services).filter(t => t === type).length > 0
       : false;
   };
   const checkForAttributes = type => {
@@ -76,12 +76,10 @@ export default function AdgangsplatformForm(props) {
   const [redirectUris, setRedirectUris] = useState(getredirectUris());
 
   const getServices = () => {
-    let arr = [];
-    bib ? arr.push('Login.bib.dk') : arr.filter(e => e === 'Login.bib.dk');
-    openPlatform
-      ? arr.push('OpenPlatform')
-      : arr.filter(e => e === 'OpenPlatform');
-    return arr;
+    let attObj = {...jsonConfig.services};
+    bib ? (attObj['Login.bib.dk'] = '') : delete attObj['Login.bib.dk'];
+    openPlatform ? (attObj['OpenPlatform'] = '') : delete attObj.OpenPlatform;
+    return attObj;
   };
   const getAttributes = () => {
     let attObj = {...jsonConfig.attributes};
@@ -122,6 +120,12 @@ export default function AdgangsplatformForm(props) {
     updateJEditor(jsonOUT);
   };
 
+  const getEditJsonBtnTitle = () => {
+    return jsonEditState
+      ? 'Hide JSON formatting'
+      : 'Edit configuration in JSON format';
+  };
+
   useEffect(() => {
     let jsonOUT = jsonConfig;
     jsonOUT['attributes'] = getAttributes();
@@ -130,7 +134,7 @@ export default function AdgangsplatformForm(props) {
     jsonOUT['logoutScreen'] = showSignOut;
 
     // clean up
-    if (jsonOUT.services.length < 1) {
+    if (Object.keys(jsonOUT.services).length < 1) {
       delete jsonOUT.services;
     }
     if (jsonOUT.identityProviders.length < 1) {
@@ -162,7 +166,7 @@ export default function AdgangsplatformForm(props) {
           <label>Services</label>
         </div>
         <div className="adgangsForm-toggle" onClick={toggleJson}>
-          Edit configuration as json EDITS
+          {getEditJsonBtnTitle()}
         </div>
       </span>
       <div className="adgangsForm">

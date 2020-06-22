@@ -87,6 +87,7 @@ export default function ClientForm({
           jsonConfig={jsonConfig}
           updateJEditor={updateJEditor}
           toggleJson={toggleJson}
+          jsonEditState={showJson}
         />
         <JEditor
           name="config"
