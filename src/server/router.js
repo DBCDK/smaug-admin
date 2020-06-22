@@ -95,11 +95,24 @@ router.get('/client/:id', async ctx => {
 router.post('/client/:id', async ctx => {
   const body = ctx.request.body;
   const id = ctx.params.id;
-  const client = await ctx.api.setClient(id, {
-    name: body.name,
-    config: JSON.parse(body.config),
-    contact: contactListToObject(body.contact)
-  });
+
+  // fetch original client first
+  // and merge into that
+  // then its possible to only update enabled state
+  const oldClient = await ctx.api.getClient(id);
+  let client = {
+    name: typeof body.name === 'undefined' ? oldClient.name : body.name,
+    config:
+      typeof body.config === 'undefined'
+        ? oldClient.config
+        : JSON.parse(body.config),
+    contact:
+      typeof body.contact === 'undefined'
+        ? oldClient.contact
+        : contactListToObject(body.contact),
+    enabled: body.enabled === 'true' || body.enabled === 'on'
+  };
+  client = await ctx.api.setClient(id, client);
   ctx.body = renderPage(
     'clientform',
     'Edit Client',
@@ -140,7 +153,8 @@ router.post('/add', async ctx => {
   const client = await ctx.api.createClient({
     name: body.name,
     config: JSON.parse(body.config),
-    contact: contactListToObject(body.contact)
+    contact: contactListToObject(body.contact),
+    enabled: body.enabled === 'true' || body.enabled === 'on'
   });
 
   ctx.body = renderPage(

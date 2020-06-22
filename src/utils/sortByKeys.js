@@ -1,10 +1,16 @@
 import _ from 'lodash';
 
-const sortByKeys = object => {
+const sortByKeys = (object, asc) => {
   const keys = Object.keys(object);
   const sortedKeys = _.sortBy(keys);
 
-  return _.fromPairs(_.map(sortedKeys, key => [key, object[key]]));
+  const res = _.map(sortedKeys, key => [key, object[key]]);
+
+  if (!asc) {
+    return _.fromPairs(res.reverse());
+  }
+
+  return _.fromPairs(res);
 };
 
 export default sortByKeys;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {dot} from 'dot-object';
 import Highlight from '../highlight/highlight.component';
+import ClientEnableSwitch from '../switch/clientEnableSwitch.component';
 
 const Hits = ({id, hits, search}) =>
   hits.map(hit => (
@@ -9,7 +10,7 @@ const Hits = ({id, hits, search}) =>
     </Highlight>
   ));
 
-const FindListElement = ({id, name, hits, search}) => (
+const FindListElement = ({id, name, hits, search, enabled}) => (
   <div className="client" key={id}>
     <a href={`/client/${id}`} className="name">
       <Highlight highlight={search}>{name}</Highlight>
@@ -17,19 +18,25 @@ const FindListElement = ({id, name, hits, search}) => (
     <a href={`/client/${id}`} className="hit">
       <Hits id={id} hits={hits} search={search} />
     </a>
+    <div>
+      <ClientEnableSwitch name={name} id={id} initEnabled={enabled} />
+    </div>
   </div>
 );
 
 const FindListElements = ({list, search}) =>
-  Object.entries(list).map(([key, {id, name, hits}]) => (
-    <FindListElement
-      key={key}
-      id={id}
-      name={name}
-      hits={hits}
-      search={search}
-    />
-  ));
+  Object.entries(list).map(([key, {id, name, hits, enabled}]) => {
+    return (
+      <FindListElement
+        key={key}
+        id={id}
+        name={name}
+        hits={hits}
+        search={search}
+        enabled={enabled}
+      />
+    );
+  });
 
 const FindList = ({list, search}) => (
   <div className="find-list">
@@ -37,6 +44,7 @@ const FindList = ({list, search}) => (
       <div className="labels">
         <label className="label-name">Name</label>
         <label className="label-hits">Hits</label>
+        <label className="label-hits">Enabled</label>
       </div>
       <div className="elements">
         <FindListElements list={list} search={search} />

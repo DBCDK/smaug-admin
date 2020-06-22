@@ -8,7 +8,7 @@ services:
       - POSTGRES_USER=smaug
       - POSTGRES_HOST_AUTH_METHOD=trust
   smaug:
-    image: 'docker-ux.dbc.dk/smaug-master:35'
+    image: '${IMAGE:-docker-ux.dbc.dk/smaug-master:34}'
     environment:
       - NODE_ENV=production
       - PORT=3001
@@ -31,22 +31,23 @@ services:
     depends_on:
       - database
       - redis
+    ports:
+      - 3001:3001
+      - 3002:3002
+      - 3003:3003
     command: bash -c 'while !</dev/tcp/database/5432; do sleep 1; done; npm run start'
-  web:
-    ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: '${IMAGE:-docker-frontend.dbc.dk/smaug-admin:latest}'
-    command: bash -c 'node src/server/index.js'
-    environment: 
-      - SMAUG_URI=http://smaug:3002
+  smaugadmin:
     depends_on:
       - smaug
-  e2e:
-    ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: docker.dbc.dk/cypress:latest
+    image: docker.dbc.dk/dbc-node:latest
     volumes:
-      - './e2e:/app/e2e'
-    depends_on:
-      - web
+      - .:/home/node/app
+      - /home/node/app/node_modules/ ## we do not mount node_modules
+    working_dir: /home/node/app
+    command: bash -c 'npm install && npm run dev'
     environment:
-      - CYPRESS_baseUrl=http://web:1234
-    command: bash -c 'until $$(curl --output /dev/null --silent --head --fail http://web:1234/ready); do printf '.'; sleep 5; done; npm run cy'
+      - SMAUG_URI=http://smaug:3002
+      # - SMAUG_USER=admin
+      # - SMAUG_PASSWORD=admin
+    ports:
+      - 1234:1234

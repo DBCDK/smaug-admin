@@ -44,11 +44,11 @@
   text-align: left;
   display: flex;
   align-items: center;
-  padding: 2rem 0.5rem;
+  padding: 2rem 0;
 
   * {
     min-width: 20%;
-    padding: 0 0.5rem;
+
     font-weight: bold;
   }
 
@@ -68,7 +68,7 @@
   }
 
   a {
-    padding: 1rem 0.5rem;
+    padding: 1rem 0;
     color: #373a3c;
     transition: all 200ms ease-in;
   }

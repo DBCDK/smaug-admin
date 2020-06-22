@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import JEditor from '../jsonEditor/jsonEditor.component';
 import Contacts from '../contact/contactContainer.component';
 import AdgangsplatformForm from './AdgangsplatformForm.component';
+import ClientEnableSwitch from '../switch/clientEnableSwitch.component';
 import AutoSuggester from '../suggester/suggester.component';
 
 function ClientSecret({secret}) {
@@ -31,7 +32,8 @@ export default function ClientForm({
   config = {},
   onSubmit,
   setErrorState,
-  hasErrors
+  hasErrors,
+  enabled
 }) {
   const [jsonConfig, setJsonConfig] = useState(config);
   const [showJson, setShowJson] = useState(false);
@@ -74,6 +76,17 @@ export default function ClientForm({
         </div>
         <label>Contacts</label>
         <Contacts contacts={contact} />
+        <div className="element">
+          <label>Enabled</label>
+          <div>
+            <ClientEnableSwitch
+              name={name}
+              id={id}
+              initEnabled={enabled}
+              immediateUpdate={false}
+            />
+          </div>
+        </div>
         <AdgangsplatformForm
           jsonConfig={jsonConfig}
           updateJEditor={updateJEditor}

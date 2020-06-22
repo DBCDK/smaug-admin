@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import _, {orderBy} from 'lodash';
 import sortByKeys from '../../../utils/sortByKeys';
 import Token from '../token/tokenContainer.component';
+import ClientEnableSwitch from '../switch/clientEnableSwitch.component';
 
 const ClientListElement = ({data}) => {
-  const {id, name, contact, config} = data;
-
+  const {id, name, contact, config, enabled} = data;
   const submit = e => {
     const confirmed = confirm(`Are you sure you want to delete:\n${name}?`); // eslint-disable-line no-alert
     if (!confirmed) {
@@ -26,13 +26,12 @@ const ClientListElement = ({data}) => {
       <a href={`/client/${id}`} className="name">
         {name}
       </a>
-      <a href={`/client/${id}`} className="id">
-        {id}
-      </a>
       <a href={`/client/${id}`} className="owner">
         {(contact.owner && contact.owner.name) || ''}
       </a>
-
+      <div>
+        <ClientEnableSwitch id={id} initEnabled={enabled} name={name} />
+      </div>
       <Token client={{id, name}} />
     </div>
   );
@@ -62,6 +61,17 @@ const Group = ({name, group, i}) => {
 
 function ClientList({list}) {
   const [sort, setSort] = useState('name');
+  const [asc, setAsc] = useState(true);
+
+  const handleSort = name => {
+    if (name === sort) {
+      setAsc(!asc);
+      return;
+    }
+
+    setSort(name);
+    setAsc(true);
+  };
 
   // Map to groups
   const unsorted_groups = _.groupBy(
@@ -73,26 +83,29 @@ function ClientList({list}) {
   );
 
   // Sort groups alphabetical
-  const groups = sortByKeys(unsorted_groups);
+  const groups = sortByKeys(unsorted_groups, asc);
+  const arrow = asc ? '↓' : '↑';
 
   return (
     <div className="clientlist">
       <div className="clients">
         <div className="labels">
-          <label className="label-label" onClick={() => setSort('label')}>
-            <span>Label {sort === 'label' && <span>↓</span>}</span>
+          <label className="label-label" onClick={() => handleSort('label')}>
+            <span>Label {sort === 'label' && <span>{arrow}</span>}</span>
           </label>
-          <label className="label-name" onClick={() => setSort('name')}>
-            <span>Name {sort === 'name' && <span>↓</span>}</span>
-          </label>
-          <label className="label-id" onClick={() => setSort('id')}>
-            <span>ID {sort === 'id' && <span>↓</span>}</span>
+          <label className="label-name" onClick={() => handleSort('name')}>
+            <span>Name {sort === 'name' && <span>{arrow}</span>}</span>
           </label>
           <label
             className="label-owner"
-            onClick={() => setSort('contact.owner.name')}
+            onClick={() => handleSort('contact.owner.name')}
           >
-            <span>Owner {sort === 'contact.owner.name' && <span>↓</span>}</span>
+            <span>
+              Owner {sort === 'contact.owner.name' && <span>{arrow}</span>}
+            </span>
+          </label>
+          <label className="label-owner" onClick={() => handleSort('enabled')}>
+            <span>Enabled {sort === 'enabled' && <span>{arrow}</span>}</span>
           </label>
           <label className="label-owner">token</label>
         </div>
@@ -108,7 +121,7 @@ function ClientList({list}) {
                 />
               );
             })
-          : orderBy(list, [sort], ['asc']).map(c => (
+          : orderBy(list, [sort], asc ? ['asc'] : ['desc']).map(c => (
               <ClientListElement key={c.id} data={c} />
             ))}
       </div>
