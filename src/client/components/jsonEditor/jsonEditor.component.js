@@ -5,7 +5,7 @@ export default class JEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      json: JSON.stringify(this.props.json)
+      json: JSON.stringify(this.props.json || {})
     };
   }
 
@@ -47,7 +47,7 @@ export default class JEditor extends React.Component {
         className={'element ' + this.props.name + ' ' + this.props.isVisible}
       >
         <label htmlFor={this.props.name}>{this.props.name}</label>
-        <div ref="jsoneditor" style={{width: '100%', height: '400px'}}></div>
+        <div ref="jsoneditor" style={{width: '100%', height: '400px'}} />
         <input
           type="hidden"
           name={this.props.name}

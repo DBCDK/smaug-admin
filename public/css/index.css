@@ -140,33 +140,55 @@
   height: 200px; }
 
 .clientlist {
-  text-align: center; }
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
 
 .clients {
-  display: table;
-  text-align: left;
-  width: 100%;
-  margin-bottom: 2rem; }
-  .clients .elements {
-    display: table-row-group; }
+  margin-bottom: 1rem;
+  width: 100%; }
+  .clients .elements-group {
+    width: 100%; }
+    .clients .elements-group .group-name div {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer; }
+      .clients .elements-group .group-name div h2 {
+        font-size: 14px; }
+      .clients .elements-group .group-name div span {
+        margin: 0 0.5rem 0 0; }
+    .clients .elements-group .group-clients-wrap {
+      width: 100%;
+      margin: 0 0 2rem 0;
+      overflow: hidden; }
+      .clients .elements-group .group-clients-wrap.collapsed {
+        height: 0;
+        margin: 0; }
 
 .labels {
-  display: table-header-group;
-  padding: 0 0.5rem; }
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding: 2rem 0; }
+  .labels label:first-child span {
+    padding-left: 1rem; }
   .labels * {
-    display: table-cell;
-    padding: 0 0.5rem;
+    min-width: 20%;
     font-weight: bold; }
+  .labels span {
+    cursor: pointer; }
 
 .client {
   transition: all 200ms ease-in;
-  display: table-row;
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid #ccc; }
+  .client .name div {
+    padding-left: 1rem; }
   .client > * {
-    display: table-cell;
-    border-bottom: 1px solid #ccc; }
+    min-width: 20%; }
   .client a {
-    padding: 1rem 0.5rem;
+    padding: 1rem 0;
     color: #373a3c;
     transition: all 200ms ease-in; }
   .client a.createtoken {
@@ -184,6 +206,14 @@
     background-color: #4c4c4c; }
     .client:hover a {
       color: white; }
+  .client .label a {
+    font-size: 12px;
+    border: 1px solid #979797;
+    padding: 0.3rem 0.7rem;
+    border-radius: 25px;
+    margin: 0 0 0 1rem; }
+  .client .label a:hover {
+    background-color: #979797; }
 
 .createclient {
   display: inline-block;
@@ -193,7 +223,9 @@
   color: #fff;
   border: none;
   font-weight: bold;
-  font-size: 1rem; }
+  font-size: 1rem;
+  align-self: center;
+  margin-bottom: 2rem; }
   .createclient:hover {
     background-color: #0550c7; }
 
@@ -335,15 +367,123 @@ label {
 .highlight .highlighted {
   background-color: #d8d8d8; }
 
-div, form, input, p {
+.find-clients .labels .label-name span {
+  padding-left: 1rem; }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px; }
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0; }
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s; }
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s; }
+
+input:checked + .slider {
+  background-color: #2196F3; }
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3; }
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px); }
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 20px; }
+
+.slider.round:before {
+  border-radius: 50%; }
+
+.react-autosuggest__container {
+  position: relative; }
+
+.react-autosuggest__input {
+  width: 240px;
+  height: 38px;
+  padding: 10px 20px;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border: 1px solid #aaa; }
+
+.react-autosuggest__input--focused {
+  outline: none; }
+
+.react-autosuggest__input--open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+
+.react-autosuggest__suggestions-container {
+  display: none; }
+
+.react-autosuggest__suggestions-container--open {
+  display: block;
+  position: absolute;
+  top: 38px;
+  width: 280px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  z-index: 2; }
+
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px; }
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #ddd; }
+
+div,
+form,
+input,
+p {
   box-sizing: border-box; }
 
-html, body, .page-wrapper, #content {
+html,
+body,
+.page-wrapper,
+#content {
   width: 100%;
   height: 100%; }
 
 body {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: #373a3c;

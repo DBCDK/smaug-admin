@@ -1,21 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
+import _, {orderBy} from 'lodash';
+import sortByKeys from '../../../utils/sortByKeys';
 import Token from '../token/tokenContainer.component';
 import ClientEnableSwitch from '../switch/clientEnableSwitch.component';
 
-function clientListElement({id, name, contact, enabled}) {
+const ClientListElement = ({data}) => {
+  const {id, name, contact, config, enabled} = data;
   const submit = e => {
     const confirmed = confirm(`Are you sure you want to delete:\n${name}?`); // eslint-disable-line no-alert
     if (!confirmed) {
       e.preventDefault();
     }
   };
+
+  let label = config.label || '';
+  if (label === 'zzz') {
+    label = null;
+  }
+
   return (
     <div className="client" key={id}>
+      <span href={`/client/${id}`} className="label">
+        {label && <a href={`/find/${label}`}>{label}</a>}
+      </span>
       <a href={`/client/${id}`} className="name">
         {name}
-      </a>
-      <a href={`/client/${id}`} className="id">
-        {id}
       </a>
       <a href={`/client/${id}`} className="owner">
         {(contact.owner && contact.owner.name) || ''}
@@ -24,26 +33,97 @@ function clientListElement({id, name, contact, enabled}) {
         <ClientEnableSwitch id={id} initEnabled={enabled} name={name} />
       </div>
       <Token client={{id, name}} />
-      <form onSubmit={submit} action={`/remove/${id}`} method="post">
-        <input className="deleteclient" type="submit" value="delete" />
-      </form>
     </div>
   );
-}
+};
+
+const Group = ({name, group, i}) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const collapsedClass = collapsed ? 'collapsed' : '';
+  const label = name === 'zzz' ? 'Labelless' : name;
+
+  return (
+    <div className="elements-group">
+      <div className="group-name" onClick={() => setCollapsed(!collapsed)}>
+        <div>
+          {collapsed ? <span>▼</span> : <span>▲</span>}
+          <h2>{label}</h2>
+        </div>
+      </div>
+      <div className={`group-clients-wrap ${collapsedClass}`}>
+        {group.map(c => (
+          <ClientListElement key={c.id} data={c} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 function ClientList({list}) {
+  const [sort, setSort] = useState('name');
+  const [asc, setAsc] = useState(true);
+
+  const handleSort = name => {
+    if (name === sort) {
+      setAsc(!asc);
+      return;
+    }
+
+    setSort(name);
+    setAsc(true);
+  };
+
+  // Map to groups
+  const unsorted_groups = _.groupBy(
+    list.map(c => ({
+      ...c,
+      config: {...c.config, label: c.config.label || 'zzz'}
+    })),
+    'config.label'
+  );
+
+  // Sort groups alphabetical
+  const groups = sortByKeys(unsorted_groups, asc);
+  const arrow = asc ? '↓' : '↑';
+
   return (
     <div className="clientlist">
       <div className="clients">
         <div className="labels">
-          <label className="label-name">Name</label>
-          <label className="label-id">ID</label>
-          <label className="label-owner">Owner</label>
-          <label className="label-owner">Enabled</label>
+          <label className="label-label" onClick={() => handleSort('label')}>
+            <span>Label {sort === 'label' && <span>{arrow}</span>}</span>
+          </label>
+          <label className="label-name" onClick={() => handleSort('name')}>
+            <span>Name {sort === 'name' && <span>{arrow}</span>}</span>
+          </label>
+          <label
+            className="label-owner"
+            onClick={() => handleSort('contact.owner.name')}
+          >
+            <span>
+              Owner {sort === 'contact.owner.name' && <span>{arrow}</span>}
+            </span>
+          </label>
+          <label className="label-owner" onClick={() => handleSort('enabled')}>
+            <span>Enabled {sort === 'enabled' && <span>{arrow}</span>}</span>
+          </label>
           <label className="label-owner">token</label>
-          <label className="label-owner">Delete</label>
         </div>
-        <div className="elements">{list.map(clientListElement)}</div>
+
+        {sort === 'label'
+          ? Object.values(groups).map((g, i) => {
+              return (
+                <Group
+                  key={Object.keys(groups)[i]}
+                  name={Object.keys(groups)[i]}
+                  group={g}
+                  index={i}
+                />
+              );
+            })
+          : orderBy(list, [sort], asc ? ['asc'] : ['desc']).map(c => (
+              <ClientListElement key={c.id} data={c} />
+            ))}
       </div>
       <a className="createclient" href="/add">
         + Create a new client

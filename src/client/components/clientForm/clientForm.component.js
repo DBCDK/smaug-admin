@@ -3,6 +3,7 @@ import JEditor from '../jsonEditor/jsonEditor.component';
 import Contacts from '../contact/contactContainer.component';
 import AdgangsplatformForm from './AdgangsplatformForm.component';
 import ClientEnableSwitch from '../switch/clientEnableSwitch.component';
+import AutoSuggester from '../suggester/suggester.component';
 
 function ClientSecret({secret}) {
   return (
@@ -68,6 +69,16 @@ export default function ClientForm({
             defaultValue={name}
             placeholder="the name of the service client"
             required="required"
+          />
+          <label htmlFor="label">Label</label>
+          <AutoSuggester
+            name="label"
+            className="label-suggester"
+            value={jsonConfig.label || ''}
+            onChange={e =>
+              updateJEditor({...jsonConfig, label: e.target.value})
+            }
+            placeholder="label for service client"
           />
         </div>
         <label>Contacts</label>
