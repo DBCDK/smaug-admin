@@ -93,7 +93,7 @@ export default class AutoSuggester extends React.Component {
   render() {
     const {list, labels, value, suggestions} = this.state;
 
-    console.log('labels', labels);
+    // console.log('labels', labels);
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
