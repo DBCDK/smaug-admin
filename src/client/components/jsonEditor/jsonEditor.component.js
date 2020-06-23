@@ -5,7 +5,7 @@ export default class JEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      json: JSON.stringify(this.props.json)
+      json: JSON.stringify(this.props.json || {})
     };
   }
 
@@ -19,9 +19,11 @@ export default class JEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(this.props.json) !== this.state.json) {
-      this.setState({json: JSON.stringify(this.props.json)});
-      this.editor.set(this.props.json);
+    if (this.props.json) {
+      if (JSON.stringify(this.props.json) !== this.state.json) {
+        this.setState({json: JSON.stringify(this.props.json)});
+        this.editor.set(this.props.json);
+      }
     }
   }
 

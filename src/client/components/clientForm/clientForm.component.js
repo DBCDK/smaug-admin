@@ -37,6 +37,8 @@ export default function ClientForm({
 }) {
   const [jsonConfig, setJsonConfig] = useState(config);
   const [showJson, setShowJson] = useState(false);
+  const [label, setLabel] = useState(jsonConfig.label || '');
+  jsonConfig.label = label;
 
   const updateJEditor = config => {
     setJsonConfig({...config});
@@ -56,9 +58,6 @@ export default function ClientForm({
     return showJson ? 'jeditor-visible' : 'jeditor-hide';
   };
 
-  const [label, setLabel] = useState(config.label || '');
-  config.label = label;
-
   return (
     <div className="clientform">
       <form method="post" onSubmit={onSubmit}>
@@ -72,6 +71,14 @@ export default function ClientForm({
             defaultValue={name}
             placeholder="the name of the service client"
             required="required"
+          />
+          <label htmlFor="label">Label</label>
+          <AutoSuggester
+            name="label"
+            className="label-suggester"
+            value={label}
+            onChange={e => setLabel(e.target.value)}
+            placeholder="label for service client"
           />
         </div>
         <label>Contacts</label>
@@ -91,14 +98,6 @@ export default function ClientForm({
           jsonConfig={jsonConfig}
           updateJEditor={updateJEditor}
           toggleJson={toggleJson}
-        />
-        <label htmlFor="label">Label</label>
-        <AutoSuggester
-          name="label"
-          className="label-suggester"
-          value={label}
-          onChange={e => setLabel(e.target.value)}
-          placeholder="label for service client"
         />
         <JEditor
           name="config"
