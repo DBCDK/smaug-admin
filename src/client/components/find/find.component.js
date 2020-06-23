@@ -42,9 +42,15 @@ const FindList = ({list, search}) => (
   <div className="find-list">
     <div className="find-clients clients">
       <div className="labels">
-        <label className="label-name">Name</label>
-        <label className="label-hits">Hits</label>
-        <label className="label-hits">Enabled</label>
+        <label className="label-name">
+          <span>Name</span>
+        </label>
+        <label className="label-hits">
+          <span>Hits</span>
+        </label>
+        <label className="label-hits">
+          <span>Enabled</span>
+        </label>
       </div>
       <div className="elements">
         <FindListElements list={list} search={search} />
