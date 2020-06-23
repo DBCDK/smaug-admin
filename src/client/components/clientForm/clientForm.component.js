@@ -37,8 +37,6 @@ export default function ClientForm({
 }) {
   const [jsonConfig, setJsonConfig] = useState(config);
   const [showJson, setShowJson] = useState(false);
-  const [label, setLabel] = useState(jsonConfig.label || '');
-  jsonConfig.label = label;
 
   const updateJEditor = config => {
     setJsonConfig({...config});
@@ -76,8 +74,10 @@ export default function ClientForm({
           <AutoSuggester
             name="label"
             className="label-suggester"
-            value={label}
-            onChange={e => setLabel(e.target.value)}
+            value={jsonConfig.label || ''}
+            onChange={e =>
+              updateJEditor({...jsonConfig, label: e.target.value})
+            }
             placeholder="label for service client"
           />
         </div>

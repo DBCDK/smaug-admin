@@ -19,11 +19,10 @@ export default class JEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.json) {
-      if (JSON.stringify(this.props.json) !== this.state.json) {
-        this.setState({json: JSON.stringify(this.props.json)});
-        this.editor.set(this.props.json);
-      }
+    if (prevProps.json !== this.props.json) {
+      let newText = this.props.json;
+      this.editor.setText(JSON.stringify(newText, null, 2));
+      this.onChange();
     }
   }
 
