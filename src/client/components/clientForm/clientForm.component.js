@@ -53,11 +53,7 @@ export default function ClientForm({
     }
   };
   const showEditor = () => {
-    // force show editor until
-    // problems with <Adgangsplatformform /> are fixed
-    return true;
-
-    // return showJson ? 'jeditor-visible' : 'jeditor-hide';
+    return showJson ? 'jeditor-visible' : 'jeditor-hide';
   };
 
   return (
@@ -98,14 +94,12 @@ export default function ClientForm({
             />
           </div>
         </div>
-        {/* 
-          Currently disabled until problems are solved
-
         <AdgangsplatformForm
           jsonConfig={jsonConfig}
           updateJEditor={updateJEditor}
           toggleJson={toggleJson}
-        /> */}
+          jsonEditState={showJson}
+        />
         <JEditor
           name="config"
           json={jsonConfig}

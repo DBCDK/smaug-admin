@@ -1,6 +1,6 @@
 .page {
   background-color: white;
-  padding: 1rem 2rem;
+  padding: 3rem 2rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
   min-height: 80%;
@@ -88,8 +88,11 @@
   display: none; }
 
 .clientform .updateclient, .clientform .removeclient {
-  margin-left: 30px;
-  display: inline-flex; }
+  display: inline-flex;
+  position: absolute; }
+
+.clientform .removeclient {
+  margin-left: 150px; }
 
 .emptylist {
   margin-bottom: 2rem;
@@ -127,7 +130,9 @@
 .adgangsForm-formBg {
   width: 100%;
   background: whitesmoke;
-  border: 1px solid #979797; }
+  border: 1px solid #979797;
+  padding: 35px;
+  padding-top: 15px; }
 
 .adgangsForm-checkbox-section {
   display: grid; }
@@ -345,7 +350,8 @@ label {
   right: 0;
   top: 0;
   bottom: 0;
-  height: 100%; }
+  height: 100%;
+  z-index: 1; }
   .tokenview .overlay.background {
     background: rgba(55, 58, 60, 0.8);
     display: block;
@@ -423,67 +429,15 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%; }
 
-.react-autosuggest__container {
-  position: relative; }
-
-.react-autosuggest__input {
-  width: 240px;
-  height: 38px;
-  padding: 10px 20px;
-  font-family: Helvetica, sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  border: 1px solid #aaa; }
-
-.react-autosuggest__input--focused {
-  outline: none; }
-
-.react-autosuggest__input--open {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0; }
-
-.react-autosuggest__suggestions-container {
-  display: none; }
-
-.react-autosuggest__suggestions-container--open {
-  display: block;
-  position: absolute;
-  top: 38px;
-  width: 280px;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  font-family: Helvetica, sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  z-index: 2; }
-
-.react-autosuggest__suggestions-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none; }
-
-.react-autosuggest__suggestion {
-  cursor: pointer;
-  padding: 10px 20px; }
-
-.react-autosuggest__suggestion--highlighted {
-  background-color: #ddd; }
-
-div,
-form,
-input,
-p {
+div, form, input, p {
   box-sizing: border-box; }
 
-html,
-body,
-.page-wrapper,
-#content {
+html, body, .page-wrapper, #content {
   width: 100%;
   height: 100%; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: #373a3c;
@@ -500,6 +454,13 @@ a {
   text-decoration: none; }
 
 .input-label {
+  margin-top: 10px;
+  font-size: 16px;
+  font-family: HelveticaNeue-Bold;
+  font-weight: bold;
+  letter-spacing: 0; }
+
+input-label {
   font-size: 16px;
   font-family: HelveticaNeue-Bold;
   font-weight: bold;

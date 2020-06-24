@@ -6,39 +6,31 @@ $primary-color: blue;
 $alert-color: red;
 $secondary-color: #222;
 
-@import 'mixins/button';
-@import 'mixins/cssIcon';
-@import 'mixins/overlay';
-@import 'components/page';
-@import 'components/clientForm';
-@import 'components/adgangsplatformForm';
-@import 'components/clientList';
-@import 'components/contact';
-@import 'components/forms';
-@import 'components/loginForm';
-@import 'components/tokenview';
-@import 'components/find';
-@import 'components/switch';
-@import 'components/suggester';
+@import "mixins/button";
+@import "mixins/cssIcon";
+@import "mixins/overlay";
+@import "components/page";
+@import "components/clientForm";
+@import "components/adgangsplatformForm";
+@import "components/clientList";
+@import "components/contact";
+@import "components/forms";
+@import "components/loginForm";
+@import "components/tokenview";
+@import "components/find";
+@import "components/switch";
 
-div,
-form,
-input,
-p {
+div, form, input, p {
   box-sizing: border-box;
 }
 
-html,
-body,
-.page-wrapper,
-#content {
+html, body, .page-wrapper, #content {
   width: 100%;
   height: 100%;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: rgba(55, 58, 60, 1);
@@ -58,6 +50,14 @@ a {
 }
 
 .input-label {
+  margin-top: 10px;
+  font-size: 16px;
+  font-family: HelveticaNeue-Bold;
+  font-weight: bold;
+  letter-spacing: 0;
+}
+
+input-label {
   font-size: 16px;
   font-family: HelveticaNeue-Bold;
   font-weight: bold;
@@ -78,16 +78,20 @@ a {
     display: flex;
     line-height: 56px;
   }
+
   .logo {
     min-width: fit-content;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 1.5em;
+
   }
+
   a {
     transition: color 200ms ease-in;
     color: white;
     font-weight: bold;
+
     &:hover {
       color: darken(white, 30%);
     }

@@ -33,5 +33,4 @@ src/utils/config.util.js
 # ==========
 public/*/*.map
 public/css/index.css
-
 public/js/index.js
