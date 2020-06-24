@@ -1,8 +1,8 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React from 'react';
+import {useState, useEffect} from 'react';
 
 export default function AdgangsplatformForm(props) {
-  const { updateJEditor, toggleJson, jsonConfig, jsonEditState } = props;
+  const {updateJEditor, toggleJson, jsonConfig, jsonEditState} = props;
 
   const isJSON = str => {
     try {
@@ -34,37 +34,37 @@ export default function AdgangsplatformForm(props) {
   };
   const checkForSignOut = () => {
     if (jsonConfig.logoutScreen) {
-      return jsonConfig.logoutScreen !== ("skip" || false);
+      return jsonConfig.logoutScreen !== ('skip' || false);
     }
   };
 
   const [openPlatform, setOpenplatform] = useState(
-    checkForUses("OpenPlatform")
+    checkForUses('OpenPlatform')
   );
-  const [bib, setBib] = useState(checkForUses("Login.bib.dk"));
-  const [userCPR, setUserCPR] = useState(checkForAttributes("cpr"));
-  const [userID, setUserID] = useState(checkForAttributes("userId"));
-  const [uniqueID, setUniqueID] = useState(checkForAttributes("uniqueId"));
-  const [libraries, setLibraries] = useState(checkForAttributes("libraries"));
+  const [bib, setBib] = useState(checkForUses('Login.bib.dk'));
+  const [userCPR, setUserCPR] = useState(checkForAttributes('cpr'));
+  const [userID, setUserID] = useState(checkForAttributes('userId'));
+  const [uniqueID, setUniqueID] = useState(checkForAttributes('uniqueId'));
+  const [libraries, setLibraries] = useState(checkForAttributes('libraries'));
   const [muniNo, setMuniNo] = useState(
-    checkForAttributes("municipalityAgencyId")
+    checkForAttributes('municipalityAgencyId')
   );
-  const [borchk, setBorchk] = useState(checkForIdProviders("borchk"));
-  const [nemLogin, setNemLogin] = useState(checkForIdProviders("nemlogin"));
-  const [uniLogin, setUniLogin] = useState(checkForIdProviders("unilogin"));
+  const [borchk, setBorchk] = useState(checkForIdProviders('borchk'));
+  const [nemLogin, setNemLogin] = useState(checkForIdProviders('nemlogin'));
+  const [uniLogin, setUniLogin] = useState(checkForIdProviders('unilogin'));
   const [showSignOut, setShowSignOut] = useState(checkForSignOut());
 
   const getSignOutPath = () => {
-    return jsonConfig.singleLogoutPath ? jsonConfig.singleLogoutPath : "";
+    return jsonConfig.singleLogoutPath ? jsonConfig.singleLogoutPath : '';
   };
   const getAgencyId = () => {
-    return jsonConfig.agencyId ? jsonConfig.agencyId : "";
+    return jsonConfig.agencyId ? jsonConfig.agencyId : '';
   };
   const getLogo = () => {
-    return jsonConfig.logoColor ? jsonConfig.logoColor : "";
+    return jsonConfig.logoColor ? jsonConfig.logoColor : '';
   };
   const getDisplayName = () => {
-    return jsonConfig.displayName ? jsonConfig.displayName : "";
+    return jsonConfig.displayName ? jsonConfig.displayName : '';
   };
   const getredirectUris = () => {
     let incomingURIs = isJSON(jsonConfig.redirectUris)
@@ -88,19 +88,19 @@ export default function AdgangsplatformForm(props) {
     return arr;
   };
   const getAttributes = () => {
-    let attObj = { ...jsonConfig.attributes };
-    userCPR ? (attObj["cpr"] = {}) : delete attObj.cpr;
-    userID ? (attObj["userId"] = {}) : delete attObj.userId;
-    uniqueID ? (attObj["uniqueId"] = {}) : delete attObj.uniqueId;
-    libraries ? (attObj["libraries"] = {}) : delete attObj.libraries;
-    muniNo ? (attObj["MuniNo"] = {}) : delete attObj.MuniNo;
+    let attObj = {...jsonConfig.attributes};
+    userCPR ? (attObj['cpr'] = {}) : delete attObj.cpr;
+    userID ? (attObj['userId'] = {}) : delete attObj.userId;
+    uniqueID ? (attObj['uniqueId'] = {}) : delete attObj.uniqueId;
+    libraries ? (attObj['libraries'] = {}) : delete attObj.libraries;
+    muniNo ? (attObj['MuniNo'] = {}) : delete attObj.MuniNo;
     return attObj;
   };
   const getIdProviders = () => {
     let arr = [];
-    borchk ? arr.push("borchk") : arr.filter(e => e === "borchk");
-    nemLogin ? arr.push("nemlogin") : arr.filter(e => e === "nemlogin");
-    uniLogin ? arr.push("unilogin") : arr.filter(e => e === "unilogin");
+    borchk ? arr.push('borchk') : arr.filter(e => e === 'borchk');
+    nemLogin ? arr.push('nemlogin') : arr.filter(e => e === 'nemlogin');
+    uniLogin ? arr.push('unilogin') : arr.filter(e => e === 'unilogin');
     return arr;
   };
 
@@ -110,14 +110,14 @@ export default function AdgangsplatformForm(props) {
   };
 
   const saveTextToJSON = (e, fn) => {
-    let jsonOUT = { ...props.jsonConfig };
+    let jsonOUT = {...props.jsonConfig};
     fn(e.target.value);
     jsonOUT[e.target.id] = e.target.value;
     // clean up
     if (!e.target.value) {
       delete jsonOUT[e.target.id];
     }
-    if (e.target.id === "redirectUris") {
+    if (e.target.id === 'redirectUris') {
       jsonOUT[e.target.id] = isJSON(e.target.value)
         ? JSON.parse(e.target.value)
         : e.target.value;
@@ -128,16 +128,16 @@ export default function AdgangsplatformForm(props) {
 
   const getEditJsonBtnTitle = () => {
     return jsonEditState
-      ? "Hide JSON formatting"
-      : "Edit configuration in JSON format";
+      ? 'Hide JSON formatting'
+      : 'Edit configuration in JSON format';
   };
 
   useEffect(() => {
     let jsonOUT = jsonConfig;
-    jsonOUT["attributes"] = getAttributes();
-    jsonOUT["uses"] = getUses();
-    jsonOUT["identityProviders"] = getIdProviders();
-    jsonOUT["logoutScreen"] = showSignOut;
+    jsonOUT['attributes'] = getAttributes();
+    jsonOUT['uses'] = getUses();
+    jsonOUT['identityProviders'] = getIdProviders();
+    jsonOUT['logoutScreen'] = showSignOut;
 
     // clean up
     if (jsonOUT.uses.length < 1) {
@@ -324,7 +324,10 @@ export default function AdgangsplatformForm(props) {
               </div>
 
               {/* Sign out screen  */}
-              <div className="adgangsForm-checkbox-section input-label" id="logoutScreen">
+              <div
+                className="adgangsForm-checkbox-section input-label"
+                id="logoutScreen"
+              >
                 Sign out screen
                 <span>
                   <input
@@ -334,7 +337,7 @@ export default function AdgangsplatformForm(props) {
                     onChange={() => setShowSignOut(!showSignOut)}
                   />
                   <input-label>
-                    {" "}
+                    {' '}
                     Show sign out screen to user, when signing out
                   </input-label>
                 </span>
