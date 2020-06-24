@@ -13,19 +13,12 @@ export default function AdgangsplatformForm(props) {
     return true;
   };
 
-<<<<<<< HEAD
   const checkForUses = type => {
     let retvar = false;
     if (Array.isArray(jsonConfig.uses)) {
       retvar = jsonConfig.uses.filter(t => t === type).length > 0;
     }
     return retvar;
-=======
-  const checkForServices = type => {
-    return jsonConfig.services
-      ? Object.keys(jsonConfig.services).filter(t => t === type).length > 0
-      : false;
->>>>>>> a9ea7fd6664184436481b8d6d107958dfd8d2cb3
   };
   const checkForAttributes = type => {
     return jsonConfig.attributes
@@ -86,7 +79,6 @@ export default function AdgangsplatformForm(props) {
   const [singleSignoutPath, setSingleSignoutPath] = useState(getSignOutPath());
   const [redirectUris, setRedirectUris] = useState(getredirectUris());
 
-<<<<<<< HEAD
   const getUses = () => {
     let arr = [];
     bib ? arr.push('Login.bib.dk') : arr.filter(e => e === 'Login.bib.dk');
@@ -94,13 +86,6 @@ export default function AdgangsplatformForm(props) {
       ? arr.push('OpenPlatform')
       : arr.filter(e => e === 'OpenPlatform');
     return arr;
-=======
-  const getServices = () => {
-    let attObj = {...jsonConfig.services};
-    bib ? (attObj['Login.bib.dk'] = '') : delete attObj['Login.bib.dk'];
-    openPlatform ? (attObj['OpenPlatform'] = '') : delete attObj.OpenPlatform;
-    return attObj;
->>>>>>> a9ea7fd6664184436481b8d6d107958dfd8d2cb3
   };
   const getAttributes = () => {
     let attObj = {...jsonConfig.attributes};
@@ -155,13 +140,8 @@ export default function AdgangsplatformForm(props) {
     jsonOUT['logoutScreen'] = showSignOut;
 
     // clean up
-<<<<<<< HEAD
     if (jsonOUT.uses.length < 1) {
       delete jsonOUT.uses;
-=======
-    if (Object.keys(jsonOUT.services).length < 1) {
-      delete jsonOUT.services;
->>>>>>> a9ea7fd6664184436481b8d6d107958dfd8d2cb3
     }
     if (jsonOUT.identityProviders.length < 1) {
       delete jsonOUT.identityProviders;
