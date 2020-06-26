@@ -32,11 +32,11 @@ export default function AdgangsplatformForm(props) {
     }
     return retvar;
   };
-  const checkForSignOut = () => {
+  /*const checkForSignOut = () => {
     if (jsonConfig.logoutScreen) {
       return jsonConfig.logoutScreen !== ('skip' || false);
     }
-  };
+  };*/
 
   const [openPlatform, setOpenplatform] = useState(
     checkForUses('OpenPlatform')
@@ -52,7 +52,7 @@ export default function AdgangsplatformForm(props) {
   const [borchk, setBorchk] = useState(checkForIdProviders('borchk'));
   const [nemLogin, setNemLogin] = useState(checkForIdProviders('nemlogin'));
   const [uniLogin, setUniLogin] = useState(checkForIdProviders('unilogin'));
-  const [showSignOut, setShowSignOut] = useState(checkForSignOut());
+  /* const [showSignOut, setShowSignOut] = useState(checkForSignOut());*/
 
   const getSignOutPath = () => {
     return jsonConfig.singleLogoutPath ? jsonConfig.singleLogoutPath : '';
@@ -137,7 +137,7 @@ export default function AdgangsplatformForm(props) {
     jsonOUT['attributes'] = getAttributes();
     jsonOUT['uses'] = getUses();
     jsonOUT['identityProviders'] = getIdProviders();
-    jsonOUT['logoutScreen'] = showSignOut;
+    /*jsonOUT['logoutScreen'] = showSignOut;*/
 
     // clean up
     if (jsonOUT.uses.length < 1) {
@@ -161,8 +161,8 @@ export default function AdgangsplatformForm(props) {
     muniNo,
     borchk,
     nemLogin,
-    uniLogin,
-    showSignOut
+    uniLogin /*,
+    showSignOut*/
   ]);
 
   return (
@@ -324,7 +324,7 @@ export default function AdgangsplatformForm(props) {
               </div>
 
               {/* Sign out screen  */}
-              <div
+              {/*<div
                 className="adgangsForm-checkbox-section input-label"
                 id="logoutScreen"
               >
@@ -341,7 +341,7 @@ export default function AdgangsplatformForm(props) {
                     Show sign out screen to user, when signing out
                   </input-label>
                 </span>
-              </div>
+              </div>*/}
 
               <div className="input-label"> Single sign out path</div>
               <input
