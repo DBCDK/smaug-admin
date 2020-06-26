@@ -9,5 +9,13 @@
         padding-left: 1rem;
       }
     }
+    .label-hits {
+      flex-grow: 2;
+    }
+  }
+  .elements {
+    .hit {
+      flex-grow: 2;
+    }
   }
 }

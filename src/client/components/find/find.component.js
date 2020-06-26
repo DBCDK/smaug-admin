@@ -48,7 +48,7 @@ const FindList = ({list, search}) => (
         <label className="label-hits">
           <span>Hits</span>
         </label>
-        <label className="label-hits">
+        <label className="label-enabled">
           <span>Enabled</span>
         </label>
       </div>
