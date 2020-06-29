@@ -41,7 +41,7 @@ const now = new Date();
 
 /* -- main ----------------------------------------------------------------------------------- */
 
-const [host, filters, endpoints, outfile, monthly] = getFileInfoOrDie(process.argv.slice(2));
+const [host, filters, endpoints, clientFile, outfile, monthly] = getFileInfoOrDie(process.argv.slice(2));
 try {
   oFilters = JSON.parse(filters);
 } catch (e) {
@@ -53,6 +53,7 @@ try {
   usage('endpoint(s) should be valid json\n - ' + endpoints + '\n - ' + e.message);
 }
 console.log('Start at', now);
+const clientList = fetchClientIds(clientFile);
 client = new ElasticSearch.Client({host: host});
 
 if (monthly) {
@@ -65,7 +66,7 @@ else {
 }
 console.log('Search:', JSON.stringify(search, null, 2));
 elkSearch(search, oEndpoints).then(function(resp){
-  const res = Object.assign({created: now}, {filter: oFilters}, {endpoint: resp});
+  const res = Object.assign({created: now}, {filter: oFilters}, {clientList: resp});
   writeFile(outfile, JSON.stringify(res, null, 2));
   console.log('Exit at', new Date());
 });
@@ -80,16 +81,25 @@ elkSearch(search, oEndpoints).then(function(resp){
  */
 async function elkSearch (search, endpoints) {
   const resp = {};
-  for (const field in endpoints) {
-    for (const ep in endpoints[field]) {
-      const endpoint = endpoints[field][ep];
-      resp[endpoint] = {};
-      let thisSearch = JSON.parse(JSON.stringify(search));
-      thisSearch.body.query.bool.filter.push({"match_phrase": {[field]: endpoint}});
-      const elkResponse = await client.search(thisSearch);
-      Object.keys(elkResponse.aggregations).forEach(sum => {
-        resp[endpoint][sum] = parseAggr(elkResponse.aggregations[sum]);
-      })
+  for (const clientIdx in clientList) {
+    const clientId = clientList[clientIdx];
+    console.log('clientId', clientId);
+    resp[clientId] = {};
+    for (const field in endpoints) {
+      for (const ep in endpoints[field]) {
+        const endpoint = endpoints[field][ep];
+        resp[clientId][endpoint] = {};
+        let thisSearch = JSON.parse(JSON.stringify(search));
+        thisSearch.body.query.bool.filter.push({"match_phrase": {clientId: clientId}});
+        thisSearch.body.query.bool.filter.push({"match_phrase": {[field]: endpoint}});
+        const elkResponse = await client.search(thisSearch);
+        Object.keys(elkResponse.aggregations).forEach(sum => {
+          const zums = parseAggr(elkResponse.aggregations[sum]);
+          if (zums.length) {
+            resp[clientId][endpoint][sum] = zums;
+          }
+        })
+      }
     }
   }
   return resp;
@@ -138,6 +148,18 @@ function writeFile(fileName, buffer) {
   }
 }
 
+function fetchClientIds(clientFile) {
+  const list = [];
+  try {
+    const clients = fs.readFileSync(clientFile);
+    JSON.parse(clients).forEach(client => {
+      list.push(client.id);
+    });
+  } catch (err) {
+    usage('Cannot read ' + clientFile);
+  }
+  return list;
+}
 /**
  *
  * @param args
@@ -162,10 +184,13 @@ function getFileInfoOrDie(args) {
   if (!options['f']) {
     usage('missing filter(s)');
   }
+  if (!options['c']) {
+    usage('missing json client-list');
+  }
   if (!options['e']) {
     usage('missing endpoint(s)');
   }
-  return [options['h'], options['f'], options['e'], options['o'], options['m']];
+  return [options['h'], options['f'], options['e'], options['c'], options['o'], options['m']];
 }
 
 /**
@@ -180,7 +205,7 @@ function usage(error) {
     'Option -m will only produce sums for the current month (normally used on the last day of each month)' +
     '\n%sUsage \n %s [options]\n\n' +
     'Options:\n' +
-    ' -h [ElasticSearch host] -f [filter(s)] -e [endpoint(s)] -o  output [json-file] -m\n' +
+    ' -h [ElasticSearch host] -f [filter(s)] -e [endpoint(s)] -c client-list -o output [json-file] -m\n' +
     '\nExample:\n' +
     scriptName + ' -h http://elk.dk -f \'{"app": "my_app", "level": "INFO"}\' -e \'{"endpointName": ["endp-1", endp-2"]}\' -o myFile.json',errorTxt, scriptName);
   process.exit(1);
