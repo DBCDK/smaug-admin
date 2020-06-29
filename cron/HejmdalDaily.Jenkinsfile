@@ -11,9 +11,12 @@ pipeline {
     MONTHLY = " "
     STAT_FILE = "hejmdal_daily.json"
     STAT_FILTER = '{"app":"hejmdal", "level":"INFO"}'
-    STAT_ENDPOINT = '{"baseUrl":["/login","/introspection"]}'
+    STAT_ENDPOINT = '{"baseUrl":["/login"]}'
     ELK_CREDENTIALS = credentials('elk_user');
     ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
+    SMAUG_CLIENT_FILE = "smaug_clients.json"
+    SMAUG_CREDENTIALS = credentials("smaug_login")
+    SMAUG_URI="https://${SMAUG_CREDENTIALS}@auth-admin.dbc.dk/clients"
     ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
     ARTIFACTORY_LOGIN = credentials("artifactory_login")
   }
@@ -25,8 +28,10 @@ pipeline {
     }
     stage('Create stat files from elk') {
       steps { script {
+        sh "rm -f ${SMAUG_CLIENT_FILE}"
+        sh "curl -u ${SMAUG_LOGIN} ${SMAUG_URI} -o ${SMAUG_CLIENT_FILE}"
         sh "rm -f ${STAT_FILE}"
-        sh "node cron/fetch_statistics.js '${MONTHLY}' -h '${ELK_URI}' -f '${STAT_FILTER}' -e '${STAT_ENDPOINT}' -o '${STAT_FILE}'"
+        sh "node cron/fetch_statistics.js '${MONTHLY}' -h '${ELK_URI}' -f '${STAT_FILTER}' -e '${STAT_ENDPOINT}' -c '${SMAUG_CLIENT_FILE}' -o '${STAT_FILE}'"
       } }
     }
   }
