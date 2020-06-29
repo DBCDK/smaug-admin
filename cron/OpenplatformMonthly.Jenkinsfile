@@ -14,7 +14,7 @@ pipeline {
     STAT_ENDPOINT = '{"name":["work","suggest","recommend","search","storage","user","order"]}'
     ELK_CREDENTIALS = credentials('elk_user');
     ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
-    SMAUG_CLIENT_FILE = "smaug_clients.json"
+    SMAUG_CLIENT_FILE = "clients_${STAT_FILE}"
     SMAUG_CREDENTIALS = credentials("smaug_login")
     SMAUG_URI="https://${SMAUG_CREDENTIALS}@auth-admin.dbc.dk/clients"
     ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
@@ -26,10 +26,14 @@ pipeline {
         sh 'cd cron; npm install;'
       } }
     }
-    stage('Create stat files from elk') {
+    stage('fetch smaug clients') {
       steps { script {
         sh "rm -f ${SMAUG_CLIENT_FILE}"
-        sh "curl -u ${SMAUG_LOGIN} ${SMAUG_URI} -o ${SMAUG_CLIENT_FILE}"
+        sh "curl -X GET ${SMAUG_URI} -o ${SMAUG_CLIENT_FILE}"
+      } }
+    }
+    stage('Create stat files from elk') {
+      steps { script {
         sh "rm -f ${STAT_FILE}"
         sh "node cron/fetch_statistics.js '${MONTHLY}' -h '${ELK_URI}' -f '${STAT_FILTER}' -e '${STAT_ENDPOINT}' -c '${SMAUG_CLIENT_FILE}' -o '${STAT_FILE}'"
       } }
