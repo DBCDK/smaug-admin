@@ -68,7 +68,6 @@ pipeline {
                     docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
                     docker rmi ${DOCKER_NAME}
                 """
-                junit 'e2e/reports/*.xml'
                 archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
         }  
     }
