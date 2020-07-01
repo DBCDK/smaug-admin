@@ -33,10 +33,10 @@ const Menu = ({userLoggedIn = false, findValue = '', onSearch = noop}) => (
   <div className="menu-container">
     <div className="left-menu">
       <div className="menu-item">
-        <a href="/">Client List</a>
+        <a href="/">Client list</a>
       </div>
       <div className="menu-item">
-        <a href="/add">Create Client</a>
+        <a href="/stats">Client stats</a>
       </div>
     </div>
     <div className="right-menu">
@@ -58,6 +58,7 @@ const PageContainer = ({
   children,
   id,
   title,
+  description,
   userLoggedIn = false,
   searchString = '',
   onSearch = noop
@@ -77,6 +78,7 @@ const PageContainer = ({
     </header>
     <div className={`wrapper page ${id}`}>
       <h1>{title}</h1>
+      <p className="description">{description}</p>
       {children}
     </div>
   </div>

@@ -52,20 +52,21 @@ a {
 .input-label {
   margin-top: 10px;
   font-size: 16px;
-  font-family: HelveticaNeue-Bold;
+  // font-family: HelveticaNeue-Bold;
   font-weight: bold;
   letter-spacing: 0;
 }
 
 input-label {
   font-size: 16px;
-  font-family: HelveticaNeue-Bold;
+  // font-family: HelveticaNeue-Bold;
   font-weight: bold;
   letter-spacing: 0;
 }
 
 .wrapper {
-  max-width: 1024px;
+  max-width: 1440px;
+  min-width: 1024px;
   margin-left: auto;
   margin-right: auto;
 }

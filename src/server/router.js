@@ -36,6 +36,7 @@ router.get('/', async ctx => {
   ctx.body = renderPage(
     'clientList',
     'Client List',
+    '',
     ctx.session.smaug.loggedIn,
     state
   );
@@ -45,7 +46,7 @@ router.get('/', async ctx => {
  * Login route.
  */
 router.get('/login', ctx => {
-  ctx.body = renderPage('login', 'Login to Smaug Admin', false, {
+  ctx.body = renderPage('login', 'Login to Smaug Admin', '', false, {
     uri: ctx.session.smaug.uri
   });
 });
@@ -68,7 +69,7 @@ router.post('/login', ctx => {
     ctx.session.smaug = body;
     ctx.redirect('/');
   } catch (e) {
-    ctx.body = renderPage('login', 'Login to Smaug Admin', false, {
+    ctx.body = renderPage('login', 'Login to Smaug Admin', '', false, {
       ...body,
       error: 'invalid credentials'
     });
@@ -84,6 +85,7 @@ router.get('/client/:id', async ctx => {
   ctx.body = renderPage(
     'clientform',
     'Edit Client',
+    '',
     ctx.session.smaug.loggedIn,
     client
   );
@@ -116,6 +118,7 @@ router.post('/client/:id', async ctx => {
   ctx.body = renderPage(
     'clientform',
     'Edit Client',
+    '',
     ctx.session.smaug.loggedIn,
     client
   );
@@ -141,6 +144,7 @@ router.get('/add', ctx => {
   ctx.body = renderPage(
     'clientform',
     'Create new client',
+    '',
     ctx.session.smaug.loggedIn
   );
 });
@@ -160,6 +164,7 @@ router.post('/add', async ctx => {
   ctx.body = renderPage(
     'newclient',
     'New client created',
+    '',
     ctx.session.smaug.loggedIn,
     client
   );
@@ -188,7 +193,36 @@ router.get('/find/:key?', async ctx => {
     state.error = 'No contact to SMAUG';
   }
 
-  ctx.body = renderPage('find', 'Search', ctx.session.smaug.loggedIn, state);
+  ctx.body = renderPage(
+    'find',
+    'Search',
+    '',
+    ctx.session.smaug.loggedIn,
+    state
+  );
+});
+
+/**
+ * Stats page
+ */
+router.get('/stats', async ctx => {
+  const state = {};
+  try {
+    state.stats = await ctx.statsApi.getHejmdal30summed();
+    state.statsOpenplatform = await ctx.statsApi.getOpenplatform30summed();
+    const list = await ctx.api.getClientList();
+    state.list = (Array.isArray(list) && list) || [];
+  } catch (e) {
+    state.error = 'No contact to SMAUG';
+  }
+
+  ctx.body = renderPage(
+    'clientList',
+    'Client Stats',
+    'Showing data for the last 30 days',
+    ctx.session.smaug.loggedIn,
+    state
+  );
 });
 
 export default router;

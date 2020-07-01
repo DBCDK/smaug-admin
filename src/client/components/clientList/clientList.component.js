@@ -1,17 +1,67 @@
 import React, {useState} from 'react';
-import _, {orderBy} from 'lodash';
+import _, {orderBy, get} from 'lodash';
 import sortByKeys from '../../../utils/sortByKeys';
 import Token from '../token/tokenContainer.component';
 import ClientEnableSwitch from '../switch/clientEnableSwitch.component';
 
-const ClientListElement = ({data}) => {
+const COLUMNS = {
+  label: {displayName: 'Label', path: 'label', paramName: 'label'},
+  name: {displayName: 'Name', path: 'name', paramName: 'name'},
+  owner: {displayName: 'Owner', path: 'owner', paramName: 'owner'},
+  enabled: {displayName: 'Enabled', path: 'enabled', paramName: 'enabled'},
+  token: {displayName: 'Token', path: 'token', paramName: 'token'},
+  last30Login: {
+    displayName: '/login',
+    path: 'stats./login.last30',
+    paramName: 'last30Login',
+    type: 'stats'
+  },
+  last30Work: {
+    displayName: '/work',
+    path: 'stats.work.last30',
+    paramName: 'last30Work',
+    type: 'stats'
+  },
+  last30Suggest: {
+    displayName: '/suggest',
+    path: 'stats.suggest.last30',
+    paramName: 'last30Suggest',
+    type: 'stats'
+  },
+  last30Search: {
+    displayName: '/search',
+    path: 'stats.search.last30',
+    paramName: 'last30Search',
+    type: 'stats'
+  },
+  last30Storage: {
+    displayName: '/storage',
+    path: 'stats.storage.last30',
+    paramName: 'last30Storage',
+    type: 'stats'
+  },
+  last30User: {
+    displayName: '/user',
+    path: 'stats.user.last30',
+    paramName: 'last30User',
+    type: 'stats'
+  },
+  last30Order: {
+    displayName: '/order',
+    path: 'stats.order.last30',
+    paramName: 'last30Order',
+    type: 'stats'
+  },
+  last30Recommend: {
+    displayName: '/recommend',
+    path: 'stats.recommend.last30',
+    paramName: 'last30Recommend',
+    type: 'stats'
+  }
+};
+
+const ClientListElement = ({data, columns}) => {
   const {id, name, contact, config, enabled} = data;
-  const submit = e => {
-    const confirmed = confirm(`Are you sure you want to delete:\n${name}?`); // eslint-disable-line no-alert
-    if (!confirmed) {
-      e.preventDefault();
-    }
-  };
 
   let label = config.label || '';
   if (label === 'zzz') {
@@ -20,24 +70,48 @@ const ClientListElement = ({data}) => {
 
   return (
     <div className="client" key={id}>
-      <span href={`/client/${id}`} className="label">
-        {label && <a href={`/find/${label}`}>{label}</a>}
-      </span>
-      <a href={`/client/${id}`} className="name">
-        {name}
-      </a>
-      <a href={`/client/${id}`} className="owner">
-        {(contact.owner && contact.owner.name) || ''}
-      </a>
-      <div>
-        <ClientEnableSwitch id={id} initEnabled={enabled} name={name} />
-      </div>
-      <Token client={{id, name}} />
+      {columns.includes(COLUMNS.label) && (
+        <span href={`/client/${id}`} className="label">
+          {label && <a href={`/find/${label}`}>{label}</a>}
+        </span>
+      )}
+      {columns.includes(COLUMNS.name) && (
+        <a href={`/client/${id}`} className="name">
+          {name}
+        </a>
+      )}
+      {columns.includes(COLUMNS.owner) && (
+        <a href={`/client/${id}`} className="owner">
+          {(contact.owner && contact.owner.name) || ''}
+        </a>
+      )}
+
+      {columns.includes(COLUMNS.enabled) && (
+        <div>
+          <ClientEnableSwitch id={id} initEnabled={enabled} name={name} />
+        </div>
+      )}
+      {columns.includes(COLUMNS.token) && <Token client={{id, name}} />}
+      {Object.values(COLUMNS)
+        .filter(col => col.type === 'stats')
+        .map(col => {
+          if (!columns.includes(col)) {
+            return null;
+          }
+          return (
+            <span
+              className="label stats-label"
+              style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
+            >
+              {get(data, col.path, 0)}
+            </span>
+          );
+        })}
     </div>
   );
 };
 
-const Group = ({name, group, i}) => {
+const Group = ({name, group, i, columns}) => {
   const [collapsed, setCollapsed] = useState(false);
   const collapsedClass = collapsed ? 'collapsed' : '';
   const label = name === 'zzz' ? 'Labelless' : name;
@@ -52,16 +126,24 @@ const Group = ({name, group, i}) => {
       </div>
       <div className={`group-clients-wrap ${collapsedClass}`}>
         {group.map(c => (
-          <ClientListElement key={c.id} data={c} />
+          <ClientListElement key={c.id} data={c} columns={columns} />
         ))}
       </div>
     </div>
   );
 };
 
-function ClientList({list}) {
+function ClientList({list, stats, columns, statsOpenplatform}) {
   const [sort, setSort] = useState('name');
   const [asc, setAsc] = useState(true);
+
+  const mergedWithStats = list.map(el => ({
+    ...el,
+    stats: {
+      ...((stats && stats[el.id]) || {}),
+      ...((statsOpenplatform && statsOpenplatform[el.id]) || {})
+    }
+  }));
 
   const handleSort = name => {
     if (name === sort) {
@@ -75,7 +157,7 @@ function ClientList({list}) {
 
   // Map to groups
   const unsorted_groups = _.groupBy(
-    list.map(c => ({
+    mergedWithStats.map(c => ({
       ...c,
       config: {...c.config, label: c.config.label || 'zzz'}
     })),
@@ -88,26 +170,64 @@ function ClientList({list}) {
 
   return (
     <div className="clientlist">
+      {!stats && (
+        <a className="createclient" href="/add">
+          + Create a new client
+        </a>
+      )}
       <div className="clients">
         <div className="labels">
-          <label className="label-label" onClick={() => handleSort('label')}>
-            <span>Label {sort === 'label' && <span>{arrow}</span>}</span>
-          </label>
-          <label className="label-name" onClick={() => handleSort('name')}>
-            <span>Name {sort === 'name' && <span>{arrow}</span>}</span>
-          </label>
-          <label
-            className="label-owner"
-            onClick={() => handleSort('contact.owner.name')}
-          >
-            <span>
-              Owner {sort === 'contact.owner.name' && <span>{arrow}</span>}
-            </span>
-          </label>
-          <label className="label-owner" onClick={() => handleSort('enabled')}>
-            <span>Enabled {sort === 'enabled' && <span>{arrow}</span>}</span>
-          </label>
-          <label className="label-owner">token</label>
+          {columns.includes(COLUMNS.label) && (
+            <label className="label-label" onClick={() => handleSort('label')}>
+              <span>Label {sort === 'label' && <span>{arrow}</span>}</span>
+            </label>
+          )}
+          {columns.includes(COLUMNS.name) && (
+            <label className="label-name" onClick={() => handleSort('name')}>
+              <span>Name {sort === 'name' && <span>{arrow}</span>}</span>
+            </label>
+          )}
+          {columns.includes(COLUMNS.owner) && (
+            <label
+              className="label-owner"
+              onClick={() => handleSort('contact.owner.name')}
+            >
+              <span>
+                Owner {sort === 'contact.owner.name' && <span>{arrow}</span>}
+              </span>
+            </label>
+          )}
+
+          {columns.includes(COLUMNS.enabled) && (
+            <label
+              className="label-owner"
+              onClick={() => handleSort('enabled')}
+            >
+              <span>Enabled {sort === 'enabled' && <span>{arrow}</span>}</span>
+            </label>
+          )}
+          {columns.includes(COLUMNS.token) && (
+            <label className="label-owner">token</label>
+          )}
+          {Object.values(COLUMNS)
+            .filter(col => col.type === 'stats')
+            .map(col => {
+              if (!columns.includes(col)) {
+                return null;
+              }
+              return (
+                <label
+                  className="label-name"
+                  onClick={() => handleSort(col.path)}
+                  style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
+                >
+                  <span>
+                    {col.displayName}
+                    {sort === col.path && <span>{arrow}</span>}
+                  </span>
+                </label>
+              );
+            })}
         </div>
 
         {sort === 'label'
@@ -118,16 +238,19 @@ function ClientList({list}) {
                   name={Object.keys(groups)[i]}
                   group={g}
                   index={i}
+                  columns={columns}
                 />
               );
             })
-          : orderBy(list, [sort], asc ? ['asc'] : ['desc']).map(c => (
-              <ClientListElement key={c.id} data={c} />
+          : orderBy(mergedWithStats, sort, asc ? ['asc'] : ['desc']).map(c => (
+              <ClientListElement
+                key={c.id}
+                data={c}
+                stats={stats && stats[c.id]}
+                columns={columns}
+              />
             ))}
       </div>
-      <a className="createclient" href="/add">
-        + Create a new client
-      </a>
     </div>
   );
 }
@@ -147,12 +270,37 @@ function ClientListEmpty() {
   );
 }
 
-export default function ClientListContainer({error, list = []}) {
+export default function ClientListContainer({
+  error,
+  list = [],
+  stats,
+  statsOpenplatform,
+  queryParams
+}) {
   if (error) {
     return ClientListError({error});
   } else if (list.length === 0) {
     return ClientListEmpty();
   }
 
-  return ClientList({list});
+  const columns = stats
+    ? [
+        COLUMNS.label,
+        COLUMNS.name,
+        ...Object.values(COLUMNS).filter(col => col.type === 'stats')
+      ]
+    : [
+        COLUMNS.label,
+        COLUMNS.name,
+        COLUMNS.owner,
+        COLUMNS.enabled,
+        COLUMNS.token
+      ];
+
+  return ClientList({
+    list,
+    stats,
+    columns,
+    statsOpenplatform
+  });
 }

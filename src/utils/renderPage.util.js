@@ -13,16 +13,23 @@ import {html} from '../server/templates/html.template';
  * @param state
  * @returns {*}
  */
-export default function renderPage(id, title, userLoggedIn, state = {}) {
+export default function renderPage(
+  id,
+  title,
+  description,
+  userLoggedIn,
+  state = {}
+) {
   const Component = getComponentFromId(id);
 
   return html({
     id,
     title,
+    description,
     state,
     userLoggedIn,
     content: ReactDOM.renderToString(
-      <Page id={id} title={title}>
+      <Page id={id} title={title} description={description}>
         <Component {...state} />
       </Page>
     )
