@@ -66,7 +66,7 @@ pipeline {
                     docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs smaug > logs/smaug-log.txt
                     docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
                     docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
-                    docker rmi $IMAGE
+                    docker rmi ${DOCKER_NAME}
                 """
                 junit 'e2e/reports/*.xml'
                 archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
