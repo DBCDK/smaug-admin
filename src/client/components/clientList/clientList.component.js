@@ -258,8 +258,7 @@ export default function ClientListContainer({
   error,
   list = [],
   stats,
-  statsOpenplatform,
-  queryParams
+  statsOpenplatform
 }) {
   if (error) {
     return ClientListError({error});
