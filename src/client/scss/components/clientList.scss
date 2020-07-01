@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.stats-column {
+  max-width: 7% !important; 
+  min-width: 7% !important; 
+  text-align: right !important;
+}
+
 .clients {
   margin-bottom: 1rem;
   width: 100%;
@@ -47,6 +53,7 @@
   padding: 2rem 0;
 
   label {
+    padding-right: 1rem;
     &:first-child {
       span {
         padding-left: 1rem;
@@ -54,8 +61,11 @@
     }
   }
 
+
+
   * {
-    min-width: 20%;
+    min-width: 16%;
+    max-width: 16%;
 
     font-weight: bold;
   }
@@ -78,13 +88,17 @@
   }
 
   & > * {
-    min-width: 20%;
+    min-width: 16%;
+    max-width: 16%;
+    
   }
-
+  span.label,
   a {
     padding: 1rem 0;
     color: #373a3c;
     transition: all 200ms ease-in;
+    padding-right: 1rem;
+
   }
 
   a.createtoken {
@@ -98,6 +112,9 @@
   &:hover {
     background-color: #4c4c4c;
     a {
+      color: white;
+    }
+    span {
       color: white;
     }
   }
@@ -119,7 +136,7 @@
   @include button();
   font-weight: bold;
   font-size: 1rem;
-  align-self: center;
+  align-self: flex-end;
   margin-bottom: 2rem;
 }
 

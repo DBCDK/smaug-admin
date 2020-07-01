@@ -7,6 +7,7 @@ import Config from '../../utils/config.util';
  * @param next
  */
 export default async function config(ctx, next) {
+  ctx.session.stats = Config.stats;
   if (!ctx.session.smaug) {
     ctx.session.smaug = Config.smaug;
   } else if (!ctx.session.smaug.uri) {

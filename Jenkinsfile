@@ -59,15 +59,16 @@ pipeline {
     }
     post {
         always {
-            script {
-                sh """
-                    CONTAINER_ID=`docker ps | grep $DOCKER_NAME | awk '{print \$1}'`
-                    [ ! -z \$CONTAINER_ID ] && docker kill \$CONTAINER_ID
-                    [ ! -z \$CONTAINER_ID ] && docker rm \$CONTAINER_ID
-                    IMAGE_ID=`docker images -a | grep $IMAGE_NAME | grep " $BUILD_NUMBER " | awk '{print \$3}'`
-                    [ ! -z \$IMAGE_ID ] && docker rmi \$IMAGE_ID
+               sh """
+                    echo Clean up
+                    mkdir -p logs
+                    docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs database > logs/database-log.txt
+                    docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs smaug > logs/smaug-log.txt
+                    docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
+                    docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
+                    docker rmi ${DOCKER_NAME}
                 """
-            }
-        }
+                archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
+        }  
     }
 }

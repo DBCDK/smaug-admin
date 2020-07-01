@@ -11,6 +11,7 @@
 
 export function html({
   title,
+  description,
   content = '',
   id = 'clientlist',
   userLoggedIn = false,
@@ -29,6 +30,7 @@ export function html({
       <script id="pagedata" type='application/json'>${JSON.stringify({
         id,
         title,
+        description,
         userLoggedIn,
         state
       })}</script>

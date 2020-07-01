@@ -5,11 +5,19 @@
   margin-bottom: 2rem;
   min-height: 80%;
   box-shadow: 2px 2px 5px rgba($dark-color, 0.1);
+
+  h1 {
+    margin-bottom: 0px;
+  }
+  .description {
+    margin-top: 4px;
+  }
 }
 
 .wrapper {
   position: relative;
 }
+
 
 .logo {
   min-width: 190px;
@@ -51,7 +59,7 @@
 
 .menu-container .menu-item {
   flex-shrink: 0;
-  margin-left: 16px;
+  margin-left: 32px;
 }
 
 .menu-container .search-form {
