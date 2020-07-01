@@ -226,7 +226,11 @@ function ClientList({list, stats, columns, statsOpenplatform}) {
                 />
               );
             })
-          : orderBy(mergedWithStats, sort, asc ? ['asc'] : ['desc']).map(c => (
+          : orderBy(
+              mergedWithStats,
+              c => get(c, sort, 0),
+              asc ? ['asc'] : ['desc']
+            ).map(c => (
               <ClientListElement
                 key={c.id}
                 data={c}
