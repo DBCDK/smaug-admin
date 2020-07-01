@@ -9,8 +9,8 @@ export default {
   port: env.PORT || 1234,
   smaug: {
     uri: env.SMAUG_URI || 'http://smaug:3002',
-    username: env.SMAUG_USER || 'admin',
-    password: env.SMAUG_PASSWORD || 'admin'
+    username: env.SMAUG_USER,
+    password: env.SMAUG_PASSWORD
   },
   stats: {
     hejmdal: {
