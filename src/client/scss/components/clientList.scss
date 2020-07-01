@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.stats-column {
+  max-width: 7% !important; 
+  min-width: 7% !important; 
+  text-align: right !important;
+}
+
 .clients {
   margin-bottom: 1rem;
   width: 100%;
@@ -54,6 +60,8 @@
       }
     }
   }
+
+
 
   * {
     min-width: 16%;

@@ -95,12 +95,7 @@ const ClientListElement = ({data, columns}) => {
       {Object.values(COLUMNS)
         .filter(col => col.type === 'stats' && columns.includes(col))
         .map(col => (
-          <span
-            className="label stats-label"
-            style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
-          >
-            {get(data, col.path, 0)}
-          </span>
+          <span className="label stats-column">{get(data, col.path, 0)}</span>
         ))}
     </div>
   );
@@ -208,9 +203,8 @@ function ClientList({list, stats, columns, statsOpenplatform}) {
             .filter(col => col.type === 'stats' && columns.includes(col))
             .map(col => (
               <label
-                className="label-name"
+                className="label-name stats-column"
                 onClick={() => handleSort(col.path)}
-                style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
               >
                 <span>
                   {col.displayName}
