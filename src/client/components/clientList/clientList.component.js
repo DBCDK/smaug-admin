@@ -93,20 +93,15 @@ const ClientListElement = ({data, columns}) => {
       )}
       {columns.includes(COLUMNS.token) && <Token client={{id, name}} />}
       {Object.values(COLUMNS)
-        .filter(col => col.type === 'stats')
-        .map(col => {
-          if (!columns.includes(col)) {
-            return null;
-          }
-          return (
-            <span
-              className="label stats-label"
-              style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
-            >
-              {get(data, col.path, 0)}
-            </span>
-          );
-        })}
+        .filter(col => col.type === 'stats' && columns.includes(col))
+        .map(col => (
+          <span
+            className="label stats-label"
+            style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
+          >
+            {get(data, col.path, 0)}
+          </span>
+        ))}
     </div>
   );
 };
@@ -210,24 +205,19 @@ function ClientList({list, stats, columns, statsOpenplatform}) {
             <label className="label-owner">token</label>
           )}
           {Object.values(COLUMNS)
-            .filter(col => col.type === 'stats')
-            .map(col => {
-              if (!columns.includes(col)) {
-                return null;
-              }
-              return (
-                <label
-                  className="label-name"
-                  onClick={() => handleSort(col.path)}
-                  style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
-                >
-                  <span>
-                    {col.displayName}
-                    {sort === col.path && <span>{arrow}</span>}
-                  </span>
-                </label>
-              );
-            })}
+            .filter(col => col.type === 'stats' && columns.includes(col))
+            .map(col => (
+              <label
+                className="label-name"
+                onClick={() => handleSort(col.path)}
+                style={{maxWidth: '7%', minWidth: '7%', textAlign: 'end'}}
+              >
+                <span>
+                  {col.displayName}
+                  {sort === col.path && <span>{arrow}</span>}
+                </span>
+              </label>
+            ))}
         </div>
 
         {sort === 'label'
