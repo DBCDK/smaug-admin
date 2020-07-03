@@ -78,9 +78,9 @@ export default function ClientForm({
             name="label"
             className="label-suggester"
             value={jsonConfig.label || ''}
-            onChange={e =>
-              updateJEditor({...jsonConfig, label: e.target.value})
-            }
+            onChange={(e, {newValue}) => {
+              updateJEditor({...jsonConfig, label: newValue});
+            }}
             placeholder="label for service client"
           />
         </div>

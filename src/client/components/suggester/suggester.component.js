@@ -99,9 +99,9 @@ export default class AutoSuggester extends React.Component {
     const inputProps = {
       placeholder: 'Set label',
       value,
-      onChange: e => {
-        this.onChange(e);
-        this.props.onChange(e);
+      onChange: (e, extra) => {
+        this.onChange(e, extra);
+        this.props.onChange(e, extra);
       }
     };
 
