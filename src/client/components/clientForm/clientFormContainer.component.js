@@ -4,7 +4,6 @@ import Client from './clientForm.component';
 
 export default function ClientFormContainer(props) {
   const [hasError, setHasError] = useState(false);
-
   const onSubmit = e => {
     if (hasError) {
       e.preventDefault();
@@ -16,6 +15,7 @@ export default function ClientFormContainer(props) {
     <Client
       onSubmit={onSubmit}
       setErrorState={state => setHasError(state)}
+      hasError={hasError}
       {...props}
     />
   );
