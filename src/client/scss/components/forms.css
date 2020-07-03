@@ -26,8 +26,13 @@ label {
 
 .element {
   margin-bottom: 1rem;
+  /* margin-top: 1rem; */
 }
 
 .element label {
   font-weight: bold;
+}
+
+.element h2 {
+  margin: 0;
 }

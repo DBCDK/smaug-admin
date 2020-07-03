@@ -19,6 +19,7 @@ $secondary-color: #222;
 @import "components/tokenview";
 @import "components/find";
 @import "components/switch";
+@import 'components/suggester';
 
 div, form, input, p {
   box-sizing: border-box;
@@ -101,4 +102,25 @@ input-label {
 
 .btn + .btn {
   margin-left: 1rem;
+}
+
+.flex-row-space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+p {
+  // margin-top: 0px;
+}
+
+hr {
+  margin: 24px 0;
+}
+
+h3 {
+  font-size: 20px;
+  margin-top: 0px;
+  margin-bottom: 1rem;
 }

@@ -32,7 +32,7 @@ export default function ClientForm({
   config = {},
   onSubmit,
   setErrorState,
-  hasErrors,
+  hasError,
   enabled
 }) {
   const [jsonConfig, setJsonConfig] = useState(config);
@@ -43,7 +43,11 @@ export default function ClientForm({
   };
 
   const toggleJson = () => {
-    setShowJson(!showJson);
+    if (showJson && hasError) {
+      alert('Fix JSON errors before proceeding');
+    } else {
+      setShowJson(!showJson);
+    }
   };
 
   const remove = e => {
@@ -51,9 +55,6 @@ export default function ClientForm({
     if (!confirmed) {
       e.preventDefault();
     }
-  };
-  const showEditor = () => {
-    return showJson ? 'jeditor-visible' : 'jeditor-hide';
   };
 
   return (
@@ -70,6 +71,8 @@ export default function ClientForm({
             placeholder="the name of the service client"
             required="required"
           />
+        </div>
+        <div className="element">
           <label htmlFor="label">Label</label>
           <AutoSuggester
             name="label"
@@ -81,8 +84,10 @@ export default function ClientForm({
             placeholder="label for service client"
           />
         </div>
-        <label>Contacts</label>
-        <Contacts contacts={contact} />
+        <div className="element">
+          <label>Contacts</label>
+          <Contacts contacts={contact} />
+        </div>
         <div className="element">
           <label>Enabled</label>
           <div>
@@ -94,20 +99,44 @@ export default function ClientForm({
             />
           </div>
         </div>
-        <AdgangsplatformForm
-          jsonConfig={jsonConfig}
-          updateJEditor={updateJEditor}
-          toggleJson={toggleJson}
-          jsonEditState={showJson}
-        />
-        <JEditor
-          name="config"
-          json={jsonConfig}
-          setErrorState={setErrorState}
-          isVisible={showEditor()}
-        />
+        <hr />
+        <div className="element">
+          <div className="flex-row-space-between">
+            <h3>Services</h3>
+            <div onClick={toggleJson} className="adgangsForm-toggle">
+              {showJson
+                ? 'Hide JSON formatting'
+                : 'Edit configuration in JSON format'}
+            </div>
+          </div>
+
+          <div>
+            {!showJson && (
+              <AdgangsplatformForm
+                jsonConfig={jsonConfig}
+                updateJEditor={updateJEditor}
+                jsonEditState={showJson}
+              />
+            )}
+            {showJson && (
+              <JEditor
+                name="config"
+                json={jsonConfig}
+                setErrorState={setErrorState}
+                onChange={json => setJsonConfig({...json})}
+              />
+            )}
+            <input
+              type="hidden"
+              name="config"
+              id="config"
+              value={JSON.stringify(jsonConfig)}
+            />
+          </div>
+        </div>
+        <hr />
         <div className="element submit updateclient">
-          <input type="submit" value="Save Client" disabled={hasErrors} />
+          <input type="submit" value="Save Client" />
         </div>
       </form>
       <form
