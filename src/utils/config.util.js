@@ -23,5 +23,12 @@ export default {
         env.STATS_OPENPLATFORM_URL ||
         'https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/openplatform_daily.json'
     }
+  },
+  session: {
+    key: process.env.SESSION_KEY,
+    redis: env.REDIS_CLUSTER_HOST && {
+      host: env.REDIS_CLUSTER_HOST,
+      port: env.REDIS_PORT || 6379
+    }
   }
 };
