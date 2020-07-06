@@ -21,6 +21,9 @@ import authenticate from './middlewares/authenticate.middleware';
 import apiToContext from './middlewares/api.middleware';
 import configtoContext from './middlewares/config.middleware';
 
+// import session
+import SessionStore from './session/store.session';
+
 const app = new Koa();
 app.name = 'Smaug Admin';
 const PORT = config.port;
@@ -33,9 +36,18 @@ app.listen(PORT, () => {
   console.log(`Server is up and running on port ${PORT}!`); // eslint-disable-line no-console
 });
 
+// Configure session
+const sessionConfig = config.session.redis
+  ? {
+      key: config.session.key,
+      store: new SessionStore(config.session.redis),
+      maxAge: 2592000000 // 30 days (miliseconds)
+    }
+  : {key: config.session.key};
+
 // Apply middlewares
 app.use(convert(serve('./public')));
-app.use(session());
+app.use(session(sessionConfig));
 app.use(bodyParser());
 app.use(configtoContext);
 app.use(apiToContext);
