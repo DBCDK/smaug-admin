@@ -9,10 +9,9 @@ context('Stats', () => {
     const name = 'client-with-stats';
     cy.deleteClientByName(name);
     cy.createClient({
-      name,
+      name
     });
-    cy.getClientByName(name).then((client) => {
-      console.log({client});
+    cy.getClientByName(name).then(client => {
       cy.server();
       cy.route('GET', '/api/stats', {
         hejmdalStats: {[client.id]: {'/login': {last30: 80}}},
@@ -24,9 +23,9 @@ context('Stats', () => {
             storage: {last30: 40},
             user: {last30: 50},
             order: {last30: 60},
-            recommend: {last30: 70},
-          },
-        },
+            recommend: {last30: 70}
+          }
+        }
       });
 
       cy.visit('/stats');
@@ -47,7 +46,7 @@ context('Stats', () => {
       method: 'GET',
       url: '/api/stats',
       status: 500,
-      response: {body: {}},
+      response: {body: {}}
     });
     cy.visit('/stats');
     cy.contains('Kunne ikke hente stats');

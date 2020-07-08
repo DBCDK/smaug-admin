@@ -7,12 +7,12 @@ context('Client list', () => {
 
   describe('labels', () => {
     it('should show label for client', () => {
-      ['client-with-label-1'].forEach((name) => {
+      ['client-with-label-1'].forEach(name => {
         cy.deleteClientByName(name);
         cy.createClient({
           name,
           enabled: true,
-          config: {label: 'some-label'},
+          config: {label: 'some-label'}
         });
       });
 
@@ -21,29 +21,29 @@ context('Client list', () => {
     });
 
     it('should group label', () => {
-      ['client-with-label-1', 'client-with-label-2'].forEach((name) => {
+      ['client-with-label-1', 'client-with-label-2'].forEach(name => {
         cy.deleteClientByName(name);
         cy.createClient({
           name,
           enabled: true,
-          config: {label: 'some-label'},
+          config: {label: 'some-label'}
         });
       });
 
-      ['client-with-label-3', 'client-with-label-4'].forEach((name) => {
+      ['client-with-label-3', 'client-with-label-4'].forEach(name => {
         cy.deleteClientByName(name);
         cy.createClient({
           name,
           enabled: true,
-          config: {label: 'some-other-label'},
+          config: {label: 'some-other-label'}
         });
       });
 
-      ['client-without-label'].forEach((name) => {
+      ['client-without-label'].forEach(name => {
         cy.deleteClientByName(name);
         cy.createClient({
           name,
-          enabled: true,
+          enabled: true
         });
       });
 
@@ -72,7 +72,7 @@ context('Client list', () => {
     cy.deleteClientByName(name);
     cy.createClient({
       name,
-      enabled: true,
+      enabled: true
     });
 
     cy.visit('/');

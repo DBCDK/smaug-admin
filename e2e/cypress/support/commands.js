@@ -32,12 +32,12 @@ Cypress.Commands.add('login', () => {
     body: {
       uri: 'http://smaug:3002',
       username: 'admin',
-      password: 'admin',
-    },
+      password: 'admin'
+    }
   });
 });
 
-Cypress.Commands.add('createClient', (client) => {
+Cypress.Commands.add('createClient', client => {
   return cy.request({
     method: 'POST',
     url: '/add',
@@ -50,18 +50,18 @@ Cypress.Commands.add('createClient', (client) => {
           role: 'owner',
           name: 'test-name',
           email: 'test@dbc.dk',
-          phone: '',
-        },
+          phone: ''
+        }
       ],
-      enabled: client.enabled,
-    },
+      enabled: client.enabled
+    }
   });
 });
 
-Cypress.Commands.add('getClientByName', (name) => {
-  return cy.request('/api/clients').then((res) => {
+Cypress.Commands.add('getClientByName', name => {
+  return cy.request('/api/clients').then(res => {
     let found = null;
-    res.body.forEach((client) => {
+    res.body.forEach(client => {
       if (client.name === name) {
         found = client;
       }
@@ -70,9 +70,9 @@ Cypress.Commands.add('getClientByName', (name) => {
   });
 });
 
-Cypress.Commands.add('deleteClientByName', (name) => {
-  cy.request('/api/clients').then((res) => {
-    res.body.forEach((client) => {
+Cypress.Commands.add('deleteClientByName', name => {
+  cy.request('/api/clients').then(res => {
+    res.body.forEach(client => {
       if (client.name === name) {
         cy.request({method: 'POST', url: `/remove/${client.id}`});
       }
