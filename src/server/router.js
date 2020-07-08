@@ -22,6 +22,15 @@ router.get('/api/clients', async ctx => {
 });
 
 /**
+ * Get stats
+ */
+router.get('/api/stats', async ctx => {
+  const hejmdalStats = await ctx.statsApi.getHejmdal30summed();
+  const openplatformStats = await ctx.statsApi.getOpenplatform30summed();
+  ctx.body = {hejmdalStats, openplatformStats};
+});
+
+/**
  * Shows a list of service clients.
  */
 router.get('/', async ctx => {
@@ -206,10 +215,8 @@ router.get('/find/:key?', async ctx => {
  * Stats page
  */
 router.get('/stats', async ctx => {
-  const state = {};
+  const state = {showStats: true};
   try {
-    state.stats = await ctx.statsApi.getHejmdal30summed();
-    state.statsOpenplatform = await ctx.statsApi.getOpenplatform30summed();
     const list = await ctx.api.getClientList();
     state.list = (Array.isArray(list) && list) || [];
   } catch (e) {

@@ -70,6 +70,7 @@ export default function ClientForm({
             defaultValue={name}
             placeholder="the name of the service client"
             required="required"
+            data-cy="name-input"
           />
         </div>
         <div className="element">
