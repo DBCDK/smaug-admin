@@ -127,6 +127,29 @@ export default function AdgangsplatformForm(props) {
               </div>
 
               <div className="adgangsForm-formBg">
+                <div className="adgangsForm-checkbox-section" id="grants">
+                  <div className="input-label">Grant types</div>
+                  {[
+                    {label: 'Authorization code', key: 'authorization_code'},
+                    {label: 'Password', key: 'password'},
+                    {label: 'CAS', key: 'cas'}
+                  ].map(({label, key}) => (
+                    <span key={key}>
+                      <input
+                        type="checkbox"
+                        checked={getArray(jsonConfig, 'grants').includes(key)}
+                        onChange={e =>
+                          update({
+                            ...jsonConfig,
+                            grants: toggle(getArray(jsonConfig, 'grants'), key)
+                          })
+                        }
+                      />
+                      <input-label>{label}</input-label>
+                    </span>
+                  ))}
+                </div>
+
                 <div className="input-label">Agency Id</div>
                 <input
                   id="agencyId"
@@ -160,101 +183,43 @@ export default function AdgangsplatformForm(props) {
                   <div className="input-label">
                     User attributes to retrieve at sign in
                   </div>
-                  <span className="userCPR">
-                    <input
-                      id="userCPR"
-                      type="checkbox"
-                      checked={!!get(jsonConfig, 'attributes.userCpr')}
-                      onChange={() =>
-                        update({
-                          ...jsonConfig,
-                          attributes: toggleInObject(
-                            jsonConfig.attributes,
-                            'userCpr',
-                            {}
-                          )
-                        })
-                      }
-                    />
-                    <input-label>User CPR</input-label>
-                  </span>
-                  <span className="userID">
-                    <input
-                      id="userID"
-                      type="checkbox"
-                      checked={!!get(jsonConfig, 'attributes.userID')}
-                      onChange={() =>
-                        update({
-                          ...jsonConfig,
-                          attributes: toggleInObject(
-                            jsonConfig.attributes,
-                            'userID',
-                            {}
-                          )
-                        })
-                      }
-                    />
-                    <input-label>
-                      User ID (retrieved from the library, which is selected at
-                      sign in)
-                    </input-label>
-                  </span>
-                  <span className="uniqueID">
-                    <input
-                      id="uniqueID"
-                      type="checkbox"
-                      checked={!!get(jsonConfig, 'attributes.uniqueId')}
-                      onChange={() =>
-                        update({
-                          ...jsonConfig,
-                          attributes: toggleInObject(
-                            jsonConfig.attributes,
-                            'uniqueId',
-                            {}
-                          )
-                        })
-                      }
-                    />
-                    <input-label>Unique ID (from CULR)</input-label>
-                  </span>
-                  <span className="libraries">
-                    <input
-                      id="libraries"
-                      type="checkbox"
-                      checked={!!get(jsonConfig, 'attributes.libraries')}
-                      onChange={() =>
-                        update({
-                          ...jsonConfig,
-                          attributes: toggleInObject(
-                            jsonConfig.attributes,
-                            'libraries',
-                            {}
-                          )
-                        })
-                      }
-                    />
-                    <input-label>Libraries</input-label>
-                  </span>
-                  <span className="muniNo">
-                    <input
-                      id="muniNo"
-                      type="checkbox"
-                      checked={
-                        !!get(jsonConfig, 'attributes.municipalityAgencyId')
-                      }
-                      onChange={() =>
-                        update({
-                          ...jsonConfig,
-                          attributes: toggleInObject(
-                            jsonConfig.attributes,
-                            'municipalityAgencyId',
-                            {}
-                          )
-                        })
-                      }
-                    />
-                    <input-label>Municipality no</input-label>
-                  </span>
+                  {[
+                    {label: 'CPR', key: 'cpr'},
+                    {label: 'User ID (usually CPR)', key: 'userId'},
+                    {label: 'Unique ID (CULR)', key: 'uniqueId'},
+                    {
+                      label: 'Libraries (libraries knowing the user)',
+                      key: 'libraries'
+                    },
+                    {label: 'Unilogin ID', key: 'uniloginId'},
+                    {label: 'Municipality NO (3 digit)', key: 'municipality'},
+                    {
+                      label: 'Municipality agency ID',
+                      key: 'municipalityAgencyId'
+                    },
+                    {label: 'Birth date', key: 'birthDate'},
+                    {label: 'Birth year', key: 'birthYear'},
+                    {label: 'Gender', key: 'gender'},
+                    {label: 'Authenticated token', key: 'authenticatedToken'}
+                  ].map(({label, key}) => (
+                    <span key={key}>
+                      <input
+                        type="checkbox"
+                        checked={!!get(jsonConfig, `attributes.${key}`)}
+                        onChange={() =>
+                          update({
+                            ...jsonConfig,
+                            attributes: toggleInObject(
+                              jsonConfig.attributes,
+                              key,
+                              {}
+                            )
+                          })
+                        }
+                      />
+                      <input-label>{label}</input-label>
+                    </span>
+                  ))}
                 </div>
                 <div className="input-label">Display name</div>
                 <input
@@ -277,78 +242,51 @@ export default function AdgangsplatformForm(props) {
                   id="identityProviders"
                 >
                   <div className="input-label">Identity providers</div>
-                  <span>
-                    <input
-                      id="borchk"
-                      type="checkbox"
-                      checked={getArray(
-                        jsonConfig,
-                        'identityProviders'
-                      ).includes('borchk')}
-                      onChange={e =>
-                        update({
-                          ...jsonConfig,
-                          identityProviders: toggle(
-                            getArray(jsonConfig, 'identityProviders'),
-                            'borchk'
-                          )
-                        })
-                      }
-                    />
-                    <input-label>Borchk</input-label>
-                  </span>
-                  <span>
-                    <input
-                      id="nemlogin"
-                      type="checkbox"
-                      checked={getArray(
-                        jsonConfig,
-                        'identityProviders'
-                      ).includes('nemlogin')}
-                      onChange={e =>
-                        update({
-                          ...jsonConfig,
-                          identityProviders: toggle(
-                            getArray(jsonConfig, 'identityProviders'),
-                            'nemlogin'
-                          )
-                        })
-                      }
-                    />
-                    <input-label>NemLogin</input-label>
-                  </span>
-                  <span>
-                    <input
-                      id="unilogin"
-                      type="checkbox"
-                      checked={getArray(
-                        jsonConfig,
-                        'identityProviders'
-                      ).includes('unilogin')}
-                      onChange={e =>
-                        update({
-                          ...jsonConfig,
-                          identityProviders: toggle(
-                            getArray(jsonConfig, 'identityProviders'),
-                            'unilogin'
-                          )
-                        })
-                      }
-                    />
-                    <input-label>UniLogin</input-label>
-                  </span>
+                  {[
+                    {label: 'Borchk', key: 'borchk'},
+                    {label: 'Nemlogin', key: 'nemlogin'},
+                    {label: 'Unilogin', key: 'unilogin'}
+                  ].map(({label, key}) => (
+                    <span key={key}>
+                      <input
+                        type="checkbox"
+                        checked={getArray(
+                          jsonConfig,
+                          'identityProviders'
+                        ).includes(key)}
+                        onChange={e =>
+                          update({
+                            ...jsonConfig,
+                            identityProviders: toggle(
+                              getArray(jsonConfig, 'identityProviders'),
+                              key
+                            )
+                          })
+                        }
+                      />
+                      <input-label>{label}</input-label>
+                    </span>
+                  ))}
                 </div>
 
-                <div className="input-label"> Single sign out path</div>
+                <div className="input-label">
+                  Single logout path
+                  <br />
+                  <small>
+                    Login.bib.dk will always use the host from the redirect_uri
+                    provided at login, thus singleLogoutPath needs to be
+                    relative to the root of the host
+                  </small>
+                </div>
                 <input
                   id="singleLogoutPath"
                   type="text"
-                  defaultValue={jsonConfig.singleSignoutPath || ''}
-                  placeholder="Type URL to redirect to, when user signs out"
+                  defaultValue={jsonConfig.singleLogoutPath || ''}
+                  placeholder="Ex.: /single-logout"
                   onChange={e =>
                     update({
                       ...jsonConfig,
-                      singleSignoutPath: e.target.value
+                      singleLogoutPath: e.target.value
                     })
                   }
                 />

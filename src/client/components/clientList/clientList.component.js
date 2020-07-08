@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import _, {orderBy, get} from 'lodash';
+import request from 'superagent';
 import sortByKeys from '../../../utils/sortByKeys';
 import Token from '../token/tokenContainer.component';
 import ClientEnableSwitch from '../switch/clientEnableSwitch.component';
@@ -69,9 +70,13 @@ const ClientListElement = ({data, columns}) => {
   }
 
   return (
-    <div className="client" key={id}>
+    <div className="client" key={id} data-cy={`client-${name}`}>
       {columns.includes(COLUMNS.label) && (
-        <span href={`/client/${id}`} className="label">
+        <span
+          href={`/client/${id}`}
+          className="label"
+          data-cy={`label-${label}`}
+        >
           {label && <a href={`/find/${label}`}>{label}</a>}
         </span>
       )}
@@ -95,7 +100,13 @@ const ClientListElement = ({data, columns}) => {
       {Object.values(COLUMNS)
         .filter(col => col.type === 'stats' && columns.includes(col))
         .map(col => (
-          <span className="label stats-column">{get(data, col.path, 0)}</span>
+          <span
+            className="label stats-column"
+            key={col.path}
+            data-cy={`${col.displayName}-${get(data, col.path, 0)}`}
+          >
+            {get(data, col.path, 0)}
+          </span>
         ))}
     </div>
   );
@@ -107,7 +118,7 @@ const Group = ({name, group, i, columns}) => {
   const label = name === 'zzz' ? 'Labelless' : name;
 
   return (
-    <div className="elements-group">
+    <div className="elements-group" data-cy={`group-${label}`}>
       <div className="group-name" onClick={() => setCollapsed(!collapsed)}>
         <div>
           {collapsed ? <span>▼</span> : <span>▲</span>}
@@ -123,9 +134,23 @@ const Group = ({name, group, i, columns}) => {
   );
 };
 
-function ClientList({list, stats, columns, statsOpenplatform}) {
+function ClientList({
+  list,
+  stats,
+  columns,
+  statsOpenplatform,
+  isLoading,
+  statsError
+}) {
   const [sort, setSort] = useState('name');
   const [asc, setAsc] = useState(true);
+
+  if (isLoading) {
+    return <div>Indlæser</div>;
+  }
+  if (statsError) {
+    return <div>Kunne ikke hente stats</div>;
+  }
 
   const mergedWithStats = list.map(el => ({
     ...el,
@@ -168,7 +193,11 @@ function ClientList({list, stats, columns, statsOpenplatform}) {
       <div className="clients">
         <div className="labels">
           {columns.includes(COLUMNS.label) && (
-            <label className="label-label" onClick={() => handleSort('label')}>
+            <label
+              className="label-label"
+              onClick={() => handleSort('label')}
+              data-cy="label-label"
+            >
               <span>Label {sort === 'label' && <span>{arrow}</span>}</span>
             </label>
           )}
@@ -205,6 +234,7 @@ function ClientList({list, stats, columns, statsOpenplatform}) {
               <label
                 className="label-name stats-column"
                 onClick={() => handleSort(col.path)}
+                key={col.path}
               >
                 <span>
                   {col.displayName}
@@ -258,19 +288,29 @@ function ClientListEmpty() {
   );
 }
 
-export default function ClientListContainer({
-  error,
-  list = [],
-  stats,
-  statsOpenplatform
-}) {
+export default function ClientListContainer({error, list = [], showStats}) {
+  const [stats, setStats] = useState({isLoading: true});
+
+  useEffect(() => {
+    if (showStats) {
+      request
+        .get('/api/stats')
+        .then(res => {
+          setStats(res.body);
+        })
+        .catch(error => {
+          setStats({error});
+        });
+    }
+  }, []);
+
   if (error) {
     return ClientListError({error});
   } else if (list.length === 0) {
     return ClientListEmpty();
   }
 
-  const columns = stats
+  const columns = showStats
     ? [
         COLUMNS.label,
         COLUMNS.name,
@@ -286,8 +326,10 @@ export default function ClientListContainer({
 
   return ClientList({
     list,
-    stats,
+    stats: stats.hejmdalStats,
     columns,
-    statsOpenplatform
+    statsOpenplatform: stats.openplatformStats,
+    isLoading: showStats && stats.isLoading,
+    statsError: stats.error
   });
 }

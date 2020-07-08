@@ -38,7 +38,7 @@ Cypress.Commands.add('login', () => {
 });
 
 Cypress.Commands.add('createClient', client => {
-  cy.request({
+  return cy.request({
     method: 'POST',
     url: '/add',
     form: true,
@@ -55,6 +55,18 @@ Cypress.Commands.add('createClient', client => {
       ],
       enabled: client.enabled
     }
+  });
+});
+
+Cypress.Commands.add('getClientByName', name => {
+  return cy.request('/api/clients').then(res => {
+    let found = null;
+    res.body.forEach(client => {
+      if (client.name === name) {
+        found = client;
+      }
+    });
+    return found;
   });
 });
 
