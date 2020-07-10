@@ -22,6 +22,7 @@ context('client form', () => {
 
   it('should create client using forms', () => {
     const name = 'test-client';
+    cy.deleteClientByName(name);
     cy.visit('/add');
     cy.contains('Create new client');
     cy.get('[data-cy="name-input"').type(name);
