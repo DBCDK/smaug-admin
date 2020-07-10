@@ -11,10 +11,12 @@
     }
     .label-hits {
       flex-grow: 2;
+      max-width: none;
     }
   }
   .elements {
     .hit {
+      max-width: none;
       flex-grow: 2;
     }
   }

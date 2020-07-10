@@ -40,7 +40,7 @@ const FindListElements = ({list, search}) =>
 
 const FindList = ({list, search}) => (
   <div className="find-list">
-    <div className="find-clients clients">
+    <div className="find-clients clients" data-cy="searchResultTable">
       <div className="labels">
         <label className="label-name">
           <span>Name</span>

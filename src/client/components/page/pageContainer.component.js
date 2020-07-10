@@ -10,7 +10,7 @@ const InputField = ({value = '', onSearch = noop}) => {
     e.preventDefault();
   };
   return (
-    <form onSubmit={onSubmit} className="search-form">
+    <form onSubmit={onSubmit} className="search-form" data-cy="searchForm">
       <button type="submit" className="search-button">
         <MagnifyingGlass />
       </button>
@@ -77,7 +77,7 @@ const PageContainer = ({
       </div>
     </header>
     <div className={`wrapper page ${id}`}>
-      <h1>{title}</h1>
+      <h1 data-cy="pageHeader">{title}</h1>
       <p className="description">{description}</p>
       {children}
     </div>
