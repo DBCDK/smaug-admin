@@ -59,7 +59,7 @@ export default function ClientForm({
 
   return (
     <div className="clientform">
-      <form method="post" onSubmit={onSubmit}>
+      <form method="post" onSubmit={onSubmit} data-cy="createClient">
         {(id && ClientID({id})) || ''}
         {(secret && ClientSecret({secret})) || ''}
         <div className="element name">

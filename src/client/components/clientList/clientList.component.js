@@ -184,7 +184,7 @@ function ClientList({
   const arrow = asc ? '↓' : '↑';
 
   return (
-    <div className="clientlist">
+    <div className="clientlist" data-cy="clientList">
       {!stats && (
         <a className="createclient" href="/add">
           + Create a new client
