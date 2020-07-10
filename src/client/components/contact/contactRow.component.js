@@ -22,6 +22,7 @@ export default function ContactRow({index, role, contact, removeContact}) {
           defaultValue={contact.name || ''}
           placeholder="Contact name"
           required="required"
+          data-cy="contant-name-input"
         />
       </div>
       <div className="element email">
@@ -32,6 +33,7 @@ export default function ContactRow({index, role, contact, removeContact}) {
           defaultValue={contact.email || ''}
           placeholder="Contact email"
           required="required"
+          data-cy="contact-email-input"
         />
       </div>
       <div className="element phone">
@@ -41,6 +43,7 @@ export default function ContactRow({index, role, contact, removeContact}) {
           type="text"
           defaultValue={contact.phone || ''}
           placeholder="Contact phone"
+          data-cy="contact-phone-input"
         />
       </div>
       <div className="element remove">

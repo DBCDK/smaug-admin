@@ -102,7 +102,8 @@ export default class AutoSuggester extends React.Component {
       onChange: (e, extra) => {
         this.onChange(e, extra);
         this.props.onChange(e, extra);
-      }
+      },
+      'data-cy': 'label-suggester'
     };
 
     // Finally, render it!
