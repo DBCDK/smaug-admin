@@ -36,13 +36,13 @@ services:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     image: '${IMAGE:-docker-frontend.dbc.dk/smaug-admin:latest}'
     command: bash -c 'node src/server/index.js'
-    environment: 
+    environment:
       - SMAUG_URI=http://smaug:3002
     depends_on:
       - smaug
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: docker.dbc.dk/cypress:latest
+    image: docker-dbc.artifacts.dbccloud.dk/cypress:latest
     volumes:
       - './e2e:/app/e2e'
     depends_on:

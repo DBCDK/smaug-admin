@@ -39,7 +39,7 @@ services:
   smaugadmin:
     depends_on:
       - smaug
-    image: docker.dbc.dk/dbc-node:latest
+    image: docker-dbc.artifacts.dbccloud.dk/dbc-node:latest
     volumes:
       - .:/home/node/app
       - /home/node/app/node_modules/ ## we do not mount node_modules
