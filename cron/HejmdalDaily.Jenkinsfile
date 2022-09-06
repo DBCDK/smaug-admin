@@ -17,7 +17,7 @@ pipeline {
     SMAUG_CLIENT_FILE = "clients_${STAT_FILE}"
     SMAUG_CREDENTIALS = credentials("smaug_login")
     SMAUG_URI="https://${SMAUG_CREDENTIALS}@auth-admin.dbc.dk/clients"
-    ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/"
+    ARTIFACTORY_GENERIC = "https://artifactory.dbccloud.dk/artifactory/generic-fbiscrum-production/metakompasset/"
     ARTIFACTORY_LOGIN = credentials("artifactory_login")
   }
   stages {
@@ -43,7 +43,7 @@ pipeline {
     failure {
       when {branch "master"} {
         script {
-          slackSend(channel: 'fe-drift',
+          slackSend(channel: 'fbi-frontend-is',
             color: 'warning',
             message: "${env.JOB_NAME} #${env.BUILD_NUMBER} failed and needs attention: ${env.BUILD_URL}",
             tokenCredentialId: 'slack-global-integration-token')
@@ -55,17 +55,17 @@ pipeline {
         if ("${env.BRANCH_NAME}" == 'master') {
           sh "echo archive ${STAT_FILE}"
           archiveArtifacts "${STAT_FILE}"
-          sh "echo push to ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
-          sh "curl -u ${ARTIFACTORY_LOGIN} -T ${STAT_FILE} ${ARTIFACTORY_FE_GENERIC}${STAT_FILE}"
-          slackSend(channel: 'fe-drift',
+          sh "echo push to ${ARTIFACTORY_GENERIC}${STAT_FILE}"
+          sh "curl -u ${ARTIFACTORY_LOGIN} -T ${STAT_FILE} ${ARTIFACTORY_GENERIC}${STAT_FILE}"
+          slackSend(channel: 'fbi-frontend-is',
             color: 'good',
-            message: "${env.JOB_NAME} #${env.BUILD_NUMBER} completed, and pushed ${STAT_FILE} to ${ARTIFACTORY_FE_GENERIC}",
+            message: "${env.JOB_NAME} #${env.BUILD_NUMBER} completed, and pushed ${STAT_FILE} to ${ARTIFACTORY_GENERIC}",
             tokenCredentialId: 'slack-global-integration-token')
         }
       }
     }
     fixed {
-      slackSend(channel: 'fe-drift',
+      slackSend(channel: 'fbi-frontend-is',
         color: 'good',
         message: "${env.JOB_NAME} #${env.BUILD_NUMBER} back to normal: ${env.BUILD_URL}",
         tokenCredentialId: 'slack-global-integration-token')

@@ -16,12 +16,12 @@ export default {
     hejmdal: {
       url:
         env.STATS_HEJMDAL_URL ||
-        'https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/hejmdal_daily.json'
+        'https://artifactory.dbccloud.dk/artifactory/generic-fbiscrum-production/metakompasset/hejmdal_daily.json'
     },
     openplatform: {
       url:
         env.STATS_OPENPLATFORM_URL ||
-        'https://artifactory.dbc.dk/artifactory/fe-generic/metakompasset/openplatform_daily.json'
+        'https://artifactory.dbccloud.dk/artifactory/generic-fbiscrum-production/metakompasset/openplatform_daily.json'
     }
   },
   session: {
