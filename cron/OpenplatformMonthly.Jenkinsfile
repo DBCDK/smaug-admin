@@ -13,7 +13,7 @@ pipeline {
     STAT_FILTER = '{"app":"serviceprovider", "level":"INFO"}'
     STAT_ENDPOINT = '{"name":["work","suggest","recommend","search","storage","user","order"]}'
     ELK_CREDENTIALS = credentials('elk_user');
-    ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-frontend-prod-*"
+    ELK_URI = "https://${ELK_CREDENTIALS}@elk.dbc.dk:9100/k8s-febib-prod-*"
     SMAUG_CLIENT_FILE = "clients_${STAT_FILE}"
     SMAUG_CREDENTIALS = credentials("smaug_login")
     SMAUG_URI="https://${SMAUG_CREDENTIALS}@auth-admin.dbc.dk/clients"
