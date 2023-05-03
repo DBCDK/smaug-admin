@@ -41,6 +41,5 @@ context('client form', () => {
     cy.contains('test@test.dk');
     cy.contains('123');
     */
-     */
   });
 });
